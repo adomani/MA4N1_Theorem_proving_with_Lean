@@ -3,7 +3,7 @@ import Mathlib.Tactic
 /-!
 #  Pathologies
 
-This file shows some of the quirks and oddities used in `Lean/Mathlib`.
+This file shows some of the quirks and oddities appearing in `Lean/Mathlib`.
 
 ## Every function is "total"
 
