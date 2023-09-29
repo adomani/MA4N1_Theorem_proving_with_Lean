@@ -4,11 +4,8 @@ import Mathlib.Tactic
 #  Pathologies
 
 This file shows some of the quirks and oddities used in `Lean/Mathlib`.
--/
 
-
-/-
-# Every function is "total"
+## Every function is "total"
 
 What this means is that you are not allowed to leave a function undefined on
 some (non-empty) subset of its domain.
