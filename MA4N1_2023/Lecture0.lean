@@ -16,8 +16,8 @@ namespace TPwL
 
 #check and  -- and (x y : Bool) : Bool
 #check or   -- or  (x y : Bool) : Bool
-#check Or   -- and (x y : Prop) : Prop
-#check And  -- or  (x y : Prop) : Prop
+#check And  -- And (x y : Prop) : Prop
+#check Or   -- Or  (x y : Prop) : Prop
 
 #check (· ∧ ·)  -- fun x x_1 ↦ x ∧ x_1 : Prop → Prop → Prop
 
