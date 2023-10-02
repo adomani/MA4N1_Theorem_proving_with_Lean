@@ -1,9 +1,5 @@
 import Mathlib.Tactic
 
-/-
-https://tinyurl.com/26v39cmu
--/
-
 namespace TPwL
 
 #check Bool   -- Bool : Type
