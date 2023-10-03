@@ -55,7 +55,7 @@ to see if `(x : X)` works and uses it.
 Useful to avoid repetitions in a group of results that have
 common assumptions and notation.
 -/
-variable (f : ℕ[X])        -- `f` is a polynomial with coefficients in `ℕ`
+variable  (f : ℕ[X])        -- `f` is a polynomial with coefficients in `ℕ`
           (P : ℕ[X] → Prop) -- `P` is a property of polynomials: `P f` may be
                             -- true or false
 
