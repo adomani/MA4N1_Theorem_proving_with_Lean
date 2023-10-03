@@ -107,8 +107,7 @@ theorem my_induction
 by
   -- hover over `Polynomial.induction_on'`
   refine Polynomial.induction_on' f ?_ ?_
-  · -- `hint` reports `assumption`, among others
-    -- `exact?` reports `exact P_add`
+  · -- `exact?` reports `exact P_add`
     exact P_add
   · intros n a
     simp [← C_mul_X_pow_eq_monomial]  -- replace `monomial n a` with `a * X ^ n`
