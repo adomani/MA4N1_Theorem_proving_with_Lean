@@ -63,13 +63,14 @@ variable  (f : ℕ[X])        -- `f` is a polynomial with coefficients in `ℕ`
 ### Digression on `Prop`
 
 `Prop` is the "generic Type of propositions".  Most of the times, you can
-think of this as `true/false`.
-(The Type of "actual" `true/false` is called `bool` and
-`true` is really `tt`, `false` is really `ff`.)
+think of this as `True/False`.
+(The Type of "actual" `true/false` is called `Bool` -- note the difference
+in capitalization: `true : Bool` while `True : Prop`.
+This will be only superficially relevant.)
 
 Thus, when we write `P : ℕ[X] → Prop` we are introducing a function `P`
-that takes a polynomial with coefficients in `ℕ` and returns `true`
-or `false`.  For instance, "being monic" could be one such function.
+that takes a polynomial with coefficients in `ℕ` and returns `True`
+or `False`.  For instance, "being monic" could be one such function.
 Also, "the leading coefficient of `f` equals the first decimal digit
 of the `deg f`-th odd perfect number, if it exists, and `1` otherwise".
 -/
@@ -104,7 +105,7 @@ theorem my_induction
   (P_X_pow : ∀ n : ℕ, P (X ^ n)) :
   P f :=
 by
-  -- hover over `polynomial.induction_on'`
+  -- hover over `Polynomial.induction_on'`
   refine Polynomial.induction_on' f ?_ ?_
   · -- `hint` reports `assumption`, among others
     -- `library_search` reports `exact P_add`
@@ -174,7 +175,7 @@ Copy-paste the above and look for a common generalization of `ℕ` and `ℝ≥0`
 
 namespace next
 
---  -->  semiring --> comm --> ordered --> canonically
+--  -->  Semiring --> Comm --> Ordered --> Canonically
 
 end next
 
