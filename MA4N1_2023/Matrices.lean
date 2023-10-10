@@ -69,7 +69,23 @@ depend on the actual entries.
 
 --  Better to use the dedicated notation!
 example : !![1, 0; 0, 1] = 1 := by simp
+/-
+Hopefully the notation is self-explanatory:
+we can provide a matrix to Lean by using the following syntax
+* the matrix entries are contained in a `!![...]` block;
+* rows are inserted by comma-separated `,` entries;
+* consecutive rows are separated by a colon `;`.
 
+The syntax allows rectangular (i.e. not necessarily square) matrices.
+For legibility (especially if we have bigger matrices), we could write the `2 × 2` identity matrix as
+-/
+#check !![1, 0;
+          0, 1]
+/-
+although, admittedly, for such a small mattrix, the single-line expression might be clearer.
+-/
+
+--  let's prove a not fully trivial result about matrices!
 example {n : ℕ} : !![1, 1; 0, 1] ^ n = !![1, n; 0, 1] := by
   induction n with
   | zero => simp
@@ -77,3 +93,23 @@ example {n : ℕ} : !![1, 1; 0, 1] ^ n = !![1, n; 0, 1] := by
     rw [pow_succ, ih]
     simp
   done
+
+/-
+The `!![...]` notation is useful for writing "explicit" matrices,
+but if you have a "generic" `m × n` matrix it will not help.
+In fact, how *do* we write a generic `m × n`?
+-/
+
+variable {m n : Type} (M : Matrix m n ℝ)
+/-
+`m` and `n` are *arbitrary* sets, `M` is a real-valued matrix
+whose rows are indexed by `m` and
+whose columns are indexed by `n`.
+
+This is maybe not so common: rows and columns are often *finite*... here we go!
+-/
+variable [Fintype m] [Fintype n]
+/-
+Finiteness is a property of the set that is expressed by a typeclass.
+In fact, by several typeclasses, but `Fintype` may be the one that is most useful for us.
+-/
