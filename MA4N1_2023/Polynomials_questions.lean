@@ -149,30 +149,30 @@ section natDegree
 
 example : natDegree (X + 1 : ℤ[X]) = 1 := by
   sorry
-  end
+  done
 
 example : natDegree (C 0 * X ^ 2 + C 3 * X : ℤ[X]) = 1 := by
   sorry
-  end
+  done
 
 example (h2 : (2 : R) = 0) (h3 : (3 : R) = 0) : (0 : R) = 1 := by
   sorry
-  end
+  done
 
 lemma aux [Nontrivial R] (h2 : (2 : R) ≠ 0) :
     natDegree (C 4 * X ^ 2 : R[X]) < natDegree (C 2 * X ^ 3 : R[X]) := by
   sorry
-  end
+  done
 
 /-- Proof without automation -- I had prepared this before tactic `compute_degree` was merged. -/
 example : natDegree (C 2 * X ^ 3 + C 4 * X ^ 2 + 1 : R[X]) ∈ ({0, 3} : Set ℕ) := by
   sorry
-  end
+  done
 
 /-- Proof with more automation -- works now that `compute_degree` is merged. -/
 example : natDegree (C 2 * X ^ 3 + C 4 * X ^ 2 + 1 : R[X]) ∈ ({0, 3} : Set ℕ) := by
   sorry
-  end
+  done
 
 end natDegree
 
