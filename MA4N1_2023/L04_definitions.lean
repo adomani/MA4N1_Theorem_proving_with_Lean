@@ -144,25 +144,14 @@ This should feel like a much smoother experience!
 
 The main reason is that we could rely on the API for `max`, rather than on "hard" automation,
 provided for instance by `linarith`.
+
+When formalising a new definition, try to keep as close as possible to definitions that already exist.
+If you think that you have to make a big "leap", chances are that it will be easier to first define some
+intermediate notion and then continue with what you want.
+
+Lean will try hard to connect your "new" definition to the ones that it already knows about,
+and it will be an easier experience for you to teach it new trick in small, incremental baby steps!
 -/
 
-
-
-
-
-
-
-
-
-/-
-
-, but A crucial difference
-
-, so that users of that API should
-not really be required to know
-
-Before I started learning about formalisation
-
--/
 
 end TPwL
