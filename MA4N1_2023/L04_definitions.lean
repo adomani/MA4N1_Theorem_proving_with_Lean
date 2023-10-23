@@ -151,7 +151,45 @@ intermediate notion and then continue with what you want.
 
 Lean will try hard to connect your "new" definition to the ones that it already knows about,
 and it will be an easier experience for you to teach it new trick in small, incremental baby steps!
+
+#  Instances
+
+Sometimes, the "definition" that you want to make is to endow some "object" with some "structure":
+for instance you may want to define the component-wise addition on pairs of integers and
+prove that what you defined is an (additive) abelian group.
+
+Lean has a special mechanism to keep track of such "definitions" which, for instance, automatically allows
+you to use `+` as a notation for the operation.
+Another great feature is that if your newly defined `+`-operation actually induces an abelian group
+(i.e. you proved this!), then Lean will already know that therefore it is also an `AddMonoid` and you will
+be able to use the lemmas that `Mathlib` has about `AddMonoid`s.
+
+This mechanism is called the *typeclass system* and it is mostly painless to use.
+When assuming such a hypothesis (e.g. you want to prove a result about groups or topological spaces),
+then these assumptions are written inside square bracket (e.g. `[Group G]` or `[TopologicalSpace X]`).
+If you want a new object `N` that you defined to be registered by Lean as a `Group N`, then you should
+provide an `instance` of `Group` to `N`.
+
+Here is an example.
+We introduce the notion of an additive group to the pairs of integers.
 -/
 
+instance : AddGroup (ℤ × ℤ) where
+  add := fun x y => (x.1 + y.1, x.2 + y.2)
+  add_assoc := sorry
+  zero := sorry
+  zero_add := sorry
+  add_zero := sorry
+  nsmul := sorry
+  nsmul_zero := sorry
+  nsmul_succ := sorry
+  neg := sorry
+  sub := sorry
+  sub_eq_add_neg := sorry
+  zsmul := sorry
+  zsmul_zero' := sorry
+  zsmul_succ' := sorry
+  zsmul_neg' := sorry
+  add_left_neg := sorry
 
 end TPwL
