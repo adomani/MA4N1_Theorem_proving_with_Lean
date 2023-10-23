@@ -93,6 +93,12 @@ lemma abs_eq_max (z : ℤ) : Abs z = max z (-z) := by
     exact?
   done
 
+lemma abs_zero : Abs 0 = 0 := by
+  unfold Abs  -- this is not even needed in this case: `rfl` works directly
+  split_ifs
+  · exact rfl
+  · exact rfl
+
 --  following the approach from before, we can prove this result by `unfold`ing and splitting if's
 lemma abs_neg (z : ℤ) : Abs (- z) = Abs z := by
   unfold Abs
