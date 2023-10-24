@@ -174,9 +174,26 @@ Here is an example.
 We introduce the notion of an additive group to the pairs of integers.
 -/
 
-instance : AddGroup (ℤ × ℤ) where
-  add := fun x y => (x.1 + y.1, x.2 + y.2)
-  add_assoc := sorry
+#check add_sub_cancel'
+
+#synth AddCommMonoid (ℤ × ℤ)
+#check add_sub_cancel' (0 : ℤ × ℤ)
+
+@[ext]
+structure point where
+  x : ℤ
+  y : ℤ
+
+#check point
+#print point
+#print point.x
+#print point.y
+
+instance : AddGroup point where
+  add := fun p q => -- (p.x + q.x, p.y + q.y)           -- does not work
+                    -- point.mk (p.x + q.x) (p.y + q.y) -- works, but...
+                    ⟨p.x + q.x, p.y + q.y⟩              -- there is the anonymous constructor notation
+  add_assoc a b c := by ext <;> cases a <;> cases b <;> cases c <;>  dsimp <;> simp [add_assoc]
   zero := sorry
   zero_add := sorry
   add_zero := sorry
@@ -191,5 +208,81 @@ instance : AddGroup (ℤ × ℤ) where
   zsmul_succ' := sorry
   zsmul_neg' := sorry
   add_left_neg := sorry
+
+
+
+#check add_sub_cancel'
+
+#check add_sub_cancel' (0 : point)
+
+--  `inductive` is another way of generating definitions.
+--  i will not spend much time on it today, but there is *a lot* that can be said about them!
+--  if it turns out to be relevant for your projects, I will prepare a lecture about it.
+inductive nat
+  | zero : nat
+  | succ (n : nat) : nat
+
+--  Let's try with a definition of `even`
+def even (n : Nat) : Prop := match n with
+  | 0     => True
+  | n + 1 => ¬ even n
+
+#check Nat
+
+example : even 2 := by
+  unfold even
+  unfold even
+  unfold even
+  trivial
+  done
+
+example : ¬ even 3 := by
+  unfold even
+  unfold even
+  unfold even
+  unfold even
+  trivial
+  done
+
+example {n : ℕ} (h : even n) : even (n + 2) := by
+  unfold even
+  unfold even
+  simpa
+  done
+
+--  a little unwieldy
+example : even 8 := by
+  unfold even
+  unfold even
+  unfold even
+  unfold even
+  unfold even
+  unfold even
+  unfold even
+  unfold even
+  unfold even
+  trivial
+  done
+
+example (n : ℕ) : even (2 * n) := by
+  induction n with
+  | zero => simp? -- `simp` is stuck, since it does not know that `even 0` is `True`
+                  -- let's teach it!
+  | succ n ih => sorry
+  done
+
+--  Let's try with a different definition of `even`
+def even' (n : Nat) : Prop := match n with
+  | 0     => True
+  | 1     => False
+  | n + 2 => even' n
+
+example : even' 8 := by
+  unfold even'
+  unfold even'
+  unfold even'
+  unfold even'
+  unfold even'
+  trivial     -- move me up!
 
 end TPwL
