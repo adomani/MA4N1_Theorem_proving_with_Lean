@@ -221,8 +221,4 @@ example : addOrderOf (1 : ℤ) = 0 := by
   exact Nat.pos_iff_ne_zero.mp n0
   done
 
-/-
-
--/
-
 end TPwL
