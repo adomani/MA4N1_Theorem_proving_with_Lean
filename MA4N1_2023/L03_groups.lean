@@ -78,7 +78,7 @@ example : (a⁻¹)⁻¹ = a := by
   exact inv_inv a
   done
 
-lemma conj_mul : a * (b * c) * a⁻¹ = (a * b * a⁻¹) * (a * c * a⁻¹) := by
+lemma aux : a * (b * c) * a⁻¹ = (a * b * a⁻¹) * (a * c * a⁻¹) := by
   exact conj_mul.symm
   done
 
@@ -89,7 +89,7 @@ example : a⁻¹ * (b * c) * a = (a⁻¹ * b * a) * (a⁻¹ * c * a) := by
 
 example : a⁻¹ * (b * c) * a = (a⁻¹ * b * a) * (a⁻¹ * c * a) := by
   -- the "recycle the lemma we already proved" way
-  convert conj_mul a⁻¹ b c <;>
+  convert aux a⁻¹ b c <;>
   simp
   done
 
@@ -220,9 +220,5 @@ example : addOrderOf (1 : ℤ) = 0 := by
   simp
   exact Nat.pos_iff_ne_zero.mp n0
   done
-
-/-
-
--/
 
 end TPwL
