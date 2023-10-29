@@ -112,7 +112,7 @@ instance : AddCommGroup point where
     · apply add_assoc
     · apply add_assoc
     done
-  zero := { x := 0, y := 0 }
+  zero := { x := 0, y := 0 }  -- this can also be written as ⟨0, 0⟩
   zero_add := by
     intro a
     ext
