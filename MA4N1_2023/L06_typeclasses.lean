@@ -82,7 +82,7 @@ You do this, by "proving" an `instance`.
 In some sense, `class`es are the vertices and `instance`s are the edges in the "typeclass graph".
 Lean uses this information in the background to simplify our formalisation.
 -/
-@[ext]  --we will see later what this does!
+--@[ext]  --we will see later what this does!
 structure point where
   x : ℝ
   y : ℝ
