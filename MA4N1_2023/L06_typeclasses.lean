@@ -1,4 +1,5 @@
 import Mathlib.Tactic
+import Mathlib.Combinatorics.SimpleGraph.Basic
 
 /-!
 
@@ -33,7 +34,53 @@ the contexts in which they may be used.
 
 ##  `def`
 
-A `def`inition in Lean is ∀
+A `def`inition in Lean is usually a "single" property, a function or a "statement".
+For example, the degree of a polynomial is a function that takes a polynomial and returns a natural number.
+This is a definition in `Mathlib`:
+-/
+#check Polynomial.natDegree    -- immediately followed by more definitions
+#check Polynomial.leadingCoeff
+#check Polynomial.Monic
+
+#check Nat.Prime  -- slightly unusual, since `Irreducible` is a structure
+#check Nat.minFac
+
+/-
+
+##  `structure`
+
+This is typically a "collection" of properties that we would like to treat as a single "bundle".
+For example
+-/
+#check Basis       --  a basis of a vector space
+#check MonoidHom   --  a homomorphism of monoids (e.g. of groups!)
+#check Units       --  the units in a monoid (e.g. in a ring)
+#check SimpleGraph --  a simple, undirected, loopless graph
+
+/-
+
+##  `class`
+
+This is very similar to structure, except that we would expect at most one such structure to be present on a given Type.
+-/
+
+#check Group
+#check Ring
+#check Field
+#check NoZeroDivisors
+#check TopologicalSpace
+/-
+
+Among `def`s, `structure`s and `class`es, the `class`es are the ones that are trickier.
+Technically, a `class` is simply a `structure` that is visible to the typeclass system.
+The typeclass system is the part of Lean that takes care of handling, synthesizing and discharging assumptions that appear inside square brackets (such as `[CommRing R] [Algebra R A]`,...).
+
+Thus, when Lean sees `class`, it created a structure, but also adds the corresponding structure to its database of `class`es.
+It will then look up at this database for figuring out that `Field` implies `AddCommGroup`, for instance.
+To create an implication among typeclasses, you should prove that some `class` is a consequence of others (e.g. as before that `AddCommGroup` follows from `Field`).
+You do this, by "proving" an `instance`.
+In some sense, `class`es are the vertices and `instance`s are the edges in the "typeclass graph".
+Lean uses this information in the background to simplify our formalisation.
 
 
 In Lean, `typeclass` refers to a mathematical structure that is associated with a given "object".
