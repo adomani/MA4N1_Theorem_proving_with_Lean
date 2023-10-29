@@ -81,7 +81,65 @@ To create an implication among typeclasses, you should prove that some `class` i
 You do this, by "proving" an `instance`.
 In some sense, `class`es are the vertices and `instance`s are the edges in the "typeclass graph".
 Lean uses this information in the background to simplify our formalisation.
+-/
+@[ext]  --we will see later what this does!
+structure point where
+  x : ℝ
+  y : ℝ
 
+/-
+Let's tell Lean that we want to be able to add two points, using component-wise addition.
+This means that we will register an `Add` instance on `point`.
+-/
+
+variable (p q : point) in
+#check p + q
+
+instance : Add point where
+  add p q := {
+    x := p.x + q.x
+    y := p.y + q.y
+  }
+
+variable (p q : point) in
+#check p + q
+
+instance : AddCommGroup point where
+  add := (· + ·)
+  add_assoc := by
+    intros a b c
+    ext
+    · apply add_assoc
+    · apply add_assoc
+    done
+  zero := { x := 0, y := 0 }
+  zero_add := by
+    intro a
+    ext
+    · apply zero_add
+    · apply zero_add
+    done
+  add_zero := by
+    intro a
+    ext
+    · apply add_zero
+    · apply add_zero
+    done
+  neg := fun ⟨px, py⟩ => ⟨-px, -py⟩
+  add_left_neg := by
+    intro a
+    ext
+    · apply add_left_neg
+    · apply add_left_neg
+    done
+  add_comm := by
+    intros a b
+    ext
+    · apply add_comm
+    · apply add_comm
+    done
+
+/-
 
 In Lean, `typeclass` refers to a mathematical structure that is associated with a given "object".
 
