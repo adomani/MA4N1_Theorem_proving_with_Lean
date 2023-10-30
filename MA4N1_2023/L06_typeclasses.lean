@@ -22,10 +22,12 @@ the items above "definitions".
 However, when formalising these notions, we may exploit different parts of Lean's internal mechanism
 to guide it and ultimately simplify our following efforts.
 
-Lean has 3 keywords that can be used in the situations above:
+Here we look at the 3 keywords
 * `def`;
 * `structure`;
-* `class`.
+* `class`;
+
+that Lean has to generate new definitions.
 
 Knowing which one to use when normally means asking yourself "what is the expected usage of this notion".
 
@@ -187,6 +189,14 @@ imply the same typeclass.
 example {α : Type} /-[Add α]-/ [CommRing α] (a b : α) : a + b - b = a := by
   exact? says exact add_sub_cancel a b
   done
+
+class group (G : Type) where
+  id : G
+  mul : G → G → G
+  inv : G → G
+  mul_assoc : ∀ a b c : G, mul (mul a b) c = mul a (mul b c)
+  mul_inv : ∀ g, mul g (inv g) = id
+  -- and so on
 
 /-
 In Lean, `typeclass` refers to a mathematical structure that is associated with a given "object".
