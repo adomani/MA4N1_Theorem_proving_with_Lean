@@ -140,7 +140,55 @@ instance : AddCommGroup point where
     done
 
 /-
+From now, Lean knows that the `structure` that we called `point` is an additive commutative group.
+In particular, all the lemmas in the library that apply to `AddCommGroup` also apply to `point`!
+-/
 
+example {p q r : point} : r + p + q - r = p + q := by
+  abel  -- tries to solve goals in abelian groups (additive or multiplicative)
+  done
+
+/-
+`Mathlib` has a very intricate hierarchy of structures and typeclasses linking them:
+to get an impression, think about how many "structures" there are between a "bare" Type and
+and `Field`.
+
+The graphs in [this post](https://leanprover.zulipchat.com/#narrow/stream/287929-mathlib4/topic/instance.20graphs/near/378851049)
+were the actual instance graphs in `Mathlib` a few months ago.
+
+While the process of adding typeclass assumptions to `structure`s is as easy as adding
+hypotheses in square brackets, there are a couple of issues to keep in mind.
+
+###  `extends` vs assumption
+
+A `structure` can `extend` a typeclass or it can take the typeclass as an assumption.
+Here is the difference.
+-/
+
+-- structure `A` expects to find already the typeclass `Add` on `α`
+structure A (α : Type) [Add α] where
+
+variable {α : Type} (h : A α)         -- fails
+variable {α : Type} [Add α] (h : A α) -- works
+
+-- structure `B` will add the typeclass `Add` on `α`
+structure B (α : Type) extends Add α where
+
+variable {α : Type} (h : B α)  -- works
+
+/-
+###  Putting a typeclass assumption twice on the same type
+
+This mistake leads to confusing errors.
+It happens when you accidentally (or unknowingly) put two different assumptions on a Type that
+imply the same typeclass.
+-/
+
+example {α : Type} /-[Add α]-/ [CommRing α] (a b : α) : a + b - b = a := by
+  exact? says exact add_sub_cancel a b
+  done
+
+/-
 In Lean, `typeclass` refers to a mathematical structure that is associated with a given "object".
 
 Typeclasses are introduced by the `class` keyword.
