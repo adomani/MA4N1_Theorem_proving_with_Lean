@@ -22,6 +22,6 @@ mkNew () {
     lcyan $'File' ; printf ' %s ' "${file}" ; lcyan $'already exists!\n'
   else
     { brown $'save to file '; printf '%s\n' "${file}" ; } >&2
-    printf $'import Mathlib.Tactic\n\nnamespace TWwL\n\n\n\nend TPwL\n' > "${file}"
+    printf $'import Mathlib.Tactic\n\nnamespace TPwL\n\n\n\nend TPwL\n' > "${file}"
   fi
 }
