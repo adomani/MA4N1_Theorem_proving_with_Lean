@@ -1,5 +1,7 @@
 import Mathlib.Tactic
 
+namespace TPwL
+
 /-!
 
 #  Performing calculations in Lean
@@ -132,3 +134,5 @@ example {a b c : ℝ} (ha : 1 ≤ a) (hb : 0 ≤ b) (hc : 0 ≤ c) :
   · linarith
   · linarith
   done
+
+end TPwL
