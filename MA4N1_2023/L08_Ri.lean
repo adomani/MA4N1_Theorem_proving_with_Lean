@@ -61,6 +61,17 @@ lemmas, you will notice a great difference before and after!
 @[simp] lemma re_one : (1 : Ri).re = 1 := rfl
 @[simp] lemma im_one : (1 : Ri).im = 0 := rfl
 
+/-!
+The following command is a way of defining a new tactic.
+This is a completely straightforward one that chains together some other tactics.
+-/
+/--
+`solve` does `intros` followed by `ext`.
+After that, it calls `simp` and `ring` on all goals,
+but only if the combination of the two closes all remaining goals.
+It turns out that this simple-minded tactic solves all the `Prop`-fields
+of `CommRing Ri`.
+-/
 macro "solve" : tactic => `(tactic| intros <;> ext <;> try ( simp <;> ring ; done ))
 
 /-!
