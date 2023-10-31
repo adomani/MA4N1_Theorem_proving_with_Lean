@@ -114,40 +114,21 @@ instance : Inv Ri where
 
 lemma add_square_eq_zero {a b : ℝ} (ha : a ^ 2 + b ^ 2 = 0) :
     a = 0 ∧ b = 0 := by
-  --  `rwa` means "try `assumption` after the rewrite"
-  rwa [← sq_eq_zero_iff, ← sq_eq_zero_iff (a := b), ← add_eq_zero_iff'] <;>
-  exact sq_nonneg _
+  sorry
   done
 
 lemma add_square_ne_zero {a : Ri} (ha : a ≠ 0) :
     a.re ^ 2 + a.im ^ 2 ≠ 0 := by
-  contrapose! ha
-  ext
-  · exact (add_square_eq_zero ha).left
-  · exact (add_square_eq_zero ha).right
+  sorry
   done
 
 noncomputable
 instance : Field Ri where
   exists_pair_ne := by
-    use 0
-    use 1
-    intro h
-    apply_fun Ri.re at h
-    simp? at h says simp only [re_zero, re_one, zero_ne_one] at h
+    sorry
     done
   mul_inv_cancel a ha := by
-    ext
-    · simp? says simp only [re_mul, re_inv, im_inv, re_one]
-      rw [← mul_div_assoc, ← mul_div_assoc, div_sub_div, div_eq_one_iff_eq]
-      · ring
-      all_goals
-      · simp? says simp only [ne_eq, mul_eq_zero, or_self]
-        exact add_square_ne_zero ha
-    · simp
-      rw [← mul_div_assoc, ← mul_div_assoc, div_add_div, div_eq_zero_iff]
-      · ring_nf; simp
-      all_goals exact add_square_ne_zero ha
+    sorry
     done
   inv_zero := by
     sorry
