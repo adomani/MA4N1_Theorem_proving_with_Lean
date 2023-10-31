@@ -119,6 +119,13 @@ lemma add_square_eq_zero {a b : ℝ} (ha : a ^ 2 + b ^ 2 = 0) :
   exact sq_nonneg _
   done
 
+/-!
+Here you may find the tactic `contrapose!` useful!
+Read the documentation below to see what it does, in case it is not clear from the name!
+-/
+
+#help tactic contrapose
+
 lemma add_square_ne_zero {a : Ri} (ha : a ≠ 0) :
     a.re ^ 2 + a.im ^ 2 ≠ 0 := by
   contrapose! ha
@@ -126,6 +133,16 @@ lemma add_square_ne_zero {a : Ri} (ha : a ≠ 0) :
   · exact (add_square_eq_zero ha).left
   · exact (add_square_eq_zero ha).right
   done
+
+/-!
+Hint: there is a tactic that I have not yet mentioned, but that I found useful for proving this instace.
+The tactic is called `apply_fun` (see below for the documentation of the tactic).
+The way in which I used it, is to generate an equality between the real parts of two equal real numbers.
+The real numbers in question were equal "by contradiction" and `apply_fun` allowed me to exploit
+results about the real numbers to close a goal.
+-/
+
+#help tactic apply_fun
 
 noncomputable
 instance : Field Ri where
