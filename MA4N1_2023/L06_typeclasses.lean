@@ -84,7 +84,7 @@ You do this, by "proving" an `instance`.
 In some sense, `class`es are the vertices and `instance`s are the edges in the "typeclass graph".
 Lean uses this information in the background to simplify our formalisation.
 -/
---@[ext]  --we will see later what this does!
+@[ext]  --we will see later what this does!
 structure point where
   x : ℝ
   y : ℝ
@@ -107,39 +107,14 @@ variable (p q : point) in
 #check p + q
 
 instance : AddCommGroup point where
-  add := (· + ·)
-  add_assoc := by
-    intros a b c
-    ext
-    · apply add_assoc
-    · apply add_assoc
-    done
-  zero := { x := 0, y := 0 }  -- this can also be written as ⟨0, 0⟩
-  zero_add := by
-    intro a
-    ext
-    · apply zero_add
-    · apply zero_add
-    done
-  add_zero := by
-    intro a
-    ext
-    · apply add_zero
-    · apply add_zero
-    done
-  neg := fun ⟨px, py⟩ => ⟨-px, -py⟩
-  add_left_neg := by
-    intro a
-    ext
-    · apply add_left_neg
-    · apply add_left_neg
-    done
-  add_comm := by
-    intros a b
-    ext
-    · apply add_comm
-    · apply add_comm
-    done
+  add a b         := a + b
+  add_assoc a b c := by ext <;> apply add_assoc
+  zero            := { x := 0, y := 0 }  -- this can also be written as ⟨0, 0⟩
+  zero_add a      := by ext <;> apply zero_add
+  add_zero a      := by ext <;> apply add_zero
+  neg a           := ⟨-a.x, -a.y⟩
+  add_left_neg a  := by ext <;> apply add_left_neg
+  add_comm a b    := by ext <;> apply add_comm
 
 /-
 From now, Lean knows that the `structure` that we called `point` is an additive commutative group.
@@ -167,6 +142,8 @@ A `structure` can `extend` a typeclass or it can take the typeclass as an assump
 Here is the difference.
 -/
 
+section right_and_wrong_structures
+
 -- structure `A` expects to find already the typeclass `Add` on `α`
 structure A (α : Type) [Add α] where
 
@@ -178,6 +155,8 @@ structure B (α : Type) extends Add α where
 
 variable {α : Type} (h : B α)  -- works
 
+end right_and_wrong_structures
+
 /-
 ###  Putting a typeclass assumption twice on the same type
 
@@ -186,14 +165,14 @@ It happens when you accidentally (or unknowingly) put two different assumptions 
 imply the same typeclass.
 -/
 
-example {α : Type} /-[Add α]-/ [CommRing α] (a b : α) : a + b - b = a := by
+example {α : Type} /-  [Add α]/ -/ [CommRing α] (a b : α) : a + b - b = a := by
   exact? says exact add_sub_cancel a b
   done
 
 class group (G : Type) where
-  id : G
-  mul : G → G → G
-  inv : G → G
+  id        : G
+  mul       : G → G → G
+  inv       : G → G
   mul_assoc : ∀ a b c : G, mul (mul a b) c = mul a (mul b c)
-  mul_inv : ∀ g, mul g (inv g) = id
+  mul_inv   : ∀ g, mul g (inv g) = id
   -- and so on
