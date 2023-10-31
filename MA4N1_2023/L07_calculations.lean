@@ -116,15 +116,19 @@ When faced with an equality involving several terms, and a lot of common express
 
 -/
 
-example {a b c : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) (hc : 0 ≤ c) :
-    a + b + c ≤ 2 * a + 3 * b + 4 * c := by
+example {a b c : ℝ} (ha : 1 ≤ a) (hb : 0 ≤ b) (hc : 0 ≤ c) :
+    a + b + c ≤ a * a + 3 * b + 4 * c := by
   --  we can do this using a `calc` block, going sequentially through
   --  `_ ≤     a +     b + 4 * c`
   --  `_ ≤     a + 3 * b + 4 * c`
-  --  `_ ≤ 2 * a + 3 * b + 4 * c`
+  --  `_ ≤ a * a + 3 * b + 4 * c`
   --  however, the situation where you want to estimate two sides of an (in)equality is fairly common
   --  and the two sides can be estimated "term-wise".
   --  the `gcongr` tactic helps with this!
   gcongr
-  repeat linarith
+  · apply le_mul_of_le_mul_of_nonneg_left ?_ ha
+    · apply zero_le_one.trans ha
+    · rw [mul_one]
+  · linarith
+  · linarith
   done
