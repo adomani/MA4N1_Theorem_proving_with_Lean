@@ -74,3 +74,57 @@ example : (0 : ℝ) < 10 := by calc
   _ ≤ 2       := by norm_num
   _ = 1 + 1   := by norm_num
   _ ≤ 10      := by norm_num
+
+/-!
+
+#  The Conversion Tactic Mode `conv`
+
+`conv` allows you to "zoom in" on parts of an expression and perform various operations on it.
+A typical usage is to do targeted rewrites, but there are several other possibilities available.
+
+Hovering over `conv`, the doc-string contains some information and the link
+
+https://lean-lang.org/theorem_proving_in_lean4/conv.html
+
+extensive documentation.
+-/
+
+--  annoying: can we use `conv`?
+example {n : ℕ} {x : ℝ} (h : 1 ≤ x) : n ≤ n * x := by
+  conv => congr; rw [← mul_one n]
+  sorry
+  done
+
+example {f g : ℕ → ℝ} (hf : ∀ n, f n = 5) (hg : ∀ n, g n = 6) :
+    ∀ ε > 0, ∃ N ≥ 0, ∀ n ≥ N, |f n + g n - 11| < ε := by
+--  rw [hf, hg]  -- does not work, even adding `intros` before it
+  conv in |_| =>
+    rw [hf, hg]
+    norm_num
+  intros _ h
+  simp [h]
+  done
+
+/-!
+
+#  Generalized congruence: `gcongr`
+
+When faced with an equality involving several terms, and a lot of common expressions,
+`congr` can help to focus on the different-looking parts.
+
+`gcongr` is similar, but works on more than just equality, notably with `≤` and `<`.
+
+-/
+
+example {a b c : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) (hc : 0 ≤ c) :
+    a + b + c ≤ 2 * a + 3 * b + 4 * c := by
+  --  we can do this using a `calc` block, going sequentially through
+  --  `_ ≤     a +     b + 4 * c`
+  --  `_ ≤     a + 3 * b + 4 * c`
+  --  `_ ≤ 2 * a + 3 * b + 4 * c`
+  --  however, the situation where you want to estimate two sides of an (in)equality is fairly common
+  --  and the two sides can be estimated "term-wise".
+  --  the `gcongr` tactic helps with this!
+  gcongr
+  repeat linarith
+  done
