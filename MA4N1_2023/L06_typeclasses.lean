@@ -1,6 +1,8 @@
 import Mathlib.Tactic
 import Mathlib.Combinatorics.SimpleGraph.Basic
 
+namespace TPwL
+
 /-!
 
 #  Definitions, Structures and Typeclasses
@@ -176,3 +178,5 @@ class group (G : Type) where
   mul_assoc : ∀ a b c : G, mul (mul a b) c = mul a (mul b c)
   mul_inv   : ∀ g, mul g (inv g) = id
   -- and so on
+
+end TPwL
