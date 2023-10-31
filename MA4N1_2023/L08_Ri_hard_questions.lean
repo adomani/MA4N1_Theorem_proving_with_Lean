@@ -1,4 +1,5 @@
 import Mathlib.Tactic
+import MA4N1_2023.help_me
 
 namespace TPwL
 
@@ -39,7 +40,15 @@ instance : Zero Ri where zero    := ⟨0, 0⟩
 instance : One Ri  where one     := ⟨1, 0⟩
 
 /-!
-We are now ready to prove that `Ri` is a `CommRing`.
+_Warning._
+Proving the instance below with just what appears above is going to be *very* hard!
+I still encourage you to try, so that you can see first-hand what it feels like to have
+some missing key API lemmas!
+
+Once you have had enough, try to think of what lemmas would be helpful.
+If nothing comes to mind, type `help_me!` for a hint!
+
+We are now (not) ready to prove that `Ri` is a `CommRing`.
 
 The "data" fields
 * `add  := (· + ·)`
