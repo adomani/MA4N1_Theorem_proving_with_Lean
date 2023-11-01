@@ -231,47 +231,4 @@ example {m n : ℕ} : Nat.divisors m * Nat.divisors n = Nat.divisors (m * n) := 
   · intros p hp
     exact (hp.divisors_mul _).symm
 
-
-#exit
-
-lemma dvd_induction {P : ℕ → Prop} (n : ℕ)
-    (P0 : P 0)
-    (P1 : P 1)
-    (P_mul : ∀ {a b}, a ≠ 0 → a ≠ 1 → b ≠ 0 → b ≠ 1 → P a → P b → P (a * b))
-    (P_prime : ∀ {p}, Nat.Prime p → P p) :
-    P n := by
-  apply Nat.strongInductionOn
-  intros n hn
-  by_cases h : n ≤ 1
-  · interval_cases n <;> assumption
-  have := Nat.exists_prime_and_dvd (ne_of_not_le h)
-  rcases this with ⟨p, pPrime, ⟨q, rfl⟩⟩
-  cases q with
-  | zero => simpa
-  | succ q =>
-    cases q with
-    | zero =>
-      simp [P_prime pPrime]
-    | succ q =>
-      apply P_mul pPrime.ne_zero pPrime.ne_one ?_ ?_ (P_prime pPrime)
-      · apply hn
-        convert Nat.mul_lt_mul_of_pos_right pPrime.one_lt ?_ using 1
-        simp
-        exact Nat.succ_pos _
-      · exact Nat.succ_ne_zero _
-      · exact Nat.succ_succ_ne_one q
-  done
-
-open Lean
-
-#eval show IO _ from do
-  let bd := 10
-  for m in [:bd] do
-    for n in [:bd] do
-      if decide <| Nat.divisors m * Nat.divisors n = Nat.divisors (m * n) then
-        pure ()
---        dbg_trace f!"Success for (m, n) = ({m}, {n})."
-      else
-        IO.println f!"Failure for (m, n) = ({m}, {n})."
-
 end TPwL
