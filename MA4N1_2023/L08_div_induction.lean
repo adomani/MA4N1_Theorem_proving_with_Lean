@@ -8,11 +8,12 @@ The symbol for "divides" is `∣`, that is `\mid`.
 The symbol for "such that" that appears in the definition of a set is `|` -- they look the same, but are not the same!
 In general, you can hover over any symbol and you should get information about how to type it.
 
-Also, in the following example, the tactic `interval_cases` can be useful.
+In the following example, the tactic `interval_cases` can be useful.
 If `a` is a variable in context, then calling `interval_cases a` looks for upper and lower bounds for `a` and
 returns a goal for each possible value of `a`.
-Note that if `a : ℕ`, then the lower bound of `0` is always available, so you only need to have in context an upper bound
-of the form `a ≤ [some number]`.
+Note that if `a : ℕ`, then the lower bound of `0` is always available,
+so you only need to have in context an upper bound of the form `a ≤ [some number]`.
+However, if there is a better lower bound than `0`, then `interval_cases a` will use it.
 
 You can take a look at the documentation for `interval_cases here:
 -/
@@ -41,16 +42,19 @@ example : {a : ℕ | a ∣ 6} = {1, 2, 3, 6} := by
     interval_cases a <;> simp_all
     done
   · cases h with
-    | inl h =>
-      simp_all
-    | inr h => cases h with
       | inl h =>
         simp_all
-      | inr h => cases h with
-        | inl h =>
-          simp_all
-        | inr h => cases h with
-        | refl => rfl
+      | inr h =>
+        cases h with
+          | inl h =>
+            simp_all
+          | inr h =>
+            cases h with
+              | inl h =>
+                simp_all
+              | inr h =>
+                cases h with
+                  | refl => rfl
   done
 
 /-!
@@ -74,7 +78,7 @@ However, for the `decide` tactic to work, we should set ourselves up by
 having explicitly finite sets, and several algorithms that, behind the scenes,
 will take care of the appropriate enumerations.
 
-In this specific context, the enumeration will happen via `Decidable` instances.
+The automation behind `decide` is driven by `Decidable` instances.
 For most of you, `Decidabl`ity will likely play a marginal (or inexistent) role.
 But for some, it may be more important.
 
