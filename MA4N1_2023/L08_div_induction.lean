@@ -181,7 +181,12 @@ In this case, the work is making sure that Lean can really verify these proofs b
 around the `Decidable` instances and working with `Finset`s.
 
 Note that working with `Finset`s can be annoying!
+
+Let's now prove an "induction principle" for natural numbers that works on divisibility.
+
+You may find `Nat.strongInductionOn` useful.
 -/
+#check Nat.strongInductionOn
 
 lemma dvd_induction {P : ℕ → Prop} (n : ℕ)
     (P0 : P 0)
@@ -193,16 +198,16 @@ lemma dvd_induction {P : ℕ → Prop} (n : ℕ)
   intros n hn
   by_cases h : n ≤ 1
   · interval_cases n <;> assumption
-  have := Nat.exists_prime_and_dvd (ne_of_not_le h)
-  rcases this with ⟨p, pPrime, ⟨q, rfl⟩⟩
-  rcases q with _ | _ | q
-  · simpa
-  · simp [P_prime pPrime]
-  · apply P_mul pPrime (Nat.succ_ne_zero _) q.succ_succ_ne_one
-    · apply hn
-      apply (one_mul _).symm.le.trans_lt
-      apply Nat.mul_lt_mul_of_pos_right pPrime.one_lt
-      exact Nat.succ_pos _
+  · have := Nat.exists_prime_and_dvd (ne_of_not_le h)
+    rcases this with ⟨p, pPrime, ⟨q, rfl⟩⟩
+    rcases q with _ | _ | q
+    · simpa
+    · simp [P_prime pPrime]
+    · apply P_mul pPrime (Nat.succ_ne_zero _) q.succ_succ_ne_one
+      · apply hn
+        apply (one_mul _).symm.le.trans_lt
+        apply Nat.mul_lt_mul_of_pos_right pPrime.one_lt
+        exact Nat.succ_pos _
 
 open Pointwise
 
