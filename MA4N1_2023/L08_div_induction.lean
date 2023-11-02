@@ -234,6 +234,21 @@ example : ({0, 1, 2} : Finset ℕ) * {3, 4} = {0, 3, 4, 6, 8} :=  by
   decide
   done  -- if you are curious, change the numbers and get some practice!
 
+/-!
+Our main goal will be to show that the (Fin)set of divisors of a product of two
+natural numbers is the product of the sets of divisors of each factor.
+If you never thought about multiplying sets of numbers, think about why the statement
+is true and then get on with the proof!
+
+In my proof, I conclude by using the `aesop` tactic.
+This tactic is a proof-search tactic and is *very* useful!
+In fact, the reason for not mentioning it earlier was precisely to get you
+to learn how to do something on your own, so that when `aesop` fails,
+you are not necessarily stuck!
+-/
+
+#help tactic aesop
+
 lemma _root_.Nat.Prime.divisors_mul (n : ℕ) {p : ℕ} (hp : Nat.Prime p) :
     Nat.divisors (p * n) = Nat.divisors p * Nat.divisors n := by
   ext a
