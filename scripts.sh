@@ -2,6 +2,9 @@
 
 exercify () {
   sed '
+#    /:= by$/, /^  done$/ {/:= by$/!{/^  done$/!{/^  /d;};};}
+#    /^ [ ·]*have.* := by$/{d;}
+#    s=^\(   *\)done$=\1sorry\n&=
     /:= by$/, /^   *done$/ {/:= by$/!{/^   *done$/!{/^  /d;};};}
     /^  *have.* := by$/{d;}
     s=^\(   *\)done=\1sorry\n&=
