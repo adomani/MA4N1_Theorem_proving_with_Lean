@@ -271,6 +271,10 @@ lemma _root_.Nat.Prime.divisors_mul (n : ℕ) {p : ℕ} (hp : Nat.Prime p) :
   aesop
   done
 
+/-!
+Our main result: the divisors of a product are the product of the divisors.
+-/
+
 example {m n : ℕ} : Nat.divisors m * Nat.divisors n = Nat.divisors (m * n) := by
   apply dvd_induction m
   · simp only [Nat.divisors_zero, Finset.empty_mul, zero_mul, forall_const]
