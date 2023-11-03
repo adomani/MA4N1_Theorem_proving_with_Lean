@@ -11,4 +11,5 @@ require mathlib from git
 @[default_target]
 lean_lib «MA4N1_2023» {
   -- add any library configuration options here
+  roots := #[`MA4N1_2023]
 }
