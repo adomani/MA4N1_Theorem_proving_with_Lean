@@ -39,6 +39,9 @@ example {m n : ℕ} (h : (m = 0 ∧ n = 1) ∨ (m = 0 ∧ n = 2)) : m = 0 :=  by
 ... and it can be used on `inductive` types as well:
 -/
 example {n : ℕ} : (n = 0) ∨ (n = 1) ∨ (n = 2) ∨ (3 ≤ n) :=  by
+  --  the underscores represent, in succession,
+  --  `Nat.zero`, `Nat.succ Nat.zero`, `Nat.succ (Nat.succ Nat.zero)` and the rest, that is
+  --  `0`, `1`, `2`, `n + 1 + 1 + 1`
   rcases n with _ | _ | _ | _ <;>
   simp
   exact? says exact tsub_add_cancel_iff_le.mp rfl
