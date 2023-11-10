@@ -1,9 +1,9 @@
 import Lake
 open Lake DSL
 
-package «mA4N1_2023» {
+package «mA4N1_2023» where
   -- add any package configuration options here
-}
+  moreServerArgs := #[ "-DautoImplicit=false" ]
 
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4.git"
