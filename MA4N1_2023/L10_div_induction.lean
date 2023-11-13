@@ -39,6 +39,9 @@ example {m n : ℕ} (h : (m = 0 ∧ n = 1) ∨ (m = 0 ∧ n = 2)) : m = 0 :=  by
 ... and it can be used on `inductive` types as well:
 -/
 example {n : ℕ} : (n = 0) ∨ (n = 1) ∨ (n = 2) ∨ (3 ≤ n) :=  by
+  --  the underscores represent, in succession,
+  --  `Nat.zero`, `Nat.succ Nat.zero`, `Nat.succ (Nat.succ Nat.zero)` and the rest, that is
+  --  `0`, `1`, `2`, `n + 1 + 1 + 1`
   rcases n with _ | _ | _ | _ <;>
   simp
   exact? says exact tsub_add_cancel_iff_le.mp rfl
@@ -95,7 +98,29 @@ You can also use `ext a` to name the "common" element that the tactic extracts.
 -/
 
 example : {a : ℕ | a ∣ 6} = {1, 2, 3, 6} := by
-  sorry
+  ext a
+  simp
+  constructor <;> intros h
+  · have : a ≤ 6 := by
+      apply Nat.le_of_dvd
+      · exact Nat.succ_pos 5
+      · exact h
+    interval_cases a <;> simp_all
+    done
+  · cases h with   -- this chain is a prime candidate for `rcases`!
+      | inl h =>
+        simp_all
+      | inr h =>
+        cases h with
+          | inl h =>
+            simp_all
+          | inr h =>
+            cases h with
+              | inl h =>
+                simp_all
+              | inr h =>
+                cases h with
+                  | refl => rfl
   done
 
 /-!
@@ -172,7 +197,20 @@ lemma dvd_induction {P : ℕ → Prop} (n : ℕ)
     (P_mul : ∀ {p a}, Nat.Prime p → a ≠ 0 → a ≠ 1 → P a → P (p * a))
     (P_prime : ∀ {p}, Nat.Prime p → P p) :
     P n := by
-  sorry
+  apply Nat.strongInductionOn
+  intros n hn
+  by_cases h : n ≤ 1
+  · interval_cases n <;> assumption
+  · have := Nat.exists_prime_and_dvd (ne_of_not_le h)
+    rcases this with ⟨p, pPrime, ⟨q, rfl⟩⟩
+    rcases q with _ | _ | q
+    · simpa
+    · simp [P_prime pPrime]
+    · apply P_mul pPrime (Nat.succ_ne_zero _) q.succ_succ_ne_one
+      · apply hn
+        apply (one_mul _).symm.le.trans_lt
+        apply Nat.mul_lt_mul_of_pos_right pPrime.one_lt
+        exact Nat.succ_pos _
   done
 
 /-!
@@ -216,7 +254,24 @@ you are not necessarily stuck!
 
 lemma _root_.Nat.Prime.divisors_mul (n : ℕ) {p : ℕ} (hp : Nat.Prime p) :
     Nat.divisors (p * n) = Nat.divisors p * Nat.divisors n := by
-  sorry
+  ext a
+  rw [Finset.mem_mul]
+  --  the `says` combinator is essentially just a way of making the code more readable
+  --  and maintainable.  For example `tac? says tac [...]` means:
+  --  * we used the tactic `tac?` that produces some output like a `Try this`;
+  --  * the output of `Try this` is `tac [...]`.
+  --  This has several benefits:
+  --  * the output of `tac?` may be very long and cluttered, but the call `tac?`
+  --    itself may be very clear
+  --  * the execution of `tac [...]` may be much faster than `tac` or `tac?`
+  --  * if we change a lemma in the output of `tac?`, but `tac?` still works,
+  --    we only have to re-run `tac?`, instead of having to find out what had
+  --    generated `tac [...]`.
+  simp? [hp.divisors, dvd_mul, Nat.dvd_prime hp] says
+    simp only [Nat.mem_divisors, Nat.isUnit_iff, dvd_mul, Nat.dvd_prime hp, exists_and_left,
+      exists_eq_or_imp, one_mul, exists_eq_right', exists_eq_left, ne_eq, mul_eq_zero, hp.divisors,
+      Finset.mem_singleton, Finset.mem_insert, exists_eq_right]
+  aesop
   done
 
 /-!
@@ -224,7 +279,13 @@ Our main result: the divisors of a product are the product of the divisors.
 -/
 
 example {m n : ℕ} : Nat.divisors m * Nat.divisors n = Nat.divisors (m * n) := by
-  sorry
+  apply dvd_induction m
+  · simp only [Nat.divisors_zero, Finset.empty_mul, zero_mul, forall_const]
+  · simpa using one_mul _
+  · intros p a hp _ _ han
+    rw [hp.divisors_mul, mul_assoc p, hp.divisors_mul, mul_assoc, han]
+  · intros p hp
+    exact (hp.divisors_mul _).symm
   done
 
 end TPwL
