@@ -66,11 +66,15 @@ the easier it will be to use your results, because you will not have to provide 
 every time you use your lemmas.
 -/
 
-def myDiv (p q : ℚ) (h : q ≠ 0) : ℚ := p / q
-
+--  The `Std` division on `ℚ`.
 example : (2 : ℚ) / 1 = 2 := by
   exact div_one 2
   done
+
+--  Let's roll our own
+
+/-- `myDiv p q h` is the result of division of `p` by `q` with the assumption `h` that `q` is non-zero. -/
+def myDiv (p q : ℚ) (h : q ≠ 0) : ℚ := p / q
 
 example : myDiv 2 1 = 2 := by
   done
@@ -82,10 +86,12 @@ example : myDiv 2 1 (by exact one_ne_zero) = 2 := by
 
 example : (1 : ℚ) / 2 + 1 / 2 = 1 := by
   exact add_halves 1
+  done
 
 example : myDiv 1 2 (by exact two_ne_zero) + myDiv 1 2 (by exact two_ne_zero) = 1 := by
-  simp only [myDiv]
+  unfold myDiv
   exact add_halves 1
+  done
 
 example : myDiv 1 0 (by
   _
@@ -118,6 +124,7 @@ to some sources, but also because
 * there may be implicit assumptions that may not be clear to someone who is just starting,
 * ...
 
+These are some of the reasons why formalization is useful!
 -/
 
 end TPwL
