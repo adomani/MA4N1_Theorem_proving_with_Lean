@@ -1,5 +1,7 @@
 import Mathlib.Tactic
 
+namespace TPwL
+
 /-!
 #  Pathologies
 
@@ -113,3 +115,5 @@ to some sources, but also because
 * ...
 
 -/
+
+end TPwL
