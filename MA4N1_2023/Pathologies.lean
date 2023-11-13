@@ -59,10 +59,11 @@ Of course, this is something that *can* be done, and you can certainly find situ
 where this is the preferred route.
 
 However, there are also other situations where it is simply much more convenient to work with
-`junk values`: you define your function everywhere, trying to make your like simpler.
+`junk values`: you define your function everywhere, trying to make your life simpler.
 Naturally, for the results that are "really" interesting, some extra assumption will show up.
-Nevertheless, the later you actually have to provide these assumptions, the easier it will be to use
-your results, because these assumptions will not be required to use your lemmas.
+Nevertheless, as a rule of thumb, the more you can hold on making these assumptions,
+the easier it will be to use your results, because you will not have to provide these assumptions
+every time you use your lemmas.
 -/
 
 def myDiv (p q : ℚ) (h : q ≠ 0) : ℚ := p / q
