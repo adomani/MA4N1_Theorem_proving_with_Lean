@@ -23,10 +23,13 @@ Here are some simple examples.
 
 #eval 0 - 1
 example : 0 - 1 = 0 := by exact rfl
+/-!
+Lean happily tells us that `0 - 1` equals `0`.
+-/
 
 #eval (1 : ℚ) / 0
 example : (1 : ℚ) / 0 = 0 := by exact div_zero 1
-/-
+/-!
 Lean is just happily telling us that
 * division by zero is correct;
 * and that `1 / 0` has value `0`, in fact.
