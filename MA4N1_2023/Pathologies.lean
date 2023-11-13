@@ -13,7 +13,8 @@ some (non-empty) subset of its domain.
 Of course, you could imagine that you simply make sure that the domain of every function
 is exactly the subset where your function makes sense.
 While this is in theory possible, it is often better to work on the whole "natural" domain and
-simply return arbitrary values on inputs where you would normally not define your function.
+simply return (carefully chosen) arbitrary values on inputs where you would normally
+not define your function.
 
 Here are some simple examples.
 -/
