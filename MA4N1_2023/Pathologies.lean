@@ -51,7 +51,7 @@ A more "low-level" explanation is that
 
 Thus, if you want the denominator input to your division function to be non-zero,
 you are going to have to roll your sleeves up and define the "Type of non-zero rational numbers".
-After you have defined this Type, you will have to start proving some theorems about them --
+After you have defined this Type, you will have to start proving some theorems about it --
 these theorems will likely be complete trivialities, but you will have to devote time to doing that.
 You will also have to relate "non-zero rational numbers" to "rational numbers that could be zero".
 
