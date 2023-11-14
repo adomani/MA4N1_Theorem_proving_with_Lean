@@ -133,52 +133,9 @@ def step (r : ℝ) : ℝ := if r < 0 then 0 else 1
 
 #check deriv
 
+--  The proof of this example appears in the file for the support class for Week 7
 example : deriv step = 0 := by
-  ext r
-  simp [step]
-  rcases trichotomous (r := LT.lt) r 0 with h0 | rfl | h0
-  · have : derivWithin (fun _ : ℝ => (0 : ℝ)) {x | x < 0} r = 0 := by
-      rw [derivWithin_of_open]
-      · exact deriv_const r 0
-      · exact isOpen_Iio
-      · exact h0
-    conv_rhs => rw [← this]
-    have : deriv (fun r : ℝ => if r < 0 then (0 : ℝ) else 1) r = derivWithin (fun r : ℝ => if r < 0 then (0 : ℝ) else 1) {x | x < 0} r := by
-      rw [derivWithin_of_open]
-      · exact isOpen_Iio
-      · exact h0
-    rw [this]
-    apply derivWithin_congr
-    · intros x hx
-      aesop
-    · aesop
-  -- funny consequence of the pathologies
-  · apply IsLocalMax.deriv_eq_zero
-    apply IsMaxOn.isLocalMax (s := Set.univ)
-    · intros x _
-      aesop
-    · simp
-  -- copy-paste and fix
-  · have : derivWithin (fun _ : ℝ => (1 : ℝ)) {x | 0 < x} r = 0 := by
-      rw [derivWithin_of_open]
-      · exact deriv_const r 1
-      · exact isOpen_Ioi
-      · exact h0
-    conv_rhs => rw [← this]
-    have : deriv (fun r : ℝ => if r < 0 then (0 : ℝ) else 1) r = derivWithin (fun r : ℝ => if r < 0 then (0 : ℝ) else 1) {x : ℝ | 0 < x} r := by
-      rw [derivWithin_of_open]
-      · exact isOpen_Ioi
-      · exact h0
-    rw [this]
-    apply derivWithin_congr
-    · intros x hx
-      dsimp only
-      split_ifs with hh
-      · exact (lt_irrefl _ (hh.trans hx)).elim
-      · rfl
-    · split_ifs with hh
-      · linarith
-      · rfl
+  sorry
   done
 
 end TPwL
