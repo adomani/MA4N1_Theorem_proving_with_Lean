@@ -50,21 +50,24 @@ def Setoid_eq (α : Type*) : Setoid α where
     constructor
     · exact? says exact fun x => rfl
     · exact? says exact fun {x y} a => id a.symm
-    · intros x y z xy yz
-      apply xy.trans yz
+    · intros x y z
+      exact Eq.trans
     done
 
-section 
-variable {a b : myN}
+section
 
+/--  A copy of the natural numbers, with none of the instances already registered. -/
 def myN := ℕ
 
+variable {a b : myN}
+
+/- We record a `Setoid` instance on `myN`, determined by the equality relation. -/
 instance Nat_setoid : Setoid myN := Setoid_eq ℕ
 
 /-!
 Having a Setoid gives us two convenient notations.
 
-First, `a ≈ b`, notation for `HasEquiv.Equiv`.
+First, the notation `a ≈ b` for `HasEquiv.Equiv`.
 
 This is a very primitive notion: simply a Type with a relation on it.
 The relation is called `Equiv`, but it is simply a relation.
@@ -75,11 +78,12 @@ Of course, the most likely intended use-case is when `HasEquiv.Equiv` is an equi
 #print HasEquiv
 #check HasEquiv.Equiv
 
+--  A `HasEquiv` is just any relation, no extra requirement.
 example : HasEquiv Nat where
   Equiv a _b := a = 0
 
 /-!
-Second, `⟦x⟧`, notation for `Quotient s`, is `s : Setoid X` is available.
+Second, the notation `⟦x⟧` for `Quotient s`, if `s : Setoid X` is available.
 -/
 
 #check (⟦a⟧ : Quotient Nat_setoid)
@@ -107,3 +111,15 @@ example : (⟦a⟧ : Quotient Nat_setoid) = ⟦b⟧ ↔ a ≈ b := by
 end
 
 end TPwL
+#check Singleton
+
+set_option pp.all true
+
+import Mathlib.Tactic
+
+variable {α β : Type*}
+example (f : α → β) (a : β) (myProperty : Set α → Prop) : myProperty (f ⁻¹' ({a} : Set β)) := by
+  sorry
+
+variable {α : Type*} in
+#synth Singleton α (Set α)  -- Set.instSingletonSet
