@@ -17,6 +17,9 @@ The following `Setoid` is copied from `Core` Lean.
 /--
 A setoid is a type with a distinguished equivalence relation, denoted `≈`.
 This is mainly used as input to the `Quotient` type constructor.
+
+Note that I copied it here, but with a *lower-case* `S`!
+This is so that it does not mess up the in-built one that we use later.
 -/
 class setoid (α : Sort*) where
   /-- `x ≈ y` is the distinguished equivalence relation of a setoid. -/
