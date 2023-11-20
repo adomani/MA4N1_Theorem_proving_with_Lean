@@ -115,15 +115,3 @@ example : (⟦a⟧ : Quotient Nat_setoid) = ⟦b⟧ ↔ a ≈ b := by
 end
 
 end TPwL
-#check Singleton
-
-set_option pp.all true
-
-import Mathlib.Tactic
-
-variable {α β : Type*}
-example (f : α → β) (a : β) (myProperty : Set α → Prop) : myProperty (f ⁻¹' ({a} : Set β)) := by
-  sorry
-
-variable {α : Type*} in
-#synth Singleton α (Set α)  -- Set.instSingletonSet
