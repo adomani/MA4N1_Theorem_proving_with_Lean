@@ -88,6 +88,8 @@ Second, the notation `⟦x⟧` for `Quotient s`, if `s : Setoid X` is available.
 
 #check (⟦a⟧ : Quotient Nat_setoid)
 
+variable {α : Type}
+
 variable (r : α → α → Prop) in
 --  Good for a relation that is not required to be an equivalence relation
 #check Quot r
@@ -96,7 +98,9 @@ variable (r : α → α → Prop) in
 --  Better, when the relation is an equivalence relation
 --  Takes a `Setoid` an input.
 #check Quotient
-#print Quotient
+
+variable [s : Setoid α] in
+#check Quotient s
 
 example : a ≈ b ↔ Setoid.r a b := by
   exact? says exact Iff.rfl
