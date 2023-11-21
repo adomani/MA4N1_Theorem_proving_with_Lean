@@ -10,3 +10,6 @@ elab tk:"help_me!" : command => liftTermElabM do
   else
     let stx ← `(command| @[simp] lemma re_add {a b : Ri} : (a + b).re = a.re + b.re := sorry )
     Std.Tactic.TryThis.addSuggestion tk stx
+
+elab tk:"hint_inverse" : tactic => do
+  Std.Tactic.TryThis.addSuggestion tk (← `(tactic| rintro ⟨d⟩ ))
