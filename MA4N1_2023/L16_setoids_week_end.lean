@@ -86,7 +86,9 @@ lemma equiv_class_of_Monday (d : Week) : (⟦Mon⟧ : Quotient Week_setoid) = �
     d ∈ ({Mon, Tue, Wed, Thu, Fri} : Set _) := by
   -- `rcases d with _ | _ | _ | _ | _ | _ | _ <;>` also works instead of `induction`
   induction d <;>
-    simp <;> (try rfl) <;> rintro ⟨⟩
+    simp <;>
+    (try rfl) <;>
+    rintro ⟨⟩
   done
 
 example : Quotient Week_setoid ≃ Bool where
