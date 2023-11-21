@@ -152,10 +152,7 @@ lemma equiv_class_of_zero (d : ℤ) :
 
 lemma equiv_class_of_one (d : ℤ) :
     (⟦1⟧ : Quotient parity_setoid) = ⟦d⟧ ↔ 2 ∣ d - 1 := by
-  simp only [Quotient.eq]
-  constructor
-  · exact Setoid.symm
-  · exact fun x => Setoid.symm x
+  simpa only [Quotient.eq] using comm
   done
 
 --  This lemma is part of the Friday support class
