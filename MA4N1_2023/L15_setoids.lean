@@ -163,6 +163,24 @@ lemma two_dvd_sub_one_iff (d : ℤ) : 2 ∣ d - 1 ↔ ¬ 2 ∣ d := by
   sorry
   done
 
+/-!
+The next `example` is an excuse to highlight the use of `Quotient.lift`
+-/
+
+#check Quotient.lift
+
+/-!
+`Quotient.lift` is the result that says that a function on the quotient "is the same"
+as a function on the original set that is constant on equivalence classes.
+
+In passing, note that the (data-carrying) fields `toFun` and `invFun` have a strong impact
+on how easy it is to prove the subsequent results.
+In particular, I stated the lemmas `equiv_class_of_zero, equiv_class_of_one` and
+`two_dvd_sub_one_iff` to get the proofs working.
+
+Note also how `decide_eq_decide` in `toFun` taints the proofs.
+-/
+
 example : Quotient parity_setoid ≃ Bool where
   -- the function from the quotient to `Bool` is the `Quotient.lift` of the function
   -- "Does 2 divide `x`?".
