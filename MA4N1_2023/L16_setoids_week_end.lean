@@ -14,7 +14,7 @@ lemma two_dvd_sub_one_iff (d : ℤ) : 2 ∣ d - 1 ↔ ¬ 2 ∣ d := by
     have := dvd_sub h k
     simp at this
   · simp only [Int.two_dvd_ne_zero] at h
-    exact Int.ModEq.dvd (id h.symm)
+    exact Int.ModEq.dvd h.symm  -- some DefEq abuse, found by `exact?`.
   done
 
 /-- `Week` is the finite Type with exactly 7 constructors, one for each day of the week. -/
