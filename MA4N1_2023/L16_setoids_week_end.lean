@@ -56,25 +56,27 @@ instance : Setoid Week where
              trans := fun {_ _ _} => .trans }
 -/
 
+namespace Week
+
 @[simp]
-lemma sat_sun : (⟦Week.Sat⟧ : Quotient Week_setoid) = ⟦Week.Sun⟧ := by
+lemma sat_sun : (⟦Sat⟧ : Quotient Week_setoid) = ⟦Sun⟧ := by
   exact Quotient.eq.mpr rfl
   done
 
-example : (⟦Week.Sat⟧ : Quotient Week_setoid) ≠ ⟦Week.Mon⟧ := by
+example : (⟦Sat⟧ : Quotient Week_setoid) ≠ ⟦Mon⟧ := by
   intro h
   simp only [Quotient.eq] at h
   cases h
   done
 
-example : (⟦Week.Sat⟧ : Quotient Week_setoid) ≠ ⟦Week.Mon⟧ := by
+example : (⟦Sat⟧ : Quotient Week_setoid) ≠ ⟦Mon⟧ := by
   simp only [ne_eq, Quotient.eq]
   rintro ⟨⟩
   done
 
 @[simp]
-lemma equiv_class_of_Sunday (d : Week) : (⟦Week.Sun⟧ : Quotient Week_setoid) = ⟦d⟧ ↔
-    d ∈ ({Week.Sat, Week.Sun} : Set _) := by
+lemma equiv_class_of_Sunday (d : Week) : (⟦Sun⟧ : Quotient Week_setoid) = ⟦d⟧ ↔
+    d ∈ ({Sat, Sun} : Set _) := by
   -- `rcases d with _ | _ | _ | _ | _ | _ | _ <;>` also works instead of `induction`
   induction d <;>
     simp <;>
@@ -82,13 +84,11 @@ lemma equiv_class_of_Sunday (d : Week) : (⟦Week.Sun⟧ : Quotient Week_setoid)
   done
 
 @[simp]
-lemma equiv_class_of_Monday (d : Week) : (⟦Week.Mon⟧ : Quotient Week_setoid) = ⟦d⟧ ↔
-    d ∈ ({Week.Mon, Week.Tue, Week.Wed, Week.Thu, Week.Fri} : Set _) := by
+lemma equiv_class_of_Monday (d : Week) : (⟦Mon⟧ : Quotient Week_setoid) = ⟦d⟧ ↔
+    d ∈ ({Mon, Tue, Wed, Thu, Fri} : Set _) := by
   -- `rcases d with _ | _ | _ | _ | _ | _ | _ <;>` also works instead of `induction`
   induction d <;>
-    simp <;> try rfl
-  · rintro ⟨⟩
-  · rintro ⟨⟩
+    simp <;> (try rfl) <;> rintro ⟨⟩
   done
 
 example : Quotient Week_setoid ≃ Bool where
@@ -96,7 +96,7 @@ example : Quotient Week_setoid ≃ Bool where
   -- in maths, it is more common to say that `week_end?` "descends" to the quotient.
   toFun := Quotient.lift week_end? (fun a b => id)
   -- the function from `Bool` to the quotient assigns `true` to `⟦.Sun⟧` and `false` to `⟦.Mon⟧`
-  invFun b := if b then ⟦.Sun⟧ else ⟦.Mon⟧
+  invFun b := if b then ⟦Sun⟧ else ⟦Mon⟧
   -- it is now up to you to prove that these two functions are inverses of each other!
   -- the tactic `hint_inverse` will give you a hint on how to start the proof!
   left_inv := by
@@ -111,5 +111,7 @@ example : Quotient Week_setoid ≃ Bool where
   right_inv := by
     simp only
     done
+
+end Week
 
 end TPwL
