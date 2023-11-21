@@ -10,7 +10,7 @@ namespace TPwL
 --  A left-over lemma from the lecture on Tuesday
 lemma two_dvd_sub_one_iff (d : ℤ) : 2 ∣ d - 1 ↔ ¬ 2 ∣ d := by
   constructor <;> intro h
-  · intro k
+  · intro k -- `simpa using dvd_sub h k` already closes the goal
     have := dvd_sub h k
     simp at this
   · simp only [Int.two_dvd_ne_zero] at h
@@ -31,7 +31,7 @@ inductive Week
 answering the question "Is `d` part of the week-end?" -/
 def week_end? : Week → Bool
   -- the "anonymous dot-notation":
-  -- Lean is expecting a term of type `Week`, so `.Sat` gets parsed as `Week.Sat
+  -- Lean is expecting a term of type `Week`, so `.Sat` gets parsed as `Week.Sat`
   | .Sat => true
   | .Sun => true
   -- every other day of the `Week` returns `false`
@@ -91,7 +91,7 @@ lemma equiv_class_of_Monday (d : Week) : (⟦Week.Mon⟧ : Quotient Week_setoid)
   · rintro ⟨⟩
   done
 
-def Equiv.ff : Quotient Week_setoid ≃ Bool where
+example : Quotient Week_setoid ≃ Bool where
   -- the function from the quotient to `Bool` is the `Quotient.lift` of the function `week_end?`.
   -- in maths, it is more common to say that `week_end?` "descends" to the quotient.
   toFun := Quotient.lift week_end? (fun a b => id)
