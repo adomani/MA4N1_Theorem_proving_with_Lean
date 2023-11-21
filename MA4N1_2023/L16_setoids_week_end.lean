@@ -74,7 +74,6 @@ example : (⟦Sat⟧ : Quotient Week_setoid) ≠ ⟦Mon⟧ := by
   rintro ⟨⟩
   done
 
-@[simp]
 lemma equiv_class_of_Sunday (d : Week) : (⟦Sun⟧ : Quotient Week_setoid) = ⟦d⟧ ↔
     d ∈ ({Sat, Sun} : Set _) := by
   -- `rcases d with _ | _ | _ | _ | _ | _ | _ <;>` also works instead of `induction`
@@ -83,7 +82,6 @@ lemma equiv_class_of_Sunday (d : Week) : (⟦Sun⟧ : Quotient Week_setoid) = �
     rintro ⟨⟩
   done
 
-@[simp]
 lemma equiv_class_of_Monday (d : Week) : (⟦Mon⟧ : Quotient Week_setoid) = ⟦d⟧ ↔
     d ∈ ({Mon, Tue, Wed, Thu, Fri} : Set _) := by
   -- `rcases d with _ | _ | _ | _ | _ | _ | _ <;>` also works instead of `induction`
