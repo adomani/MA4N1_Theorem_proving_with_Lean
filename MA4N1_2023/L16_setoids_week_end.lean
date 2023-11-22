@@ -103,9 +103,9 @@ example : Quotient Week_setoid ≃ Bool where
     rintro ⟨d⟩
     dsimp only
     split_ifs
-    · apply (equiv_class_of_Sunday d).mpr
+    · apply d.equiv_class_of_Sunday.mpr
       induction d <;> aesop
-    · apply (equiv_class_of_Monday d).mpr
+    · apply d.equiv_class_of_Monday.mpr
       induction d <;> aesop
     done
   right_inv := by
