@@ -11,7 +11,8 @@ that tend to be not too familiar for mathematicians.
 
 This file is intended as a first introduction to finiteness.
 
-We will touch upon `Fintype` and `Finite`, two typeclasses dealing with finiteness.
+We will touch upon `Fintype` and `Finite`, two typeclasses dealing with finiteness,
+as well as some implied "finite-adjacent" classes/structures.
 
 As usual, let's see the definition.
 -/
@@ -30,7 +31,9 @@ This is defined as a structure with two fields:
 * a natural number `a`;
 * a proof of the inequality `a < n`.
 
-So, ultimately, `Finite α` means that you chose a bijection of `α` with the finite set `0, 1, ..., n`.
+So, ultimately, `Finite α` means that there is a bijection of `α` with the finite set `0, 1, ..., n`.
+
+This class is the less-computable one.
 -/
 
 #where
