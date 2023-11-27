@@ -174,18 +174,25 @@ this type has a unique constructor, called `unit`.
 For convenience, there is notation for `unit` and we can simply write `()` instead of `unit`.
 -/
 
+--  The Type `Unit` is the specialisation of the "polymorphic" `PUnit` at `Type`.
 #print PUnit
 
 open Classical in
+/-- `Prop_to_type?` is always `()` for 3 reasons:
+* the condition is `True`,
+* both arms of the `if ... then ... else ...` statement end in `true`,
+* there is a unique function to `Unit` from *anything*!
+-/
 def Prop_to_type? : Unit :=
 if ∃ n, n = 0 then ()
               else ()
 
 example : Prop_to_type? = () := by
   unfold Prop_to_type?
-  rfl
+  rfl  -- this time, the proof is even simpler than before `rfl` closes the goal!
   done
 
+--  We make our goals a little harder: the arms differ, though the condition is unchanged.
 open Classical in
 noncomputable
 def Prop_to_Bool_again? : Bool :=
@@ -197,6 +204,76 @@ example : Prop_to_Bool_again? = true := by
   simp only [exists_eq, ite_true]
   done
 
+-- Here is a proof that "there is a unique function to `Unit` from *anything*".
+variable {α} in
+example : Subsingleton (α → Unit) := by
+  infer_instance
+  --exact? says exact instSubsingletonForAll
+  done
 
+/-!
+
+#  Digression on `Unit` and `Subsingleton`
+
+First of all, `Subsingleton α` means that any two elements of `α` are equal.
+This is equivalent to saying that `α` has at most one element.
+The main example of a `Subsingleton` is `Prop`:
+by proof-irrelevance, any `lemma/theorem` in Lean as at most one proof:
+* it actually has a proof (and all proofs are "equal") if it is provable;
+* it has no proof if it is unprovable.
+
+(The statement above is maybe more of a tautology than usual!
+I wanted to highlight the concept of *proof-irrelevance* with it, though.)
+
+Why are `Unit` and `Subsingleton` important?
+
+For formalisation, mostly as a ripple effect from programming and computer science.
+To first approximation, tactics do nothing but manipulating the "state"
+(roughly, what you see in the Infoview).
+The actual proof that you construct is a "by-product" of this manipulation.
+However, the operations that the tactics perform are themselves part of the Lean
+language and therefore are terms of some Type.
+However, as they manipulate the "state" and do not really have a return value.
+Tactics are encoded as functions from what you type (technically, `Syntax`), to
+`Unit` (more precisely, there are `Monad`s involved, but that is besides the point).
+The intuitive idea is that what you type instructs the computer to perform some
+computations that modify the state but do not really have any return value.
+When a proof is complete, Lean inspects the final state that the succession of
+tactics produced and verifies that it matches whatever you had set out to prove.
+If this type-checking passes, then Lean accepts your proof as valid and adds to
+the environment a declaration with the name that you specified and the proof that
+you built.
+If the type-checking fails, then Lean throws some error.
+-/
+
+--  We set our target: given the LHS, we want to produce a term of Type the RHS
+theorem blah (assumption : ℕ) : 0 + 0 = 0 := by
+--  inside the `by` we are in the "tactic world": we are building a computer program
+  have : 0 * assumption = 0 := by simp
+  nth_rewrite 1 [← this]
+  let x : ℕ := 0
+  show 0 * assumption + x = 0
+  simp
+  done
+/-!
+Here, the `theorem` disappeared.  The "consequences" are that there is a declaration
+called `blah` whose Type is the `Prop`osition `0 + 0 = 0` and whose term is...
+-/
+#print blah
+
+/-!
+The following is a simpler proof.  This highlights the same, except that, of course,
+the declaration `blah1` that is produced is much simpler.
+-/
+theorem blah1 (assumption : ℕ) : 0 + 0 = 0 := by
+  rfl
+  done
+
+#print blah1
+
+--  Proof-irrelevance does not see the difference between the two terms used to prove `0 + 0 = 0`.
+example : blah 3 = blah1 0 := by
+  rfl
+  done
 
 end TPwL
