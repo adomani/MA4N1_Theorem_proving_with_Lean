@@ -44,4 +44,8 @@ For instance, `of` usually introduces an assumption.
 
 --#check lt_of_le_of_lt
 
+/-
+Write the statement and use `exact?`, loogle, moogle.
+-/
+
 end TPwL
