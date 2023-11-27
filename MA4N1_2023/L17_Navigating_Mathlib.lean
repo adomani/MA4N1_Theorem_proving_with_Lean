@@ -11,7 +11,7 @@ that I do not already know.
 
 It is a series of tips and tricks that may work in some situation!
 
-##  Get familiar with `Mathlib`s naming convention!
+#  Get familiar with `Mathlib`s naming convention!
 
 [Mathlib's naming convention](https://leanprover-community.github.io/contribute/naming.html)
 is *very* useful for finding what are the names of theorems.
@@ -46,6 +46,18 @@ For instance, `of` usually introduces an assumption.
 --#check lt_of_le_of_lt
 
 /-!
+#  Use autocompletion (Ctrl-Space)
+
+If you have an idea of how the name of the lemma should start, type the beginning and then
+press `Ctrl-Space`.
+You will get an auto-complete dialog that will suggest how to fill in the rest of the name.
+It also gives useful type information for the statement, to fine-tune the search.
+
+After getting more familiar with the naming convention, this is my method of choice,
+and certainly the first attempt that I make at finding a lemma name.
+Honestly, the success rate of this method greatly increases with time,
+so it may not feel very efficient at the beginning, but it should improve!
+
 #  Produce a *M*inimal *W*orking *E*xample first...
 
 Producing a [#mwe](https://leanprover-community.github.io/mwe.html) is a very good way to
@@ -105,6 +117,10 @@ Suppose that we are still trying to look for `sq_sum_le_card_mul_sum_sq`.
 We could try
 
 `the sum of the squares is less than or equal to the square of the sum`.
+
+#  Look at the source code
+
+This is actually
 
 -/
 
