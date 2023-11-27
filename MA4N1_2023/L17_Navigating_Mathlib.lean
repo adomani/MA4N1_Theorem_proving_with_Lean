@@ -46,7 +46,7 @@ For instance, `of` usually introduces an assumption.
 --#check lt_of_le_of_lt
 
 /-!
-#  Use autocompletion (Ctrl-Space)
+#  Use autocompletion (Ctrl-Space) to guess the name of a lemma
 
 If you have an idea of how the name of the lemma should start, type the beginning and then
 press `Ctrl-Space`.
