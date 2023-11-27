@@ -129,6 +129,15 @@ Chances are, you will find inspiration to help you get unstuck!
 
 #  Global search inside the `.lean` files
 
+Since the naming convention takes into account the *syntax* of the statement,
+looking for "fundamental theorem of calculus" as a lemma name may not be productive.
+However, the documentation should include this information, at least for "well-known"
+results.
+In such cases, a global search among the `mathlib` files can be useful.
+
+Here is an example of what you can do with a Unix-like command-line.
+
+`grep "undamental.*calculus" $( find lake-packages/mathlib/ -name '*.lean' )`
 -/
 
 end TPwL
