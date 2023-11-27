@@ -1,4 +1,5 @@
 import Mathlib.Tactic
+import Mathlib.Algebra.Order.Chebyshev
 
 namespace TPwL
 
@@ -44,8 +45,67 @@ For instance, `of` usually introduces an assumption.
 
 --#check lt_of_le_of_lt
 
-/-
-Write the statement and use `exact?`, loogle, moogle.
+/-!
+#  Produce a *M*inimal *W*orking *E*xample first...
+
+Producing a [#mwe](https://leanprover-community.github.io/mwe.html) is a very good way to
+isolate what the issue is and removing unnecessary complications.
+
+Also, once you have a #mwe, you can easily share it with others and they will be able
+to see quickly what the problem is and may be able to help.
+Even better, the process of producing a #mwe often suggests to *you* what the next step should be!
+
+#  ... and see if automation helps!
+
+And even if that is not the case, maybe `exact?` will prove the result for you?
+Or `simp`?  `aesop`?  `hint`?
+(`hint` requires a more recent version of `Mathlib` than the one on which this project is based.
+I might update `Mathlib` soon, but wanted to avoid doing it during the term, to avoid having
+to revisit the proofs that may brake with the update.)
+
+#  `have` inside a proof and/or `extract_goal`
+
+If you have an idea of what the next step is, and it would require using several assumptions
+from the local context, then there are a couple of options.
+
+1.  You could add a `have new_hyp : <statement> := by sorry` and try to fill in the `sorry`
+    by some combination of the above tactics.
+2.  You could use `extract_goal` to create a standalone goal with the current goal and
+    its assumptions, to try to produce a #mwe and reduce to the above cases.
+
+#  [Loogle](https://loogle.lean-lang.org/)
+
+Loogle is a search engine that allows you to look for lemmas in `Mathlib` using various filters.
+You can restrict to lemmas that contain
+* certain `Type`s,
+* certain names,
+* an implication,
+* and so on.
+
+You can also mix such conditions and there is an extensive syntax for specifying exactly
+what you are looking for.
+
+It takes some time getting used to, but it can be very powerful!
+
+For instance, say that we are looking for
+-/
+#check sq_sum_le_card_mul_sum_sq
+/-!
+We might try
+`Finset.sum, _ ^ _, LE.le`
+
+and then maybe
+
+`Finset.sum, Finset.card, _ ^ _, LE.le`
+
+#  [Moogle](https://www.moogle.ai/)
+
+This is an AI-based search that takes "natural language" as input.
+Suppose that we are still trying to look for `sq_sum_le_card_mul_sum_sq`.
+We could try
+
+`the sum of the squares is less than or equal to the square of the sum`.
+
 -/
 
 end TPwL
