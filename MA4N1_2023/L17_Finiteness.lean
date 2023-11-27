@@ -108,7 +108,7 @@ a natural number itself.
 
 ##  Why is converting a `Prop` to a `Type` a "problem"?
 
-In practice, it is not for "mathematics".
+In practice, the conversion is not a problem for "mathematics".
 However, part of the issue is that Lean is also building code associated with what it checks.
 Converting a `Prop`osition to a `Type` leads to a gap in the code-production.
 Here is an example that maybe clears up what the underlying issue is.
