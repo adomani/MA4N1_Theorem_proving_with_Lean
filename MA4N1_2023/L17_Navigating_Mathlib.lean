@@ -105,10 +105,15 @@ For instance, say that we are looking for
 /-!
 We might try
 `Finset.sum, _ ^ _, LE.le`
+`Finset.sum, _ ^ _ ⊢ _ ≤ _`
 
 and then maybe
 
 `Finset.sum, Finset.card, _ ^ _, LE.le`
+
+eventually refine to
+
+`(Finset.sum _ _) ^ 2`.
 
 #  [Moogle](https://www.moogle.ai/)
 
