@@ -120,7 +120,14 @@ We could try
 
 #  Look at the source code
 
-This is actually
+This is actually something that I do regularly.
+It is very easy to get to a reasonable place in the library using the "Go to definition"
+menu, or `Ctrl-click`.
+Once you are in a relevant file, scroll around for lemmas that look similar to the one
+that you want, if you can find them.
+Chances are, you will find inspiration to help you get unstuck!
+
+#  Global search inside the `.lean` files
 
 -/
 
