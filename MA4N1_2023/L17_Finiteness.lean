@@ -4,7 +4,7 @@ import Mathlib.NumberTheory.ZetaFunction
 namespace TPwL
 
 /-!
-#  Finteness in Mathlib
+#  Finiteness in Mathlib
 
 Finiteness can be a tricky concept for formalisation.
 Part of the reason for this, is that it often means dealing with computability issues,
@@ -151,26 +151,52 @@ mathematics to which you have been exposed here at Warwick).
 
 #  Bonus
 
-
+Let's see how to work in the presence of `Classical` and `noncomputable`.
 -/
+open Classical in
+/-- `Prop_to_Bool?` is always `true`: not only the condition is `True`, also both arms of the
+`if ... then ... else ...` statement end in `true`! -/
+def Prop_to_Bool? : Bool :=
+if ∃ n, n = 0 then true
+              else true
+
+/-!  Proving that `Prop_to_Bool?` is `True` is easy:
+we look at the definition and `simp` finishes the proof
+-/
+example : Prop_to_Bool? = true := by
+  unfold Prop_to_Bool?
+  simp only [exists_eq, ite_self]
+  done
+
+/-!
+The next example uses the Type `Unit`:
+this type has a unique constructor, called `unit`.
+For convenience, there is notation for `unit` and we can simply write `()` instead of `unit`.
+-/
+
+#print PUnit
 
 open Classical in
 def Prop_to_type? : Unit :=
 if ∃ n, n = 0 then ()
               else ()
 
-open Classical in
-def Prop_to_Bool? : Bool :=
-if ∃ n, n = 0 then true
-              else true
-
-example : Prop_to_type? = () := by
-  simp only [Prop_to_type?]
-  done
-
 example : Prop_to_type? = () := by
   unfold Prop_to_type?
   rfl
   done
+
+open Classical in
+noncomputable
+def Prop_to_Bool_again? : Bool :=
+if ∃ n, n = 0 then true
+              else false
+
+example : Prop_to_Bool_again? = true := by
+  unfold Prop_to_Bool_again?
+  simp only [exists_eq, ite_true]
+  done
+
+
 
 end TPwL
