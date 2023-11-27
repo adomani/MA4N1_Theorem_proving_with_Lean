@@ -138,6 +138,12 @@ In such cases, a global search among the `mathlib` files can be useful.
 Here is an example of what you can do with a Unix-like command-line.
 
 `grep "undamental.*calculus" $( find lake-packages/mathlib/ -name '*.lean' )`
+
+#  Ask!
+
+If you have a reasonable #mwe, the above did not help, then feel free to ask me or
+ask a question on the `Mathlib` [Zulip chat](https://leanprover.zulipchat.com/).
+
 -/
 
 end TPwL
