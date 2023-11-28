@@ -1,5 +1,6 @@
 import Mathlib.Tactic
 import Mathlib.Algebra.Order.Chebyshev
+import Mathlib.MeasureTheory.Integral.FundThmCalculus
 
 namespace TPwL
 
@@ -131,7 +132,12 @@ menu, or `Ctrl-click`.
 Once you are in a relevant file, scroll around for lemmas that look similar to the one
 that you want, if you can find them.
 Chances are, you will find inspiration to help you get unstuck!
+-/
 
+-- What theorem is this?
+--#check intervalIntegral.fderiv_integral
+
+/-!
 #  Global search inside the `.lean` files
 
 Since the naming convention takes into account the *syntax* of the statement,
