@@ -135,6 +135,7 @@ Chances are, you will find inspiration to help you get unstuck!
 -/
 
 -- What theorem is this?
+--#check Continuous.deriv_integral
 --#check intervalIntegral.fderiv_integral
 
 /-!
