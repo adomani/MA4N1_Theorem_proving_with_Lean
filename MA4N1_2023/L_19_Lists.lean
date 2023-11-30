@@ -1,5 +1,4 @@
 import Mathlib.Tactic
-import Mathlib.NumberTheory.ZetaFunction
 
 namespace TPwL
 
