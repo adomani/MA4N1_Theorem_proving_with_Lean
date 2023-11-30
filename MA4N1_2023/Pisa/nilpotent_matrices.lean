@@ -7,14 +7,14 @@ section Origin_of_the_question
 [Source](https://leanprover.zulipchat.com/#narrow/stream/217875-Is-there-code-for-X.3F/topic/Nilpotent.20implies.20trace.20zero/near/381540803)
 -/
 
-variable (R : Type _) [CommRing R] {ι : Type _} [DecidableEq ι] [Fintype ι]
+variable (R : Type _) [CommRing R] {n : Type _} [DecidableEq n] [Fintype n]
 
 /-! This is a question asked on the [Lean Zulip chat](https://leanprover.zulipchat.com/). -/
 
 -- I don't suppose anyone has a proof of this lying around:
 -- Fairly sure `IsReduced` suffices (at least in commutative case) but
 -- I'll settle for a proof over a field.
-example [IsReduced R] {A : Matrix ι ι R} (h : IsNilpotent A) :
+example [IsReduced R] {A : Matrix n n R} (h : IsNilpotent A) :
     A.trace = 0 := sorry
 
 /-!
@@ -40,7 +40,7 @@ But, now the counterexample with a ring containing nilpotents no longer contradi
 --  Could maybe this be true?  Notice that `IsReduced` no longer appears and
 --  the conclusion is that the trace is *nilpotent*, as opposed to `0`.
 --  The ring is still a `CommRing`.
-example {A : Matrix ι ι R} (h : IsNilpotent A) :
+example {A : Matrix n n R} (h : IsNilpotent A) :
     IsNilpotent A.trace := sorry
 
 /-!
