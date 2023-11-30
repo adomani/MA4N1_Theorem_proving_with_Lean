@@ -6,8 +6,8 @@
 import Mathlib.Tactic
 import Aesop
 
-@[aesop 1% unsafe apply]
-def sooryeh {A} : A := sorry
+--  add the following line to your files
+@[aesop 1% unsafe apply] def sooryeh {A} : A := sorry
 
 example {n : ℕ} (h : (n = 0 ∧ False) ∨ n = 1) : False := by
   aesop?
