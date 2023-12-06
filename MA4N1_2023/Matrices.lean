@@ -60,7 +60,7 @@ Tactics used in the proof
   In this case, the goals that `rfl` proves are
   (recall that the rows and columns of our matrices are indexed by `0` and `1`)
   * `1 = One.one 0 0` -- the `(0,0)` entry of the matrix `One.one` (the identity matrix) is `1`, and
-  * `0 = One.one 0 1` -- the `(0,1)` entry of the matrix `One.one` (the identity matrix) is `1`.
+  * `0 = One.one 0 1` -- the `(0,1)` entry of the matrix `One.one` (the identity matrix) is `0`.
 
 Note that `ext; simp` is a fairly common pattern of proof for results that hold elementwise.
 In this case, we are simply inserting the "case-split" `fin_cases`, since the arguments for different entries
