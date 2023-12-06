@@ -82,7 +82,7 @@ For legibility (especially if we have bigger matrices), we could write the `2 ×
 #check !![1, 0;
           0, 1]
 /-
-although, admittedly, for such a small mattrix, the single-line expression might be clearer.
+although, admittedly, for such a small matrix, the single-line expression might be clearer.
 -/
 
 --  let's prove a not fully trivial result about matrices!
