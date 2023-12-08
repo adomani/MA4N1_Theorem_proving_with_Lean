@@ -236,7 +236,6 @@ end Matrix
 end CommRing
 
 /-!
-
 #  Extra credit
 
 Se avete finito presto gli esercizi, ecco un'ultima domanda:

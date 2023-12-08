@@ -116,7 +116,6 @@ end Matrix
 end CommRing
 
 /-!
-
 #  Extra credit
 
 Can you weaken `CommRing R` to `Ring R`?
