@@ -242,6 +242,7 @@ example (n : ℕ) : even (2 * n) := by
   induction n with
   | zero => simp? -- `simp` is stuck, since it does not know that `even 0` is `True`
                   -- let's teach it!
+            exact trivial  -- this line is what we would not like to have to use
   | succ n ih => sorry
   done
 
