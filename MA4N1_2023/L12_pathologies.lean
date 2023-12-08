@@ -1,4 +1,7 @@
 import Mathlib.Tactic
+import Mathlib.Analysis.Calculus.LocalExtr.Basic
+
+namespace TPwL
 
 /-!
 #  Pathologies
@@ -12,18 +15,22 @@ some (non-empty) subset of its domain.
 
 Of course, you could imagine that you simply make sure that the domain of every function
 is exactly the subset where your function makes sense.
-While this is in theory possible, it is often better to work on the whole "natural" domain and
-simply return arbitrary values on inputs where you would normally not define your function.
+While this is in theory possible, it is often better to work on the whole "natural" domain
+and simply return (carefully chosen) arbitrary values on inputs where you would normally
+not define your function.
 
 Here are some simple examples.
 -/
 
 #eval 0 - 1
 example : 0 - 1 = 0 := by exact rfl
+/-!
+Lean happily tells us that `0 - 1` equals `0`.
+-/
 
 #eval (1 : ℚ) / 0
 example : (1 : ℚ) / 0 = 0 := by exact div_zero 1
-/-
+/-!
 Lean is just happily telling us that
 * division by zero is correct;
 * and that `1 / 0` has value `0`, in fact.
@@ -45,7 +52,7 @@ A more "low-level" explanation is that
 
 Thus, if you want the denominator input to your division function to be non-zero,
 you are going to have to roll your sleeves up and define the "Type of non-zero rational numbers".
-After you have defined this Type, you will have to start proving some theorems about them --
+After you have defined this Type, you will have to start proving some theorems about it --
 these theorems will likely be complete trivialities, but you will have to devote time to doing that.
 You will also have to relate "non-zero rational numbers" to "rational numbers that could be zero".
 
@@ -53,17 +60,22 @@ Of course, this is something that *can* be done, and you can certainly find situ
 where this is the preferred route.
 
 However, there are also other situations where it is simply much more convenient to work with
-`junk values`: you define your function everywhere, trying to make your like simpler.
+`junk values`: you define your function everywhere, trying to make your life simpler.
 Naturally, for the results that are "really" interesting, some extra assumption will show up.
-Nevertheless, the later you actually have to provide these assumptions, the easier it will be to use
-your results, because these assumptions will not be required to use your lemmas.
+Nevertheless, as a rule of thumb, the more you can hold on making these assumptions,
+the easier it will be to use your results, because you will not have to provide these assumptions
+every time you use your lemmas.
 -/
 
-def myDiv (p q : ℚ) (h : q ≠ 0) : ℚ := p / q
-
+--  The `Std` division on `ℚ`.
 example : (2 : ℚ) / 1 = 2 := by
   exact div_one 2
   done
+
+--  Let's roll our own
+
+/-- `myDiv p q h` is the result of division of `p` by `q` with the assumption `h` that `q` is non-zero. -/
+def myDiv (p q : ℚ) (h : q ≠ 0) : ℚ := p / q
 
 example : myDiv 2 1 = 2 := by
   done
@@ -75,10 +87,12 @@ example : myDiv 2 1 (by exact one_ne_zero) = 2 := by
 
 example : (1 : ℚ) / 2 + 1 / 2 = 1 := by
   exact add_halves 1
+  done
 
 example : myDiv 1 2 (by exact two_ne_zero) + myDiv 1 2 (by exact two_ne_zero) = 1 := by
-  simp only [myDiv]
+  unfold myDiv
   exact add_halves 1
+  done
 
 example : myDiv 1 0 (by
   _
@@ -111,4 +125,17 @@ to some sources, but also because
 * there may be implicit assumptions that may not be clear to someone who is just starting,
 * ...
 
+These are some of the reasons why formalization is useful!
 -/
+
+noncomputable
+def step (r : ℝ) : ℝ := if r < 0 then 0 else 1
+
+#check deriv
+
+--  The proof of this example appears in the file for the support class for Week 7
+example : deriv step = 0 := by
+  sorry
+  done
+
+end TPwL

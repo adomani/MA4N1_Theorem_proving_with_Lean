@@ -14,7 +14,7 @@ Here we go over some of the tools and tactics available to support this part of 
 The first tool that we introduce is `calc`.
 This usually creates very readable code for chaining together long sequences of
 * equalities (`=`);
-* weak inequalities weak (`≤`);
+* weak inequalities (`≤`);
 * strict inequalities (`<`);
 * and more!
 

@@ -65,6 +65,7 @@ lemmas, you will notice a great difference before and after!
 The following command is a way of defining a new tactic.
 This is a completely straightforward one that chains together some other tactics.
 -/
+
 /--
 `solve` does `intros` followed by `ext`.
 After that, it calls `simp` and `ring` on all goals,
@@ -152,7 +153,7 @@ lemma add_square_ne_zero {a : Ri} (ha : a ≠ 0) :
   done
 
 /-!
-Hint: there is a tactic that I have not yet mentioned, but that I found useful for proving this instace.
+Hint: there is a tactic that I have not yet mentioned, but that I found useful for proving this instance.
 The tactic is called `apply_fun` (see below for the documentation of the tactic).
 The way in which I used it, is to generate an equality between the real parts of two equal real numbers.
 The real numbers in question were equal "by contradiction" and `apply_fun` allowed me to exploit
