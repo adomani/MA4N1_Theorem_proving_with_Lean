@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 
-namespace TPwL_dvd_induction_questions
+namespace TPwL_dvd_induction_no_sols
 
 /-!
 
@@ -230,4 +230,4 @@ example {m n : ℕ} : Nat.divisors m * Nat.divisors n = Nat.divisors (m * n) := 
   sorry
   done
 
-end TPwL_dvd_induction_questions
+end TPwL_dvd_induction_no_sols

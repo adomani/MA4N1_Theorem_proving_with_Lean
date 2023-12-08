@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 
-namespace TPwL_groups_questions
+namespace TPwL_groups_no_sols
 
 /-!
 #  Groups
@@ -214,4 +214,4 @@ example : addOrderOf (1 : ℤ) = 0 := by
   sorry
   done
 
-end TPwL_groups_questions
+end TPwL_groups_no_sols
