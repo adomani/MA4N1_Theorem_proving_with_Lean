@@ -1,6 +1,6 @@
 import Mathlib.Analysis.Calculus.LocalExtr.Basic
 
-namespace TPwL
+namespace TPwL_deriv_pathologies
 
 /-!
 #  Pathologies of `deriv`
@@ -119,4 +119,4 @@ example : deriv step = 0 := by
   · exact? says exact deriv_step_of_ne_zero h0
   done
 
-end TPwL
+end TPwL_deriv_pathologies

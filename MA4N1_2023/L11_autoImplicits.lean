@@ -82,7 +82,29 @@ variable (G2 : simpleGraph)
 
 --  and creates a weird environment with misleading errors.
 #check G2
+
+/--
+error: invalid field notation, type is not of the form (C ...) where C is a constant
+  G2
+has type
+  simpleGraph
+-/
+#guard_msgs in
 #check G2.Adj
+
+/--
+error: application type mismatch
+  G2.Adj
+argument
+  G2
+has type
+  simpleGraph : Sort ?u.121
+but is expected to have type
+  SimpleGraph ?m.124 : Type ?u.123
+---
+info: (sorryAx (SimpleGraph ?m.124) true).Adj : ?m.124 → ?m.124 → Prop
+-/
+#guard_msgs in
 #check SimpleGraph.Adj G2
 
 end autoImplicit_on
@@ -91,6 +113,12 @@ section what_is_n?
 -- uncomment this `variable` to resolve the `unknown identifier 'n'` error below.
 --variable {n : ℕ}
 
+/--
+error: unknown identifier 'n'
+---
+error: unknown identifier 'n'
+-/
+#guard_msgs in
 example : Nat.succ n ≠ 0 := by
   exact Nat.succ_ne_zero n
   done
