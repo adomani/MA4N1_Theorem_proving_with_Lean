@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 
-namespace TPwL
+namespace TPwL_noncomputable_IsSquare
 
 /-!
 #  A short introduction to `noncomputable` and `Decidable`
@@ -144,4 +144,4 @@ example : ¬ IsSquare 20 := by
   decide
   done
 
-end TPwL
+end TPwL_noncomputable_IsSquare

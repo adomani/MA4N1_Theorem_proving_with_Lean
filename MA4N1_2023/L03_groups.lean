@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 
-namespace TPwL
+namespace TPwL_groups
 
 /-!
 #  Groups
@@ -221,4 +221,4 @@ example : addOrderOf (1 : ℤ) = 0 := by
   exact Nat.pos_iff_ne_zero.mp n0
   done
 
-end TPwL
+end TPwL_groups

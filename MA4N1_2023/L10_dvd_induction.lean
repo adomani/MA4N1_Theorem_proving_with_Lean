@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 
-namespace TPwL
+namespace TPwL_dvd_induction
 
 /-!
 
@@ -288,4 +288,4 @@ example {m n : ℕ} : Nat.divisors m * Nat.divisors n = Nat.divisors (m * n) := 
     exact (hp.divisors_mul _).symm
   done
 
-end TPwL
+end TPwL_dvd_induction
