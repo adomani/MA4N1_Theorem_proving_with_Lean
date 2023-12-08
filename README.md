@@ -11,4 +11,8 @@ For systems other than Unix, take a look at the [Mathlib projects webpage](https
 
 ---
 
+[Back to the `Theorem Proving with Lean` webpage](https://adomani.github.io/Syllabus/MA4N1/toc)
+
 [Back to Moodle](https://moodle.warwick.ac.uk/course/view.php?id=58287#section-0)
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/adomani/MA4N1_2023)
