@@ -128,74 +128,18 @@ example {a : R} (h : a ∣ 1) : IsUnit a := by
   sorry
   done
 
-#help tactic apply_fun
-#help tactic conv
-
 /-!
-[Source](https://leanprover.zulipchat.com/#narrow/stream/217875-Is-there-code-for-X.3F/topic/Nilpotent.20implies.20trace.20zero/near/381540803)
--/
-
-variable (R : Type _) [CommRing R] {n : Type _} [DecidableEq n] [Fintype n]
-
-/-! This is a question asked on the [Lean Zulip chat](https://leanprover.zulipchat.com/). -/
-
--- I don't suppose anyone has a proof of this lying around:
--- Fairly sure `IsReduced` suffices (at least in commutative case) but
--- I'll settle for a proof over a field.
-example [IsReduced R] {A : Matrix n n R} (h : IsNilpotent A) :
-    A.trace = 0 := sorry
-
-/-!
-The question is very precise, but it leaves a few lingering follow-up questions.
-
-* Is the statement true?
-* Can the hypothesis `IsReduced R` be removed?
-* Can `CommRing R` be weakened to `Ring R`?  Or even `Semiring R`?
-
-Possible first reactions.
-
-* Over a field, the result is true: the trace is the sum of the eigenvalues and
-  all the eigenvalues of a nilpotent matrix are `0`.
-* Over an integral domain -- also, since an integral domain embeds in its field of fractions.
-* Nilpotent elements are clearly an issue: if `ε ∈ R` is non-zero and nilpotent,
-  then the `1 × 1` matrix `(ε)` has trace that is nonzero!
-
-What if we weaken the statement to `IsNilpotent A.trace`?
-Since the question assumes `IsReduced R`, the trace being nilpotent is the same as the trace being `0`.
-But, now the counterexample with a ring containing nilpotents no longer contradicts this statement!
--/
-
---  Could maybe this be true?  Notice that `IsReduced` no longer appears and
---  the conclusion is that the trace is *nilpotent*, as opposed to `0`.
---  The ring is still a `CommRing`.
-example {A : Matrix n n R} (h : IsNilpotent A) :
-    IsNilpotent A.trace := sorry
-
-/-!
-
-#  Enter the main tool
-
-About a month before this question had been asked, this result had arrived into `Mathlib`:
--/
-
-#check Polynomial.isUnit_iff_coeff_isUnit_isNilpotent
-
-/-!
-How about this?
-
-Assume that `A ^ N = 0`.
+Assume that `M ^ N = 0`.
 
 Start with the identities
 
-`I = I - (tA) ^ (N + 1)`
-`  = (I - tA)(I + tA + ... + (tA) ^ N)`.
+`I = I - (tM) ^ (N + 1)`
+`  = (I - tM)(I + tM + ... + (tM) ^ N)`.
 
 Compute determinants on both sides and use that the determinant of a product is the product of the determinants.
 
-Deduce that the determinant of `(I - tA)` is an invertible polynomial.
+Deduce that the determinant of `(I - tM)` is an invertible polynomial.
 Therefore all its coefficients of positive degree are nilpotents.
-
-Is this right? If only I had a proof assistant at hand...
 
 The rest of this file develops the tools that should allow you to formalize the above proof
 in the following hour!
@@ -218,13 +162,50 @@ theorem map_pow (N : ℕ) : (M ^ N).map C = M.map C ^ N := by
   sorry
   done
 
+/-!
+Per la dimostrazione di `isUnit_charpolyRev` ho usato (tra le altre) le due tattiche
+`apply_fun` e `conv`.
+
+`apply_fun f` è utile per applicare la stessa funzione `f` ai due lati dell'uguaglianza nel
+risultato principale.
+Funziona anche con `apply_fun at h`, quando vogliamo applicare `f` ai due lati dell'ipotesi `h`.
+La tattica cerca (un po') di trovare l'ipotesi che `f` è iniettiva.
+Se non riesce a dimostrare che `f` è iniettiva, produce anche un side-goal `⊢ f.Injective`.
+
+Qui sotto potete leggere la documentazione di `apply_fun`.
+-/
+#help tactic apply_fun
+
+/-!
+L'altra tattica è `conv`.
+La sintassi e l'uso sonoe molto estesi, ma una forma comune è di usare `conv_lhs` o `conv_rhs`
+quando il goal è un'uguaglianza.
+Per esempio, `conv_lhs => rw [one_mul]` permette di riscrivere `one_mul` solo a sinistra
+dell'uguale e non anche a destra.
+
+Come prima, se volete più informazioni, la documentazione di `conv` la potete leggere qui sotto.
+-/
+
+#help tactic conv
+
+/-!
+Questo è il risultato principale: il polinomio caratteristico "rovesciato" di una matrice
+nilpotente è un'unità.
+-/
 theorem isUnit_charpolyRev {N : ℕ} (hM : M ^ N = 0) : IsUnit (charpolyRev M) := by
   obtain ⟨A, h⟩ : 1 - (X : R[X]) • M.map C ∣ 1 - ((X : R[X]) • M.map C) ^ N := by
   sorry
   done
 
-example {N : ℕ} (hM : M ^ N = 0) {n : ℕ} (hn : n ≠ 0) :
-    IsNilpotent ((charpolyRev M).coeff n) := by
+/-!
+Per concludere e collegare il risultato precedente al fatto che i coefficienti del
+polinomio caratteristico rovesciato sono nilpotenti usiamo
+`Polynomial.isUnit_iff_coeff_isUnit_isNilpotent`.
+-/
+
+#check Polynomial.isUnit_iff_coeff_isUnit_isNilpotent
+
+example {N : ℕ} (hM : M ^ N = 0) {n : ℕ} (hn : n ≠ 0) : IsNilpotent ((charpolyRev M).coeff n) := by
   sorry
   done
 
@@ -236,11 +217,19 @@ end CommRing
 
 #  Extra credit
 
-Can you weaken `CommRing R` to `Ring R`?
+Se avete finito presto gli esercizi, ecco un'ultima domanda:
+se siamo interessati solo alla traccia della matrice, si può sostituire
+l'ipotesi `CommRing R` con `Ring R`?
+
+Ovvero, se una matrice a coefficienti in un anello *non-necessariamente commutativo*
+è nilpotente, è vero che la traccia della matrice è nilpotente?
+
+Qui sotto, trovate la formalizzazione dell'enunciato.
 -/
 
 variable {R : Type*} [Ring R] {n : Type*} [DecidableEq n] [Fintype n] (M : Matrix n n R)
 open Matrix
 
+--  Dimostrare o trovare un controesempio.
 theorem Matrix.isNilpotent_trace_of_isNilpotent' (hM : IsNilpotent M) :
     IsNilpotent M.trace := sorry
