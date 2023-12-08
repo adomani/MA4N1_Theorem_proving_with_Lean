@@ -1,4 +1,4 @@
-import Mathlib.Tactic.Recall
+import Mathlib.Tactic
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 
 open Matrix
@@ -28,6 +28,58 @@ example (M : Matrix n n R) {N : ℕ} (hM : M ^ N = 0) {n : ℕ} (hn : n ≠ 0) :
 Iniziamo con qualche lemma semplice, per imparare un po' come interagire con matrici,
 determinanti e altre cose.
 
+###  Alcune identità in anelli
+
+`Mathlib` contiene già molte identità di base tra elementi di anelli.
+
+Cominciamo con una identità facile.
+-/
+example (x y : R) (n : ℕ) : x - y ∣ x ^ n - y ^ n := by
+  sorry
+  done
+
+/-!
+Tuttavia, il risultato qui sopra non è quello che vogliamo!
+
+Nella nostra applicazione, l'anello `R` sarà realmente l'anello delle matrici a coefficienti in `R`.
+Il risultato di prima non lo possiamo usare, perché assume che `R` è commutativo.
+
+La versione non-commutativa, in cui assumiamo che `x` e `y` commutano è anche già in `Mathlib`.
+
+In questo esempio, `x` e `y` sono elementi di una anello qualsiasi
+-/
+example {A : Type*} [Ring A] {x y : A} (h : Commute x y) (n : ℕ) :
+    x - y ∣ x ^ n - y ^ n := by
+  sorry
+  done
+
+/-!
+###  Determinanti
+
+Nella nostra dimostrazione, usiamo anche qualche determinante.
+
+Il determinante di una matrice quadrata è `Matrix.det`
+(poiché abbiamo scritto `open Matrix` più sopra, possiamo riferirci con `det` a `Matrix.det`).
+
+Come ci possiamo aspettare, `det` è una funzione che associa a una matrice a coefficienti in `R`
+un elemento di `R`.
+-/
+#check det
+
+example : det (1 : Matrix n n R) = 1 := by
+  sorry
+  done
+
+/-!
+Per il prossimo esempio, può essere utile usare `det_smul`.
+-/
+#check det_smul
+
+example : det (2 : Matrix n n R) = 2 ^ (Fintype.card n) := by
+  sorry
+  done
+
+/-!
 ###  Unità
 
 Non useremo quasi nulla sulle unità, ma appariranno nell'equivalenza
@@ -54,10 +106,7 @@ example {a : R} (h : a ∣ 1) : IsUnit a := by
   done
 
 #help tactic apply_fun
-#check det
-#check det_one
 #help tactic conv
-#check Commute.sub_dvd_pow_sub_pow
 
 /-!
 [Source](https://leanprover.zulipchat.com/#narrow/stream/217875-Is-there-code-for-X.3F/topic/Nilpotent.20implies.20trace.20zero/near/381540803)
