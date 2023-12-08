@@ -22,9 +22,37 @@ example (M : Matrix n n R) {N : ℕ} (hM : M ^ N = 0) {n : ℕ} (hn : n ≠ 0) :
   sorry
   done
 
+/-!
+#  Preliminari
 
+Iniziamo con qualche lemma semplice, per imparare un po' come interagire con matrici,
+determinanti e altre cose.
 
-#check isUnit_of_dvd_one
+###  Unità
+
+Non useremo quasi nulla sulle unità, ma appariranno nell'equivalenza
+
+`i coefficienti non-costanti di un polynomio sono nilpotenti ↔ il polinomio è invertibile`
+
+Il comando `#print` qui sotto non mostra un'informazione importante, che però possiamo
+ottenere mettendo il cursore sulla `u` in `∃ u` nell'infoview.
+-/
+#print IsUnit
+/-!
+Il tipo di `u` è `Mˣ = Units M`, il tipo delle unità di `M`.
+-/
+#print Units
+
+/-!
+Quindi, `IsUnit` è semplicemente il predicato su `R` che decide se un elemento `a` ammette o meno
+un inverso destro e sinistro; ovvero se `a` "è" o meno una unità.
+-/
+
+/-- In un anello, un elemento che divide `1` è una unità. -/
+example {a : R} (h : a ∣ 1) : IsUnit a := by
+  sorry
+  done
+
 #help tactic apply_fun
 #check det
 #check det_one
