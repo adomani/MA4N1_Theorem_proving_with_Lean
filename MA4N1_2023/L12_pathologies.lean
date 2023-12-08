@@ -77,6 +77,14 @@ example : (2 : ℚ) / 1 = 2 := by
 /-- `myDiv p q h` is the result of division of `p` by `q` with the assumption `h` that `q` is non-zero. -/
 def myDiv (p q : ℚ) (h : q ≠ 0) : ℚ := p / q
 
+
+/--
+error: failed to synthesize instance
+  OfNat (1 ≠ 0 → ℚ) 2
+---
+error: unsolved goals
+⊢ myDiv 2 1 = 2-/
+#guard_msgs in
 example : myDiv 2 1 = 2 := by
   done
 
@@ -94,12 +102,25 @@ example : myDiv 1 2 (by exact two_ne_zero) + myDiv 1 2 (by exact two_ne_zero) = 
   exact add_halves 1
   done
 
+/--
+error: unsolved goals
+⊢ 0 ≠ 0
+---
+error: unsolved goals
+⊢ myDiv 1 0 (_ : 0 ≠ 0) = 0
+-/
+#guard_msgs in
 example : myDiv 1 0 (by
   _
 ) = 0 := by
   done
 
 -- Finally, an example of a result where you cannot get away with the expected non-zero assumption
+
+/--
+error: `exact?` could not close the goal. Try `apply?` to see partial suggestions.
+-/
+#guard_msgs in
 example {q : ℚ} : q / q = 1 := by exact?
 -- `exact?` does not find this result.
 -- For a good reason: it is not true!

@@ -1,7 +1,7 @@
 import Mathlib.Tactic
 import Mathlib.Combinatorics.SimpleGraph.Basic
 
-namespace TPwL
+namespace TPwL_typeclasses
 
 /-!
 
@@ -97,6 +97,11 @@ This means that we will register an `Add` instance on `point`.
 -/
 
 variable (p q : point) in
+/--
+error: failed to synthesize instance
+  HAdd point point ?m.1077
+-/
+#guard_msgs in
 #check p + q
 
 instance : Add point where
@@ -149,6 +154,11 @@ section right_and_wrong_structures
 -- structure `A` expects to find already the typeclass `Add` on `α`
 structure A (α : Type) [Add α] where
 
+/--
+error: failed to synthesize instance
+  Add α
+-/
+#guard_msgs in
 variable {α : Type} (h : A α)         -- fails
 variable {α : Type} [Add α] (h : A α) -- works
 
@@ -179,4 +189,4 @@ class group (G : Type) where
   mul_inv   : ∀ g, mul g (inv g) = id
   -- and so on
 
-end TPwL
+end TPwL_typeclasses

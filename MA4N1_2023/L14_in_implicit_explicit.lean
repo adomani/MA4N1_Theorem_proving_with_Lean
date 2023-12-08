@@ -26,6 +26,10 @@ and "out of scope" before being declared and after the following `end`.
 section There_is_n_here
 
 -- `n` has not yet been declared
+/--
+error: unknown identifier 'n'
+-/
+#guard_msgs in
 #check n  -- unknown identifier 'n'
 
 variable (n : ℕ)
@@ -36,6 +40,10 @@ variable (n : ℕ)
 end There_is_n_here
 
 -- `n` has been declared, but is out of scope
+/--
+error: unknown identifier 'n'
+-/
+#guard_msgs in
 #check n  -- unknown identifier 'n'
 
 /-
