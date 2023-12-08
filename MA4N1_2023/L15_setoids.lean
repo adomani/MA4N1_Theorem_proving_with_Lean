@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 
-namespace TPwL
+namespace TPwL_setoids
 
 /-!
 #  `Setoid`s and equivalence relations
@@ -205,4 +205,4 @@ example : Quotient parity_setoid ≃ Bool where
 
 end
 
-end TPwL
+end TPwL_setoids

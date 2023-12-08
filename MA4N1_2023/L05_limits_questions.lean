@@ -1,7 +1,7 @@
 import Mathlib.Data.Real.Basic
 import Mathlib.Order.Filter.Basic
 
-namespace TPwL
+namespace TPwL_limits_questions
 
 /-!
 #  Continuity in `Mathlib`
@@ -81,4 +81,4 @@ lemma no_limit_id {a : ℝ} : ¬ limit (fun n => n) a := by
   sorry
   done
 
-end TPwL
+end TPwL_limits_questions

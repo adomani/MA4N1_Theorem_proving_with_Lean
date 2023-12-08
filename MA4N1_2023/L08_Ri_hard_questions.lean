@@ -1,7 +1,7 @@
 import Mathlib.Tactic
 import MA4N1_2023.help_me
 
-namespace TPwL
+namespace TPwL_Ri_hard_questions
 
 /-!
 
@@ -160,4 +160,4 @@ instance : Field Ri where
     sorry
     done
 
-end TPwL
+end TPwL_Ri_hard_questions

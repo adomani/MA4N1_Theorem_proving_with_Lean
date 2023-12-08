@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 
-namespace TPwL
+namespace TPwL_in_implicit_explicit
 
 /-!
 #  The `in` modifier
@@ -225,4 +225,4 @@ There could be subtle reasons why you may want to overrule this principle.
 
 #check add_zero
 
-end TPwL
+end TPwL_in_implicit_explicit

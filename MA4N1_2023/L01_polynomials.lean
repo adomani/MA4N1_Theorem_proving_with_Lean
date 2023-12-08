@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 
-namespace MA4N1
+namespace TPwL_polynomials
 
 section Presentation
 /-!
@@ -198,4 +198,4 @@ end natDegree
 
 end Exercises
 
-end MA4N1
+end TPwL_polynomials

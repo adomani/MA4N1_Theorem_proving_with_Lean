@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 
-namespace TPwL
+namespace TPwL_dvd_induction_questions
 
 /-!
 
@@ -217,7 +217,7 @@ you are not necessarily stuck!
 
 #help tactic aesop
 
-lemma _root_.Nat.Prime.divisors_mul (n : ℕ) {p : ℕ} (hp : Nat.Prime p) :
+lemma Nat.Prime.divisors_mul (n : ℕ) {p : ℕ} (hp : Nat.Prime p) :
     Nat.divisors (p * n) = Nat.divisors p * Nat.divisors n := by
   sorry
   done
@@ -230,4 +230,4 @@ example {m n : ℕ} : Nat.divisors m * Nat.divisors n = Nat.divisors (m * n) := 
   sorry
   done
 
-end TPwL
+end TPwL_dvd_induction_questions

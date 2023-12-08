@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 
-namespace TPwL
+namespace TPwL_definitions
 
 /-!
 
@@ -260,4 +260,4 @@ example : even' 8 := by
   unfold even'
   trivial     -- move me up!
 
-end TPwL
+end TPwL_definitions

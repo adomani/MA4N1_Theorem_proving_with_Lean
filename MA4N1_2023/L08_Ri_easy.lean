@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 
-namespace TPwL
+namespace TPwL_Ri_easy
 
 /-!
 
@@ -186,4 +186,4 @@ instance : Field Ri where
     done
   inv_zero := by solve
 
-end TPwL
+end TPwL_Ri_easy

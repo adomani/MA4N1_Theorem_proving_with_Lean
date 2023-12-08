@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 
-namespace TPwL
+namespace TPwL_Ri_easy_questions
 
 /-!
 
@@ -151,6 +151,8 @@ instance : Field Ri where
   mul_inv_cancel a ha := by
     sorry
     done
-  inv_zero := by solve
+  inv_zero := by
+    sorry
+    done
 
-end TPwL
+end TPwL_Ri_easy_questions

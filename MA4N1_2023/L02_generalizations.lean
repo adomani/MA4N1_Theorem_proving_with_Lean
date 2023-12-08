@@ -29,7 +29,7 @@ means that if we construct something and we call it `X`
 its real name is going to be `TPwL.X`.
 useful to avoid name-clashes with pre-existing objects.
 -/
-namespace TPwL
+namespace TPwL_generalizations
 
 /-
 ### open
@@ -193,4 +193,4 @@ by
   done
 
 
-end TPwL
+end TPwL_generalizations
