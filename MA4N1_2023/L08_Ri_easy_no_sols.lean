@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 
-namespace TPwL_Ri_easy_questions
+namespace TPwL_Ri_easy_no_sols
 
 /-!
 
@@ -155,4 +155,4 @@ instance : Field Ri where
     sorry
     done
 
-end TPwL_Ri_easy_questions
+end TPwL_Ri_easy_no_sols

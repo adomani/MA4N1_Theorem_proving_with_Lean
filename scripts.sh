@@ -12,7 +12,7 @@ exercify () {
 }
 
 exme () {
-  newPth="${1/.lean/_questions.lean}"
+  newPth="${1/.lean/_no_sols.lean}"
   echo ${newPth}
   exercify "${1}" > "${newPth}"
 }

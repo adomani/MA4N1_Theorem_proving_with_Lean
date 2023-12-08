@@ -1,7 +1,7 @@
 import Mathlib.Tactic
 import MA4N1_2023.help_me
 
-namespace TPwL_setoids_week_end_questions
+namespace TPwL_setoids_week_end_no_sols
 
 /-!
 #  `Setoid`s and equivalence relations
@@ -89,4 +89,4 @@ example : Quotient Week_setoid ≃ Bool where
 
 end Week
 
-end TPwL_setoids_week_end_questions
+end TPwL_setoids_week_end_no_sols
