@@ -92,9 +92,12 @@ theorem map_pow (N : ℕ) : (M ^ N).map C = M.map C ^ N := by
   induction N with
     | zero => simp
     | succ N => simp [pow_succ, *]
+  done
 
-theorem IsUnit_charpolyRev_of_IsNilpotent (hM : IsNilpotent M) : IsUnit (charpolyRev M) := by
-  rcases hM with ⟨N, hM⟩
+--  I replaced the `IsNilpotent` assumption by the explicit `{N : ℕ} (hM : M ^ N = 0)`.
+--  The reason is that in the meanwhile, this result appears in `Mathlib` and `exact?`
+--  would find it!
+example {N : ℕ} (hM : M ^ N = 0) : IsUnit (charpolyRev M) := by
   apply isUnit_of_dvd_one
   have : 1 = 1 - ((X : R[X]) • M.map C) ^ N := by
     simp [smul_pow, ← map_pow, hM]
@@ -106,6 +109,7 @@ theorem IsUnit_charpolyRev_of_IsNilpotent (hM : IsNilpotent M) : IsUnit (charpol
     exact Commute.sub_dvd_pow_sub_pow (by simp) N
   rw [h]
   simp [charpolyRev]
+  done
 
 end Matrix
 
@@ -121,5 +125,4 @@ Can you weaken `CommRing R` to `Ring R`?
 variable {R : Type*} [Ring R] {n : Type*} [DecidableEq n] [Fintype n] (M : Matrix n n R)
 open Matrix
 
-theorem Matrix.isNilpotent_trace_of_isNilpotent' (hM : IsNilpotent M) :
-    IsNilpotent M.trace := sorry
+example (hM : IsNilpotent M) : IsNilpotent M.trace := sorry
