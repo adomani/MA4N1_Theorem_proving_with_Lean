@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 
-namespace TPwL_polynomials_questions
+namespace TPwL_polynomials_no_sols
 
 section Presentation
 /-!
@@ -178,4 +178,4 @@ end natDegree
 
 end Exercises
 
-end TPwL_polynomials_questions
+end TPwL_polynomials_no_sols
