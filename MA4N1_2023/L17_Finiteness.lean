@@ -36,35 +36,45 @@ This is defined as a structure with two fields:
 * a natural number `a`;
 * a proof of the inequality `a < n`.
 
-So, ultimately, `Finite α` means that there is a bijection of `α` with the finite set `0, 1, ..., n`.
+So, ultimately, `Finite α` means that there is a bijection of `α` with the finite set `0, 1, ..., n-1`.
 
-This class is the less-computable one.
+The `Finite` class is less computable than `Fintype`.
+In fact, there is an instance that, given a `Fintype` instance on a Type,
+there is an automatic `Finite` instance on that Type.
+-/
+
+#check Finite.of_fintype
+
+/-!
+
+This brings us to wondering about what is the `Fintype` class.
 
 ##  `Fintype`
 
 -/
-
 #print Fintype
 
 /-- `Fintype α` means that `α` is finite, i.e. there are only
   finitely many distinct elements of type `α`. The evidence of this
   is a finset `elems` (a list up to permutation without duplicates),
   together with a proof that everything of type `α` is in the list. -/
-class fintype (α : Type*) where  -- the actual class has a capital `F`
+class fintype (α : Type*) where  -- note the lower-case `f`, to avoid issues.
   /-- The `Finset` containing all elements of a `Fintype` -/
   elems : Finset α
   /-- A proof that `elems` contains every element of the type -/
   complete : ∀ x : α, x ∈ elems
 
 /-!
+As you can see, `Fintype` is built from a finite set `elems : Finset α`,
+and a proof that every element of `α` belongs to this finite set.
 
-Thus, an instance of `Fintype α` specifies a `Finset a` and a proof that every element of `α` belongs
-to this subset.
+A `Finset` is itself a `Multiset` with no duplicate elements and
+a `Multiset` is a `List` up to reordering.
 
-In turn, a `Finset` is a `Multiset` with no repetitions, which itself is a `List` up to permutation.
-
-Thus, ultimately, an instance of `Fintype α` is an enumeration of all the elements of `α`, each listed
-exactly once, up to their order.
+This took us down a few iterations, but hopefully we now have a clearer picture:
+* `Finite α`  means that, for some `n`, there is an equivalence between `{0, ..., n-1}` and `α`;
+* `Fintype α` means that there is a `List` enumerating all and only the elements of `α`
+  with no repetitions, up to reordering.
 
 ##  `Finite α` vs `Fintype α`
 -/
