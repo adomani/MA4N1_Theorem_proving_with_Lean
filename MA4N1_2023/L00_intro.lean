@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 
-namespace TPwL
+namespace TPwL_intro
 
 #check Bool   -- Bool : Type
 

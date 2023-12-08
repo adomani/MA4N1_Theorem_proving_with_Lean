@@ -2,7 +2,7 @@ import Mathlib.Tactic
 import Mathlib.Algebra.Order.Chebyshev
 import Mathlib.MeasureTheory.Integral.FundThmCalculus
 
-namespace TPwL
+namespace TPwL_navigating_Mathlib
 
 /-!
 #  Finding lemmas in `Mathlib`
@@ -158,4 +158,4 @@ ask a question on the `Mathlib` [Zulip chat](https://leanprover.zulipchat.com/).
 
 -/
 
-end TPwL
+end TPwL_navigating_Mathlib

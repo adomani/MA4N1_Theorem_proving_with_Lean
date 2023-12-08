@@ -1,7 +1,7 @@
 import Mathlib.Tactic
 import Mathlib.NumberTheory.ZetaFunction
 
-namespace TPwL
+namespace TPwL_finiteness
 
 /-!
 #  Finiteness in Mathlib
@@ -287,4 +287,4 @@ example : blah 3 = blah1 0 := by
   rfl
   done
 
-end TPwL
+end TPwL_finiteness
