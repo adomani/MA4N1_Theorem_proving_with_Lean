@@ -2,7 +2,7 @@ import Mathlib.Combinatorics.SimpleGraph.Hasse
 import Mathlib.Combinatorics.SimpleGraph.Basic
 import Mathlib.Data.PNat.Prime
 
-namespace TPwL
+namespace TPwL_graphs
 
 /-
 #  Graphs in `Mathlib`
@@ -158,4 +158,4 @@ example {p q : ℕ} (hp : p.Prime) (hq : q.Prime) :
   --  · assumption
   done
 
-end TPwL
+end TPwL_graphs

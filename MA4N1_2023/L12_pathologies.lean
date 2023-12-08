@@ -1,7 +1,7 @@
 import Mathlib.Tactic
 import Mathlib.Analysis.Calculus.LocalExtr.Basic
 
-namespace TPwL
+namespace TPwL_pathologies
 
 /-!
 #  Pathologies
@@ -159,4 +159,4 @@ example : deriv step = 0 := by
   sorry
   done
 
-end TPwL
+end TPwL_pathologies

@@ -1,6 +1,6 @@
 import Mathlib.Analysis.Calculus.LocalExtr.Basic
 
-namespace TPwL
+namespace TPwL_deriv_pathologies_questions
 
 /-!
 #  Pathologies of `deriv`
@@ -68,4 +68,4 @@ example : deriv step = 0 := by
   sorry
   done
 
-end TPwL
+end TPwL_deriv_pathologies_questions

@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 
-namespace TPwL
+namespace TPwL_calculations
 
 /-!
 
@@ -135,4 +135,4 @@ example {a b c : ℝ} (ha : 1 ≤ a) (hb : 0 ≤ b) (hc : 0 ≤ c) :
   · linarith
   done
 
-end TPwL
+end TPwL_calculations

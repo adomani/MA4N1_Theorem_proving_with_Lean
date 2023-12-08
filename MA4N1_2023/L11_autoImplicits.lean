@@ -1,7 +1,7 @@
 import Mathlib.Tactic
 import Mathlib.Combinatorics.SimpleGraph.Basic
 
-namespace TPwL
+namespace TPwL_autoImplicits
 
 /-!
 #  Setting `autoImplicit` true or false
@@ -113,12 +113,6 @@ section what_is_n?
 -- uncomment this `variable` to resolve the `unknown identifier 'n'` error below.
 --variable {n : ℕ}
 
-/--
-error: unknown identifier 'n'
----
-error: unknown identifier 'n'
--/
-#guard_msgs in
 example : Nat.succ n ≠ 0 := by
   exact Nat.succ_ne_zero n
   done
@@ -145,7 +139,7 @@ to loose.
 
 open scoped Pointwise
 
-lemma _root_.Nat.Prime.divisors_mul (n : ℕ) {p : ℕ} (hp : Nat.Prime p) :
+lemma Nat.Prime.divisors_mul (n : ℕ) {p : ℕ} (hp : Nat.Prime p) :
     Nat.divisors (p * n) = Nat.divisors p * Nat.divisors n := by
   ext a
   rw [Finset.mem_mul]
@@ -176,4 +170,4 @@ lemma _root_.Nat.Prime.divisors_mul (n : ℕ) {p : ℕ} (hp : Nat.Prime p) :
     · simp [bn, n0, Nat.Prime.ne_zero hp]
   done
 
-end TPwL
+end TPwL_autoImplicits
