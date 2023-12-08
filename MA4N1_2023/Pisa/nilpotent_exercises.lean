@@ -54,23 +54,9 @@ example {A : Type*} [Ring A] {x y : A} (h : Commute x y) (n : ℕ) :
   done
 
 /-!
-###  Determinanti
+###  Matrici
 
-Nella nostra dimostrazione, usiamo anche qualche determinante.
-
-Il determinante di una matrice quadrata è `Matrix.det`
-(poiché abbiamo scritto `open Matrix` più sopra, possiamo riferirci con `det` a `Matrix.det`).
-
-Come ci possiamo aspettare, `det` è una funzione che associa a una matrice a coefficienti in `R`
-un elemento di `R`.
--/
-#check det
-
-example : det (1 : Matrix n n R) = 1 := by
-  exact? says exact det_one
-  done
-
-/-! Fate attenzione alle coercizioni (`↑`) (coersions) che facciamo inserire a Lean con le
+Fate attenzione alle coercizioni (`↑`) (coersions) che facciamo inserire a Lean con le
 ascrizioni (type-ascriptions) esplicite.
 -/
 example (a b : ℕ) : ((a * b : ℕ) : Matrix n n R) = (a * b) := by
@@ -94,6 +80,23 @@ successivo vediamo una maniera migliore.
 -/
 example : !![1, 0; 0, 1] = 1 := by
   simp
+  done
+
+/-!
+###  Determinanti
+
+Nella nostra dimostrazione, usiamo anche qualche determinante.
+
+Il determinante di una matrice quadrata è `Matrix.det`
+(poiché abbiamo scritto `open Matrix` più sopra, possiamo riferirci con `det` a `Matrix.det`).
+
+Come ci possiamo aspettare, `det` è una funzione che associa a una matrice a coefficienti in `R`
+un elemento di `R`.
+-/
+#check det
+
+example : det (1 : Matrix n n R) = 1 := by
+  exact? says exact det_one
   done
 
 /-!

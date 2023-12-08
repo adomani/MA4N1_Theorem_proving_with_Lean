@@ -44,7 +44,6 @@ example {A : Matrix n n R} (h : IsNilpotent A) :
     IsNilpotent A.trace := sorry
 
 /-!
-
 #  Enter the main tool
 
 About a month before this question had been asked, this result had arrived into `Mathlib`:
@@ -87,28 +86,8 @@ namespace Matrix
 
 variable (M : Matrix n n R)
 
---  why did I not find this lemma already?
-theorem map_pow (N : ℕ) : (M ^ N).map C = M.map C ^ N := by
-  induction N with
-    | zero => simp
-    | succ N => simp [pow_succ, *]
-  done
-
---  I replaced the `IsNilpotent` assumption by the explicit `{N : ℕ} (hM : M ^ N = 0)`.
---  The reason is that in the meanwhile, this result appears in `Mathlib` and `exact?`
---  would find it!
-example {N : ℕ} (hM : M ^ N = 0) : IsUnit (charpolyRev M) := by
-  apply isUnit_of_dvd_one
-  have : 1 = 1 - ((X : R[X]) • M.map C) ^ N := by
-    simp [smul_pow, ← map_pow, hM]
-  apply_fun det at this
-  rw [det_one] at this
-  rw [this]
-  obtain ⟨A, h⟩ : 1 - (X : R[X]) • M.map C ∣ 1 - ((X : R[X]) • M.map C) ^ N := by
-    conv_rhs => rw [← one_pow N]
-    exact Commute.sub_dvd_pow_sub_pow (by simp) N
-  rw [h]
-  simp [charpolyRev]
+example (hM : IsNilpotent M) : IsUnit (charpolyRev M) := by
+  sorry
   done
 
 end Matrix
