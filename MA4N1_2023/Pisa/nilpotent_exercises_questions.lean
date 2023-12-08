@@ -70,6 +70,29 @@ example : det (1 : Matrix n n R) = 1 := by
   sorry
   done
 
+/-! Fate attenzione alle coercizioni (`↑`) (coersions) che facciamo inserire a Lean con le
+ascrizioni (type-ascriptions) esplicite.
+-/
+example (a b : ℕ) : ((a * b : ℕ) : Matrix n n R) = (a * b) := by
+  sorry
+  done
+
+/-! Le matrici sono costruite a partire dalle funzioni con due argomenti.
+La tattica `ext` può essere utile per dimostrare il risultato seguente.
+-/
+example : (fun i j => if i = j then 1 else 0 : Matrix (Fin 2) (Fin 2) R) =
+    (1 : Matrix (Fin 2) (Fin 2) R) := by
+  sorry
+  done
+/-!
+_Nota._
+Questa non è la maniera più diretta di definire la matrice identità: nell'esercizio
+successivo vediamo una maniera migliore.
+-/
+example : !![1, 0; 0, 1] = 1 := by
+  sorry
+  done
+
 /-!
 Per il prossimo esempio, può essere utile usare `det_smul`.
 -/
