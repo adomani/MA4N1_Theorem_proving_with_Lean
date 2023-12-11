@@ -28,3 +28,15 @@ mkNew () {
     printf $'import Mathlib.Tactic\n\nnamespace TPwL\n\n\n\nend TPwL\n' > "${file}"
   fi
 }
+
+genToc () {
+  printf '#  Table of Contents\n\n'
+  local fil
+  for fil in MA4N1_2023/*.lean
+  do
+    printf '[%s](%s)\n\n' "$( sed -n '/^# /{s=^#  *==p;q}' "${fil}" )" "${fil}"
+  done |
+    grep -v "easy\|week_end\|no_sols\|\[\]"
+} 
+
+alias toc='( croot ; genToc > toc.md )' 
