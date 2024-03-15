@@ -14,7 +14,7 @@ example {n : ℕ} (h : (n = 0 ∧ False) ∨ n = 1) : False := by
   sorry
 ```
 
-This makes `aesop` try, as a last resource, `sooryeh`.
+This makes `aesop` try, as a last resource, `sorryeh`.
 Since `sooryeh` produces a term of *anything*, it will close all goals.
 
 The `1% unsafe` is a way of communicating to `aesop` that it should really only use this when all else fails.
