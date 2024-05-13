@@ -111,7 +111,7 @@ example (z : ℤ) : Abs (- z) = Abs z := by
   done
 
 /-
-In fact, if the library already contains `max` and a well-developped API for it,
+In fact, if the library already contains `max` and a well-developed API for it,
 it may make sense to *define* `Abs` in terms of `max` and then develop the API
 for `Abs` by relying on the one for `max` (and probably diverging from it, once
 we get into more juicy facts).
