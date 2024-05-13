@@ -58,7 +58,7 @@ What follows can be *very* challenging: do not despair if you get stuck!
 In the proposed solution, I used
 * `Int.natAbs`, a function that takes an integer and returns its absolute value as a natural number;
 * `Int.floor`, a function that takes a real number and returns its floor as an integer number;
-* `le_trans`, a propositon that takes the proof of two inequalities of the form `a ≤ b` and `b ≤ c`
+* `le_trans`, a proposition that takes the proof of two inequalities of the form `a ≤ b` and `b ≤ c`
   as input and returns a proof of the inequality `a ≤ c`;
 
 and various other tricks, including
