@@ -56,7 +56,7 @@ example {A : Type*} [Ring A] {x y : A} (h : Commute x y) (n : ℕ) :
 /-!
 ###  Matrici
 
-Fate attenzione alle coercizioni (`↑`) (coersions) che facciamo inserire a Lean con le
+Fate attenzione alle coercizioni (`↑`) (coercions) che facciamo inserire a Lean con le
 ascrizioni (type-ascriptions) esplicite.
 -/
 example (a b : ℕ) : ((a * b : ℕ) : Matrix n n R) = (a * b) := by
@@ -110,7 +110,7 @@ example : det (2 : Matrix n n R) = 2 ^ (Fintype.card n) := by
 
 Non useremo quasi nulla sulle unità, ma appariranno nell'equivalenza
 
-`i coefficienti non-costanti di un polynomio sono nilpotenti ↔ il polinomio è invertibile`
+`i coefficienti non-costanti di un polinomio sono nilpotenti ↔ il polinomio è invertibile`
 
 Il comando `#print` qui sotto non mostra un'informazione importante, che però possiamo
 ottenere mettendo il cursore sulla `u` in `∃ u` nell'infoview.
@@ -181,7 +181,7 @@ Qui sotto potete leggere la documentazione di `apply_fun`.
 
 /-!
 L'altra tattica è `conv`.
-La sintassi e l'uso sonoe molto estesi, ma una forma comune è di usare `conv_lhs` o `conv_rhs`
+La sintassi e l'uso sono molto estesi, ma una forma comune è di usare `conv_lhs` o `conv_rhs`
 quando il goal è un'uguaglianza.
 Per esempio, `conv_lhs => rw [one_mul]` permette di riscrivere `one_mul` solo a sinistra
 dell'uguale e non anche a destra.
