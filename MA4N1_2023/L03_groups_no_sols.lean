@@ -108,7 +108,7 @@ example : addOrderOf (2 : ZMod 5) = 5 := by
 
 /-
 In the example above, you may be in the following situation:
-* you (hopefully) know the meaining of `orderOf/addOrderOf` in maths;
+* you (hopefully) know the meaning of `orderOf/addOrderOf` in maths;
 * you are confronted with the Mathlib implementation of that definition.
 
 How do we proceed?
