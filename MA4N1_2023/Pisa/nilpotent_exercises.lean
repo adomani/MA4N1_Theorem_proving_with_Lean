@@ -56,7 +56,7 @@ example {A : Type*} [Ring A] {x y : A} (h : Commute x y) (n : ℕ) :
 /-!
 ###  Matrici
 
-Fate attenzione alle coercizioni (`↑`) (coersions) che facciamo inserire a Lean con le
+Fate attenzione alle coercizioni (`↑`) (coercions) che facciamo inserire a Lean con le
 ascrizioni (type-ascriptions) esplicite.
 -/
 example (a b : ℕ) : ((a * b : ℕ) : Matrix n n R) = (a * b) := by
@@ -117,7 +117,7 @@ example : det (2 : Matrix n n R) = 2 ^ (Fintype.card n) := by
 
 Non useremo quasi nulla sulle unità, ma appariranno nell'equivalenza
 
-`i coefficienti non-costanti di un polynomio sono nilpotenti ↔ il polinomio è invertibile`
+`i coefficienti non-costanti di un polinomio sono nilpotenti ↔ il polinomio è invertibile`
 
 Il comando `#print` qui sotto non mostra un'informazione importante, che però possiamo
 ottenere mettendo il cursore sulla `u` in `∃ u` nell'infoview.

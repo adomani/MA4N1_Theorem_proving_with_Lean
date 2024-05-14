@@ -6,7 +6,7 @@ namespace TPwL_setoids
 #  `Setoid`s and equivalence relations
 
 Many constructions in mathematics are obtained by "passing to the quotient".
-The "quotient" is usually an implicit way of referring to some equivalnce relation
+The "quotient" is usually an implicit way of referring to some equivalence relation
 that we are using to identify different elements of some set.
 
 The following `Setoid` is copied from `Core` Lean.
