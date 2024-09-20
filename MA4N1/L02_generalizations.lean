@@ -149,7 +149,7 @@ by
   · -- show that monomials are monotone
     intros
     simp
-    apply Monotone.pow_right
+    apply Monotone.pow_const
     apply monotone_id
   done
 
