@@ -73,6 +73,7 @@ variable {S} [CommSemiring S] in
 example : ((X + C 1) ^ 2 : S[X]) = X ^ 2 + C 2 * X + C 1 := by
   simp?
   ring
+  congr
 
 #check natDegree
 
