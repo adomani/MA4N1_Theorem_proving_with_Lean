@@ -9,7 +9,7 @@ elab tk:"help_me!" : command => liftTermElabM do
     logInfo "What should `lemma im_add` be?\nYou may need 10 lemmas analogous to `re_add`!"
   else
     let stx ← `(command| @[simp] lemma re_add {a b : Ri} : (a + b).re = a.re + b.re := sorry )
-    Std.Tactic.TryThis.addSuggestion tk stx
+    TryThis.addSuggestion tk stx
 
 elab tk:"hint_inverse" : tactic => do
-  Std.Tactic.TryThis.addSuggestion tk (← `(tactic| rintro ⟨d⟩ ))
+  TryThis.addSuggestion tk (← `(tactic| rintro ⟨d⟩ ))
