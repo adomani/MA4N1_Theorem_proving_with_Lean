@@ -174,10 +174,10 @@ Here is an example.
 We introduce the notion of an additive group to the pairs of integers.
 -/
 
-#check add_sub_cancel'
+#check add_sub_cancel_left
 
 #synth AddCommMonoid (ℤ × ℤ)
-#check add_sub_cancel' (0 : ℤ × ℤ)
+#check add_sub_cancel_left (0 : ℤ × ℤ)
 
 @[ext]
 structure point where
