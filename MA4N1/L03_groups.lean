@@ -192,14 +192,23 @@ Let's go back to proving the result that we stated above.
 
 example : addOrderOf (2 : ZMod 5) = 5 := by
   rw [addOrderOf_eq_iff]
-  simp
-  norm_num
+  · simp
+    reduce_mod_char
+    rw [true_and]
+    intros m hm5 hm0
+    interval_cases m <;> decide
+  · omega
   done
 
 example : addOrderOf (3 : ZMod 6) = 2 := by
   rw [addOrderOf_eq_iff]
-  simp
-  norm_num
+  · simp
+    reduce_mod_char
+    rw [true_and]
+    intros m hm5 hm0
+    interval_cases m
+    decide
+  · omega
   done
 
 /-
