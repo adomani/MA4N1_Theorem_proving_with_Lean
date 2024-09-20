@@ -68,7 +68,7 @@ open SimpleGraph
 
 --  Hint: try `simp` and see if you can understand what is going on!
 lemma completeGraph_mem_edgeSet_of_ne (V : Type) {a b : V} (h : a ≠ b) :
-    ⟦(a, b)⟧ ∈ edgeSet (completeGraph V) := by
+    s(a, b) ∈ edgeSet (completeGraph V) := by
   simp [h]  -- `simp` leaves `¬ a = b` as a goal
   done
 /-
@@ -86,8 +86,8 @@ From this point of view, the `simp [h]` proof should still work, while the proof
 `exact h` is more brittle and likelier to no longer work.
 -/
 
-example {V : Type} {G : SimpleGraph V} {a b : V} (h : ⟦(a, b)⟧ ∈ G.edgeSet) :
-    ⟦(b, a)⟧ ∈ G.edgeSet := by
+example {V : Type} {G : SimpleGraph V} {a b : V} (h : s(a, b) ∈ G.edgeSet) :
+    s(b, a) ∈ G.edgeSet := by
   apply G.symm  -- `G.symm` is dot-notation: it stands for SimpleGraph.symm G
   exact h
   -- or, combining the two `exact G.symm h`
@@ -124,29 +124,28 @@ def divisibilityGraph : SimpleGraph ℕ where
       exact?
     done
 
-example : ¬ ⟦(3, 5)⟧ ∈ divisibilityGraph.edgeSet := by
+example : ¬ s(3, 5) ∈ divisibilityGraph.edgeSet := by
   simp
   unfold Adj
   unfold divisibilityGraph
-  simp
+  omega
   done
 
-example : ⟦(3, 6)⟧ ∈ divisibilityGraph.edgeSet := by
+example : s(3, 6) ∈ divisibilityGraph.edgeSet := by
   simp
   unfold Adj
   unfold divisibilityGraph
-  simp
+  omega
   done
 
 --  Try this for a potential challenge!
 example {p q : ℕ} (hp : p.Prime) (hq : q.Prime) :
-    ¬ ⟦(p, q)⟧ ∈ divisibilityGraph.edgeSet := by
+    ¬ s(p, q) ∈ divisibilityGraph.edgeSet := by
   simp
   unfold Adj
   unfold divisibilityGraph
   simp
   intro pq
-  rw [not_or]
   constructor <;> rw [Nat.prime_dvd_prime_iff_eq] <;> try assumption
   exact?
   --  if you want a more verbose and clearer proof, this also works
