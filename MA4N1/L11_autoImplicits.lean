@@ -35,7 +35,7 @@ of the file.
 ##  Change `autoImplicit` defaults
 
 Over the week-end, I have changed the default for this project:
-`autoImplicit`s are now disabled by default on `MA4N1_2023`.
+`autoImplicit`s are now disabled by default on `MA4N1`.
 
 *Warning.*
 `Lean` projects will likely have `autoImplicit`s on by default.
