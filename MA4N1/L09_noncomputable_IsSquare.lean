@@ -20,11 +20,11 @@ instance and can therefore be turned into a `Bool`.
 Sometimes, when using Lean, you may receive a warning that some definition should be marked as
 `noncomputable`.
 
-For example, Lean tells us that the definition `Real_inv` bow should be `noncomputable`:
+For example, Lean tells us that the definition `Real_inv` below should be `noncomputable`:
 if in the code below, you comment out the `noncomputable`, Lean will give the following error:
 
   failed to compile definition, consider marking it as 'noncomputable' because it depends on
-  'Real.instInvReal', and it does not have executable code
+  'Real.instInv', and it does not have executable code
 -/
 noncomputable
 def Real_inv (a : ℝ) : ℝ := a⁻¹
@@ -53,7 +53,7 @@ there is a convention that `0⁻¹ = 0`.)
 On the one hand, if `a` is non-zero, then for any Cauchy sequence converging to `a`,
 eventually the terms will be non-zero and the sequence of "inverses of non-zero terms" is Cauchy
 and converges to `a⁻¹`.
-(Given the convention on `0⁻¹ = 0`, we do not even have to worry about inverting the terms
+(Given the convention on `0⁻¹ = 0`, we do not even have to worry about inverting/omitting the terms
 of the Cauchy sequence that are equal to `0`.)
 
 So far so good.
@@ -123,7 +123,7 @@ example : IsSquare 36 := by
   done
 
 example : ¬ IsSquare 20 := by
-  --  decide  -- failed to synthesize  `Decidable ¬IsSquare 20`
+  -- decide  -- failed to synthesize  `Decidable ¬IsSquare 20`
   rw [IsSquare_iff_mul_self]
   norm_num
   done
@@ -137,11 +137,13 @@ instance {m : ℕ} : Decidable (IsSquare m) :=
 
 --  The two examples above can now be proved using `decide`.
 example : IsSquare 36 := by
-  decide
+  try decide
+  with_unfolding_all decide
   done
 
 example : ¬ IsSquare 20 := by
-  decide
+  try decide
+  with_unfolding_all decide
   done
 
 end TPwL_noncomputable_IsSquare
