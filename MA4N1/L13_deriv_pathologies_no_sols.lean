@@ -33,7 +33,7 @@ are typically referred to as "congruence" lemmas.
 In this case, you may look at `derivWithin_congr`.
 -/
 
--- useful lemmas: `derivWithin_of_open, deriv_const, derivWithin_congr`
+-- useful lemmas: `derivWithin_of_isOpen, deriv_const, derivWithin_congr`
 theorem derivWithin_step_of_neg {r : ℝ} (h0 : r < 0) :
     derivWithin step {x | x ≠ 0} r = 0 := by
   sorry
