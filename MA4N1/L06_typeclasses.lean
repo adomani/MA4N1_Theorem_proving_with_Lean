@@ -98,8 +98,9 @@ This means that we will register an `Add` instance on `point`.
 
 variable (p q : point) in
 /--
-error: failed to synthesize instance
-  HAdd point point ?m.1077
+error: failed to synthesize
+  HAdd point point ?m.1133
+Additional diagnostic information may be available using the `set_option diagnostics true` command.
 -/
 #guard_msgs in
 #check p + q
@@ -113,15 +114,52 @@ instance : Add point where
 variable (p q : point) in
 #check p + q
 
+/-!
+We want to inform Lean that `point` has the structure of an (additive) commutative group,
+where the operations are the "obvious" ones (component-wise addition).
+
+Note that in our informal description above of the "commutative group structure", we reference
+the *operations* and say that `point` is a group with respect to those operations.
+This brings up the distinction between "data" and "`Prop`":
+* the operations are "data";
+* the properties that these operations satisfy are "`Prop`".
+
+This distinction is equally important in formal and informal mathematics,
+though it is more *explicit* in formal maths.
+
+Informal mathematics sometimes blurs the distinction between the two.
+For instance, when we say that `point` is a group with with respect to the usual operations,
+we are being very implicit about what is the `zero` of the group operation.
+After all, the general theory guarantees that a group has a unique zero, so, technically,
+we do not have to provide one.
+However, it turns out that for formalization it is more convenient to be as explicit as possible
+about what the unit of our operation is (and more generally, about everything!).
+
+In this case, we isolate the definition of the zero element and of the opposite.
+The reason for isolating these two fields has more to do with a Lean-language detail, than anything
+mathematical.
+
+Note that both `zero` and `neg` are "data", and that there is more "data" in the
+additive commutative group instance on `point`.
+-/
+
+instance : Zero point where zero := {x := 0, y := 0}
+-- the above instance can also be written as
+-- `instance : Zero point := ⟨{x := 0, y := 0}⟩`
+-- or even as
+-- `instance : Zero point := ⟨⟨0, 0⟩⟩`
+
+instance : Neg point where neg a := ⟨-a.x, -a.y⟩
+
 instance : AddCommGroup point where
-  add a b         := a + b
-  add_assoc a b c := by ext <;> apply add_assoc
-  zero            := { x := 0, y := 0 }  -- this can also be written as ⟨0, 0⟩
-  zero_add a      := by ext <;> apply zero_add
-  add_zero a      := by ext <;> apply add_zero
-  neg a           := ⟨-a.x, -a.y⟩
-  add_left_neg a  := by ext <;> apply add_left_neg
-  add_comm a b    := by ext <;> apply add_comm
+  add a b          := a + b
+  add_assoc a b c  := by ext <;> apply add_assoc
+  zero_add a       := by ext <;> apply zero_add
+  add_zero a       := by ext <;> apply add_zero
+  nsmul            := nsmulRec -- do not worry about this: hover for info and ask if you want more!
+  zsmul            := zsmulRec -- do not worry about this: hover for info and ask if you want more!
+  neg_add_cancel a := by ext <;> apply neg_add_cancel
+  add_comm a b     := by ext <;> apply add_comm
 
 /-
 From now, Lean knows that the `structure` that we called `point` is an additive commutative group.
@@ -155,8 +193,9 @@ section right_and_wrong_structures
 structure A (α : Type) [Add α] where
 
 /--
-error: failed to synthesize instance
+error: failed to synthesize
   Add α
+Additional diagnostic information may be available using the `set_option diagnostics true` command.
 -/
 #guard_msgs in
 variable {α : Type} (h : A α)         -- fails
@@ -177,8 +216,11 @@ It happens when you accidentally (or unknowingly) put two different assumptions 
 imply the same typeclass.
 -/
 
-example {α : Type} /-  [Add α]/ -/ [CommRing α] (a b : α) : a + b - b = a := by
-  exact? says exact add_sub_cancel a b
+example {α : Type} /-
+    [Add α] --/
+    [CommRing α] (a b : α) :
+    a + b - b = a := by
+  exact? says exact Eq.symm (eq_sub_of_add_eq rfl)
   done
 
 class group (G : Type) where
