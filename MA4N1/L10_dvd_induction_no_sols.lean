@@ -43,8 +43,7 @@ example {n : ℕ} : (n = 0) ∨ (n = 1) ∨ (n = 2) ∨ (3 ≤ n) :=  by
   --  `Nat.zero`, `Nat.succ Nat.zero`, `Nat.succ (Nat.succ Nat.zero)` and the rest, that is
   --  `0`, `1`, `2`, `n + 1 + 1 + 1`
   rcases n with _ | _ | _ | _ <;>
-  simp
-  exact? says exact tsub_add_cancel_iff_le.mp rfl
+  omega -- `omega` is a tactic for solving linear problems with natural and integer coefficients
   done  -- do experiment with the code in this proof!
 
 /-!
@@ -106,9 +105,14 @@ The proof above probably looks more complicated than it "should".
 Even compressing it a little, it feels clunky:
 -/
 
-example : {a : ℕ | a ∣ 6} = {1, 2, 3, 6} := Set.ext
-  (⟨fun h => have := Nat.le_of_dvd (Nat.succ_pos 5) h; by interval_cases · <;> simp_all,
-    fun h => by rcases h with rfl | rfl | rfl | rfl <;> simp_all⟩)
+example : {a : ℕ | a ∣ 6} = {1, 2, 3, 6} := by
+  ext a
+  simp only [Set.mem_setOf_eq, Set.mem_insert_iff, Set.mem_singleton_iff]
+  constructor
+  · intro h
+    have := Nat.le_of_dvd (Nat.succ_pos 5) h
+    interval_cases a <;> omega
+  · rintro (rfl|rfl|rfl|rfl) <;> omega
 
 /-!
 In some sense, our intuition is correct: we have made our life hard, by
@@ -165,9 +169,9 @@ Note that working with `Finset`s can be annoying!
 
 Let's now prove an "induction principle" for natural numbers that works on divisibility.
 
-You may find `Nat.strongInductionOn` useful.
+You may find `Nat.strongRecOn` useful.
 -/
-#check Nat.strongInductionOn
+#check Nat.strongRecOn
 
 lemma dvd_induction {P : ℕ → Prop} (n : ℕ)
     (P0 : P 0)
@@ -217,7 +221,7 @@ you are not necessarily stuck!
 
 #help tactic aesop
 
-lemma Nat.Prime.divisors_mul (n : ℕ) {p : ℕ} (hp : Nat.Prime p) :
+lemma _root_.Nat.Prime.divisors_mul (n : ℕ) {p : ℕ} (hp : Nat.Prime p) :
     Nat.divisors (p * n) = Nat.divisors p * Nat.divisors n := by
   sorry
   done
