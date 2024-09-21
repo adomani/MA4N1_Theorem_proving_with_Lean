@@ -56,7 +56,7 @@ example {A : Type*} [Ring A] {x y : A} (h : Commute x y) (n : ℕ) :
 /-!
 ###  Matrici
 
-Fate attenzione alle coercizioni (`↑`) (coercions) che facciamo inserire a Lean con le
+Fate attenzione alle coercizioni (`↑`) (coersions) che facciamo inserire a Lean con le
 ascrizioni (type-ascriptions) esplicite.
 -/
 example (a b : ℕ) : ((a * b : ℕ) : Matrix n n R) = (a * b) := by
@@ -196,7 +196,6 @@ Questo è il risultato principale: il polinomio caratteristico "rovesciato" di u
 nilpotente è un'unità.
 -/
 theorem isUnit_charpolyRev {N : ℕ} (hM : M ^ N = 0) : IsUnit (charpolyRev M) := by
-  obtain ⟨A, h⟩ : 1 - (X : R[X]) • M.map C ∣ 1 - ((X : R[X]) • M.map C) ^ N := by
   sorry
   done
 
