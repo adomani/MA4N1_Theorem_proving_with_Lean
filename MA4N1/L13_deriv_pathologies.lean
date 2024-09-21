@@ -33,16 +33,16 @@ are typically referred to as "congruence" lemmas.
 In this case, you may look at `derivWithin_congr`.
 -/
 
--- useful lemmas: `derivWithin_of_open, deriv_const, derivWithin_congr`
+-- useful lemmas: `derivWithin_of_isOpen, deriv_const, derivWithin_congr`
 theorem derivWithin_step_of_neg {r : ℝ} (h0 : r < 0) :
     derivWithin step {x | x ≠ 0} r = 0 := by
   have : derivWithin (fun _ : ℝ => (0 : ℝ)) {x | x < 0} r = 0 := by
-    rw [derivWithin_of_open]
+    rw [derivWithin_of_isOpen]
     · exact deriv_const r 0
     · exact isOpen_Iio
     · exact h0
   conv_rhs => rw [← this]
-  rw [derivWithin_of_open, ← derivWithin_of_open (s := {x : ℝ | x < 0})]
+  rw [derivWithin_of_isOpen, ← derivWithin_of_isOpen (s := {x : ℝ | x < 0})]
   · unfold step
     rw [derivWithin_congr]
     · intros x hx
@@ -58,18 +58,17 @@ theorem derivWithin_step_of_neg {r : ℝ} (h0 : r < 0) :
 theorem derivWithin_step_of_pos {r : ℝ} (h0 : 0 < r) :
     derivWithin step {x | x ≠ 0} r = 0 := by
   have : derivWithin (fun _ : ℝ => (1 : ℝ)) {x | 0 < x} r = 0 := by
-    rw [derivWithin_of_open]
+    rw [derivWithin_of_isOpen]
     · exact deriv_const r 1
     · exact isOpen_Ioi
     · exact h0
   conv_rhs => rw [← this]
-  rw [derivWithin_of_open, ← derivWithin_of_open (s := {x : ℝ | 0 < x})]
+  rw [derivWithin_of_isOpen, ← derivWithin_of_isOpen (s := {x : ℝ | 0 < x})]
   · unfold step
     rw [derivWithin_congr]
     · intros x hx
       simp_all
-      intro c
-      linarith
+      linarith -- overkill, `exact hx.le` would have sufficed
     · simp only [ite_eq_right_iff, zero_ne_one]
       intro c
       linarith
@@ -93,7 +92,7 @@ theorem derivWithin_step_of_ne_zero {r : ℝ} (h0 : r ≠ 0) :
 -- Use that `{x : ℝ | x ≠ 0}` is open.
 theorem deriv_step_of_ne_zero {r : ℝ} (h0 : r ≠ 0) :
     deriv step r = 0 := by
-  rw [← derivWithin_of_open (s := {x | x ≠ 0})]
+  rw [← derivWithin_of_isOpen (s := {x | x ≠ 0})]
   · exact? says exact derivWithin_step_of_ne_zero h0
   · exact? says exact isOpen_ne
   · exact? says exact h0
