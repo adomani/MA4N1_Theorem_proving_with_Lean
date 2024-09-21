@@ -70,7 +70,7 @@ example : (fun i j => if i = j then 1 else 0 : Matrix (Fin 2) (Fin 2) R) =
     (1 : Matrix (Fin 2) (Fin 2) R) := by
   ext i j
   split_ifs with h
-  · simp [h]
+  · rw [h, one_apply_eq]
   · exact? says exact (one_apply_ne h).symm
   done
 /-!
@@ -79,7 +79,7 @@ Questa non è la maniera più diretta di definire la matrice identità: nell'ese
 successivo vediamo una maniera migliore.
 -/
 example : !![1, 0; 0, 1] = 1 := by
-  simp
+  rw [one_fin_two]
   done
 
 /-!
@@ -106,9 +106,8 @@ Per il prossimo esempio, può essere utile usare `det_smul`.
 
 example : det (2 : Matrix n n R) = 2 ^ (Fintype.card n) := by
   convert det_smul 1 (2 : R)
-  · rw [← @algebraMap_eq_smul]
-    ext i j
-    simp
+  · rw [← Algebra.algebraMap_eq_smul_one]
+    rfl
   · rw [det_one, mul_one]
   done
 
@@ -228,7 +227,8 @@ polinomio caratteristico rovesciato sono nilpotenti usiamo
 
 example {N : ℕ} (hM : M ^ N = 0) {n : ℕ} (hn : n ≠ 0) : IsNilpotent ((charpolyRev M).coeff n) := by
   -- invece di `have` e `rcases`, li potremmo combinare in `obtain ⟨-, h⟩`.
-  have : _ ∧ ∀ (i : ℕ), i ≠ 0 → IsNilpotent (coeff _ i) := by
+  have : IsUnit (M.charpolyRev.coeff 0) ∧
+      ∀ (i : ℕ), i ≠ 0 → IsNilpotent (coeff (M.charpolyRev) i) := by
     exact (Polynomial.isUnit_iff_coeff_isUnit_isNilpotent).mp (isUnit_charpolyRev M hM)
   rcases this with ⟨-, h⟩
   apply h _ hn
