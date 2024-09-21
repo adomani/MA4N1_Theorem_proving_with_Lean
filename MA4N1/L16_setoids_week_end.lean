@@ -10,11 +10,8 @@ namespace TPwL_setoids_week_end
 --  A left-over lemma from the lecture on Tuesday
 lemma two_dvd_sub_one_iff (d : ℤ) : 2 ∣ d - 1 ↔ ¬ 2 ∣ d := by
   constructor <;> intro h
-  · intro k -- `simpa using dvd_sub h k` already closes the goal
-    have := dvd_sub h k
-    simp at this
-  · simp only [Int.two_dvd_ne_zero] at h
-    exact Int.ModEq.dvd h.symm  -- some DefEq abuse, found by `exact?`.
+  · omega
+  · omega
   done
 
 /-- `Week` is the finite Type with exactly 7 constructors, one for each day of the week. -/
@@ -102,14 +99,17 @@ example : Quotient Week_setoid ≃ Bool where
   left_inv := by
     rintro ⟨d⟩
     dsimp only
-    split_ifs
+    split_ifs with h
     · apply d.equiv_class_of_Sunday.mpr
-      induction d <;> aesop
-    · apply d.equiv_class_of_Monday.mpr
-      induction d <;> aesop
+      induction d <;> cases h <;> simp
+    · simp only [Bool.not_eq_true] at h
+      apply d.equiv_class_of_Monday.mpr
+      induction d <;> cases h <;> simp
     done
   right_inv := by
-    simp only
+    rintro (x|x) -- split into `true`/`false`
+    · simp [week_end?]
+    · simp [week_end?]
     done
 
 end Week
