@@ -2,10 +2,14 @@ import Lake
 open Lake DSL
 
 package «mA4N1» where
+  leanOptions := #[
+    ⟨`lang.lemmaCmd, true⟩
+  ]
   -- add any package configuration options here
   moreServerOptions := #[
     ⟨`pp.unicode.fun, true⟩, -- pretty-prints `fun a ↦ b`
-    ⟨`autoImplicit, false⟩
+    ⟨`autoImplicit, false⟩,
+    ⟨`weak.lang.lemmaCmd, true⟩
   ]
 
 require mathlib from git
