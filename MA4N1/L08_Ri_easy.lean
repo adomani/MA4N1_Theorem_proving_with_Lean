@@ -1,4 +1,5 @@
 import Mathlib.Tactic
+import MA4N1.help_me
 
 namespace TPwL_Ri_easy
 
@@ -88,19 +89,21 @@ The "data" fields
 have already been provided above, so we no longer need to give them here.
 -/
 instance : CommRing Ri where
-  add_assoc     := by solve
-  zero_add      := by solve
-  add_zero      := by solve
-  add_comm      := by solve
-  left_distrib  := by solve
-  right_distrib := by solve
-  zero_mul      := by solve
-  mul_zero      := by solve
-  mul_assoc     := by solve
-  one_mul       := by solve
-  mul_one       := by solve
-  add_left_neg  := by solve
-  mul_comm      := by solve
+  add_assoc      := by solve
+  zero_add       := by solve
+  add_zero       := by solve
+  add_comm       := by solve
+  left_distrib   := by solve
+  right_distrib  := by solve
+  zero_mul       := by solve
+  mul_zero       := by solve
+  mul_assoc      := by solve
+  one_mul        := by solve
+  mul_one        := by solve
+  neg_add_cancel := by solve
+  mul_comm       := by solve
+  nsmul          := nsmulRec
+  zsmul          := zsmulRec
 
 /-!
 
@@ -128,12 +131,12 @@ We learned our lesson: let's prove our silly `rfl` lemmas about `Inv.inv`.
 @[simp] lemma im_inv {a : Ri} : (a⁻¹).im = - a.im / (a.re ^ 2 + a.im ^ 2) := rfl
 
 --  Hint: you may find this lemma useful!
-#check add_eq_zero_iff'
+#check add_eq_zero_iff_of_nonneg
 
 lemma add_square_eq_zero {a b : ℝ} (ha : a ^ 2 + b ^ 2 = 0) :
     a = 0 ∧ b = 0 := by
   --  `rwa` means "try `assumption` after the rewrite"
-  rwa [← sq_eq_zero_iff, ← sq_eq_zero_iff (a := b), ← add_eq_zero_iff'] <;>
+  rwa [← sq_eq_zero_iff, ← sq_eq_zero_iff (a := b), ← add_eq_zero_iff_of_nonneg] <;>
   exact sq_nonneg _
   done
 
@@ -185,5 +188,7 @@ instance : Field Ri where
       all_goals exact add_square_ne_zero ha
     done
   inv_zero := by solve
+  nnqsmul := _ -- as usual, an implementation detail: hover for some info
+  qsmul   := _ -- as usual, an implementation detail: hover for some info
 
 end TPwL_Ri_easy
