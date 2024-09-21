@@ -47,7 +47,7 @@ instance Week_setoid : Setoid Week where
 --  If you like an equivalent but more obfuscated version of the instance above, here it is!
 /-
 instance : Setoid Week where
-  r := (work? · = work? ·)
+  r := (week_end? · = week_end? ·)
   iseqv := { refl  := fun _ => rfl
              symm  := fun {_ _} => .symm
              trans := fun {_ _ _} => .trans }
