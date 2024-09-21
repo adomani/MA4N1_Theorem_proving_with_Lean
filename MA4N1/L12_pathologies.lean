@@ -79,11 +79,16 @@ def myDiv (p q : ℚ) (h : q ≠ 0) : ℚ := p / q
 
 
 /--
-error: failed to synthesize instance
+error: failed to synthesize
   OfNat (1 ≠ 0 → ℚ) 2
+numerals are polymorphic in Lean, but the numeral `2` cannot be used in a context where the expected type is
+  1 ≠ 0 → ℚ
+due to the absence of the instance above
+Additional diagnostic information may be available using the `set_option diagnostics true` command.
 ---
 error: unsolved goals
-⊢ myDiv 2 1 = 2-/
+⊢ myDiv 2 1 = 2
+-/
 #guard_msgs in
 example : myDiv 2 1 = 2 := by
   done
@@ -107,7 +112,7 @@ error: unsolved goals
 ⊢ 0 ≠ 0
 ---
 error: unsolved goals
-⊢ myDiv 1 0 (_ : 0 ≠ 0) = 0
+⊢ myDiv 1 0 ⋯ = 0
 -/
 #guard_msgs in
 example : myDiv 1 0 (by
