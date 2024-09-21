@@ -46,7 +46,9 @@ We still did not see this, but the Type of subsets of a given Type `V` is
 denoted by `Set V` is `Mathlib`.
 So, writing `U : Set V` means "`U` is a subset of `V`".
 
-The notation for an edge, viewed as an unordered pair is `⟦(a, b)⟧`.
+The notation for an edge, viewed as an unordered pair is `s(a, b)`.
+The `s` is part of the syntax: this is a `s`ymmetric pair.
+In fact, separating `s` and `(` by a space, yields a syntax error.
 -/
 
 --  Hover over these notions, to see the internal documentation.
