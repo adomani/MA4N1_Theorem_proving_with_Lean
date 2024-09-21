@@ -191,16 +191,16 @@ example : Quotient parity_setoid ≃ Bool where
     split_ifs with h
     · apply (equiv_class_of_zero d).mpr
       convert h
-      rw [← decide_eq_decide]
-      simp only [Bool.decide_coe]
+      simp [← decide_eq_decide]
     · apply (equiv_class_of_one d).mpr
       apply (two_dvd_sub_one_iff d).mpr
       convert h
-      rw [← decide_eq_decide]
-      simp
+      simp [← decide_eq_decide]
     done
   right_inv := by
-    simp only
+    rintro (x|x) -- split into `true`/`false`
+    · simp
+    · simp
     done
 
 end
