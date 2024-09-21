@@ -1,4 +1,5 @@
 import Mathlib.Tactic
+import MA4N1.help_me
 
 namespace TPwL_Ri_easy_no_sols
 
@@ -74,20 +75,21 @@ The "data" fields
 have already been provided above, so we no longer need to give them here.
 -/
 instance : CommRing Ri where
-  add_assoc     := by sorry
-  zero_add      := by sorry
-  add_zero      := by sorry
-  add_comm      := by sorry
-  left_distrib  := by sorry
-  right_distrib := by sorry
-  zero_mul      := by sorry
-  mul_zero      := by sorry
-  mul_assoc     := by sorry
-  one_mul       := by sorry
-  mul_one       := by sorry
-  add_left_neg  := by sorry
-  mul_comm      := by sorry
-
+  add_assoc      := by sorry
+  zero_add       := by sorry
+  add_zero       := by sorry
+  add_comm       := by sorry
+  left_distrib   := by sorry
+  right_distrib  := by sorry
+  zero_mul       := by sorry
+  mul_zero       := by sorry
+  mul_assoc      := by sorry
+  one_mul        := by sorry
+  mul_one        := by sorry
+  neg_add_cancel := by sorry
+  mul_comm       := by sorry
+  nsmul := nsmulRec
+  zsmul := zsmulRec
 /-!
 
 ##  Dealing with inverses
@@ -114,7 +116,7 @@ We learned our lesson: let's prove our silly `rfl` lemmas about `Inv.inv`.
 @[simp] lemma im_inv {a : Ri} : (a⁻¹).im = - a.im / (a.re ^ 2 + a.im ^ 2) := rfl
 
 --  Hint: you may find this lemma useful!
-#check add_eq_zero_iff'
+#check add_eq_zero_iff_of_nonneg
 
 lemma add_square_eq_zero {a b : ℝ} (ha : a ^ 2 + b ^ 2 = 0) :
     a = 0 ∧ b = 0 := by
@@ -154,5 +156,7 @@ instance : Field Ri where
   inv_zero := by
     sorry
     done
+  nnqsmul := _ -- as usual, an implementation detail: hover for some info
+  qsmul   := _ -- as usual, an implementation detail: hover for some info
 
 end TPwL_Ri_easy_no_sols
