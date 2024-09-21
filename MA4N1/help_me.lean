@@ -1,4 +1,7 @@
-import Mathlib.Tactic.Basic
+import Lean.Meta.Tactic.TryThis
+import Batteries.Tactic.Lemma
+
+set_option lang.lemmaCmd true
 
 open Lean Elab Command Meta Tactic
 
