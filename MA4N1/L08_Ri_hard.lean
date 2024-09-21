@@ -47,6 +47,7 @@ some missing key API lemmas!
 
 Once you have had enough, try to think of what lemmas would be helpful.
 If nothing comes to mind, type `help_me!` for a hint!
+If you are still unsure, `help_all` will give you all the API lemmas.
 
 We are now (not) ready to prove that `Ri` is a `CommRing`.
 
@@ -60,45 +61,47 @@ The "data" fields
 have already been provided above, so we no longer need to give them here.
 -/
 instance : CommRing Ri where
-  add_assoc     := by
+  add_assoc := by
     sorry
     done
-  zero_add      := by
+  zero_add := by
     sorry
     done
-  add_zero      := by
+  add_zero := by
     sorry
     done
-  add_comm      := by
+  add_comm := by
     sorry
     done
-  left_distrib  := by
+  left_distrib := by
     sorry
     done
   right_distrib := by
     sorry
     done
-  zero_mul      := by
+  zero_mul := by
     sorry
     done
-  mul_zero      := by
+  mul_zero := by
     sorry
     done
-  mul_assoc     := by
+  mul_assoc := by
     sorry
     done
-  one_mul       := by
+  one_mul := by
     sorry
     done
-  mul_one       := by
+  mul_one := by
     sorry
     done
-  add_left_neg  := by
+  neg_add_cancel := by
     sorry
     done
-  mul_comm      := by
+  mul_comm := by
     sorry
     done
+  nsmul := nsmulRec
+  zsmul := zsmulRec
 
 /-!
 
@@ -124,7 +127,7 @@ instance : Inv Ri where
 lemma add_square_eq_zero {a b : ℝ} (ha : a ^ 2 + b ^ 2 = 0) :
     a = 0 ∧ b = 0 := by
   --  `rwa` means "try `assumption` after the rewrite"
-  rwa [← sq_eq_zero_iff, ← sq_eq_zero_iff (a := b), ← add_eq_zero_iff'] <;>
+  rwa [← sq_eq_zero_iff, ← sq_eq_zero_iff (a := b), ← add_eq_zero_iff_of_nonneg] <;>
   exact sq_nonneg _
   done
 
@@ -153,6 +156,8 @@ results about the real numbers to close a goal.
 
 #help tactic apply_fun
 
+help_all
+
 noncomputable
 instance : Field Ri where
   exists_pair_ne := by
@@ -176,7 +181,9 @@ instance : Field Ri where
       all_goals exact add_square_ne_zero ha
     done
   inv_zero := by
-    sorry
+    ext <;> simp
     done
+  nnqsmul := _ -- as usual, an implementation detail: hover for some info
+  qsmul   := _ -- as usual, an implementation detail: hover for some info
 
 end TPwL_Ri_hard
