@@ -56,7 +56,7 @@ example {A : Type*} [Ring A] {x y : A} (h : Commute x y) (n : ℕ) :
 /-!
 ###  Matrici
 
-Fate attenzione alle coercizioni (`↑`) (coersions) che facciamo inserire a Lean con le
+Fate attenzione alle coercizioni (`↑`) (coercions) che facciamo inserire a Lean con le
 ascrizioni (type-ascriptions) esplicite.
 -/
 example (a b : ℕ) : ((a * b : ℕ) : Matrix n n R) = (a * b) := by
