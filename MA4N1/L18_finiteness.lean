@@ -1,5 +1,5 @@
 import Mathlib.Tactic
-import Mathlib.NumberTheory.ZetaFunction
+import Mathlib.NumberTheory.LSeries.RiemannZeta
 
 namespace TPwL_finiteness
 
