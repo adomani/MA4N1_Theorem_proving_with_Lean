@@ -44,13 +44,18 @@ Let's begin with some simple examples.
 --  First, one to get the syntax working.
 example : 0 < 10 := by calc
   _ < 1     := by norm_num
-  _ ≤ 2     := by norm_num  -- indent me more or less to see an error message
+  _ ≤ 2     := by norm_num  -- indent me more to see an error message
   _ = 1 + 1 := by norm_num
   _ ≤ 10    := by norm_num
 
 --  annoying: can we use `calc`?
 example {n : ℕ} {x : ℝ} (h : 1 ≤ x) : n ≤ n * x := by
   rw [← mul_one n]
+/-
+  calc
+    _ = ↑(n * 1) * (1 : ℝ) := by rw [mul_one (M := ℝ)]
+    _ ≤ _ := by apply mul_le_mul le_rfl h zero_le_one <| Nat.cast_nonneg _
+--/
   sorry
   done
 
