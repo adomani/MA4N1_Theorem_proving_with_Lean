@@ -68,7 +68,11 @@ depend on the actual entries.
 -/
 
 --  Better to use the dedicated notation!
-example : !![1, 0; 0, 1] = 1 := by simp
+example : !![1, 0; 0, 1] = 1 := by exact one_fin_two.symm -- found with `exact?`
+
+--  Also, let's make `one_fin_two` into a `simp` lemma.
+attribute [simp] one_fin_two
+
 /-
 Hopefully the notation is self-explanatory:
 we can provide a matrix to Lean by using the following syntax
@@ -90,7 +94,7 @@ example {n : ℕ} : !![1, 1; 0, 1] ^ n = !![1, n; 0, 1] := by
   induction n with
   | zero => simp
   | succ n ih =>
-    rw [pow_succ, ih]
+    rw [pow_succ', ih]
     simp
   done
 
