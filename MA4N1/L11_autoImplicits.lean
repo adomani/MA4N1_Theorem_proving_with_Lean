@@ -54,7 +54,7 @@ and convert it to
 ```lean
 package «my_project» where
   -- add any package configuration options here
-  moreServerArgs := #[ "-DautoImplicit=false" ]
+  moreServerOptions := #[⟨`autoImplicit, false⟩]
 ```
 
 Notice that `set_option [whatever]` are *scoped*:
@@ -94,7 +94,7 @@ has type
 
 /--
 error: application type mismatch
-  G2.Adj
+  SimpleGraph.Adj G2
 argument
   G2
 has type
