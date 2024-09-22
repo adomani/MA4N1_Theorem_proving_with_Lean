@@ -238,6 +238,12 @@ example : even 8 := by
   trivial
   done
 
+-- `repeat` can be useful
+example : even 8 := by
+  repeat unfold even
+  trivial
+  done
+
 example (n : ℕ) : even (2 * n) := by
   induction n with
   | zero => simp? -- `simp` is stuck, since it does not know that `even 0` is `True`
