@@ -1,6 +1,8 @@
 import Mathlib.Tactic
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 
+#allow_unused_tactic Lean.Parser.Tactic.done
+
 open Matrix
 
 /-!
