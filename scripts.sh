@@ -39,4 +39,4 @@ genToc () {
     grep -v "easy\|week_end\|no_sols\|\[\]"
 }
 
-alias toc='( croot ; genToc > toc.md )'
+alias toc='( croot ; genToc | sed -z "s=\n\n*=\n\n=g" > toc.md )'
