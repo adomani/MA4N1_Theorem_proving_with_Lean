@@ -2,7 +2,7 @@ import Mathlib.Tactic
 import Mathlib.Algebra.Order.Chebyshev
 import Mathlib.MeasureTheory.Integral.FundThmCalculus
 
-#allow_unused_tactic Lean.Parser.Tactic.«done»
+#allow_unused_tactic Lean.Parser.Tactic.done
 
 namespace TPwL_navigating_Mathlib
 

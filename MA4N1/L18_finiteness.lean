@@ -1,7 +1,7 @@
 import Mathlib.Tactic
 import Mathlib.NumberTheory.LSeries.RiemannZeta
 
-#allow_unused_tactic Lean.Parser.Tactic.«done»
+#allow_unused_tactic Lean.Parser.Tactic.done
 
 namespace TPwL_finiteness
 

@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 
-#allow_unused_tactic Lean.Parser.Tactic.«done»
+#allow_unused_tactic Lean.Parser.Tactic.done
 
 /-!
 #  Matrices in Lean

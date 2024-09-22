@@ -2,7 +2,7 @@ import Mathlib.Combinatorics.SimpleGraph.Hasse
 import Mathlib.Combinatorics.SimpleGraph.Basic
 import Mathlib.Data.PNat.Prime
 
-#allow_unused_tactic Lean.Parser.Tactic.«done»
+#allow_unused_tactic Lean.Parser.Tactic.done
 
 namespace TPwL_graphs
 
