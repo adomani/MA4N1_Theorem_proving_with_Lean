@@ -3,7 +3,7 @@ open Lake DSL
 
 package «mA4N1» where
   leanOptions := #[
-    ⟨`lang.lemmaCmd, true⟩
+    ⟨`weak.lang.lemmaCmd, true⟩
   ]
   -- add any package configuration options here
   moreServerOptions := #[
