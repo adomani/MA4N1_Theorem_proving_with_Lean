@@ -18,9 +18,9 @@ exme () {
 }
 
 mkNew () {
-  local tl="$(ls MA4N1_2023/L* | sed -n 's=MA4N1_2023/L0*\([0-9][0-9]*\)_.*=\1=p' | tail -1)"
+  local tl="$(ls MA4N1/L* | sed -n 's=MA4N1/L0*\([0-9][0-9]*\)_.*=\1=p' | tail -1)"
   tl="$(printf '%02d' "$(( tl + 1 ))")"
-  local file="$( printf 'MA4N1_2023/L%s_%s.lean' "${tl}" "${1// /_}" )"
+  local file="$( printf 'MA4N1/L%s_%s.lean' "${tl}" "${1// /_}" )"
   if [ -f "${file}" ]; then
     lcyan $'File' ; printf ' %s ' "${file}" ; lcyan $'already exists!\n'
   else
@@ -32,11 +32,11 @@ mkNew () {
 genToc () {
   printf '#  Table of Contents\n\n'
   local fil
-  for fil in MA4N1_2023/*.lean
+  for fil in MA4N1/*.lean
   do
     printf '[%s](%s)\n\n' "$( sed -n '/^# /{s=^#  *==p;q}' "${fil}" )" "${fil}"
   done |
     grep -v "easy\|week_end\|no_sols\|\[\]"
-} 
+}
 
-alias toc='( croot ; genToc > toc.md )' 
+alias toc='( croot ; genToc > toc.md )'
