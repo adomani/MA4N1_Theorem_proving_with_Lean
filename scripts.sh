@@ -34,7 +34,7 @@ genToc () {
   local fil
   for fil in MA4N1/*.lean
   do
-    printf '[%s](%s)\n\n' "$( sed -n '/^# /{s=^#  *==p;q}' "${fil}" )" "${fil}"
+    printf '[%s](%s) (%s)\n\n' "$( sed -n '/^# /{s=^#  *==p;q}' "${fil}" )" "${fil}" "${fil}"
   done |
     grep -v "easy\|week_end\|no_sols\|\[\]"
 }
