@@ -1,6 +1,8 @@
 import Mathlib.Order.Filter.Basic
 import Mathlib.Data.Real.Archimedean
 
+#allow_unused_tactic Lean.Parser.Tactic.«done»
+
 namespace TPwL_limits_no_sols
 
 /-!

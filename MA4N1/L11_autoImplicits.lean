@@ -1,6 +1,8 @@
 import Mathlib.Tactic
 import Mathlib.Combinatorics.SimpleGraph.Basic
 
+#allow_unused_tactic Lean.Parser.Tactic.«done»
+
 namespace TPwL_autoImplicits
 
 /-!

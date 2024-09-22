@@ -1,5 +1,7 @@
 import Mathlib.Tactic
 
+#allow_unused_tactic Lean.Parser.Tactic.«done»
+
 namespace TPwL_groups_no_sols
 
 /-!

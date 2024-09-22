@@ -1,6 +1,8 @@
 import Mathlib.Tactic
 import MA4N1.help_me
 
+#allow_unused_tactic Lean.Parser.Tactic.«done»
+
 namespace TPwL_Ri_hard
 
 /-!
