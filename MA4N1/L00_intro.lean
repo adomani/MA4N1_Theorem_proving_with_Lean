@@ -90,11 +90,11 @@ then, effectively, we have to prove two equalities
 
 You can think of the conjunction `and` among the *assumptions* as giving you two assumptions
 within the same proof.
-You can think of the conjunction `and` among the *conclusions* as requiring you two *separate*
-proofs with the same assumptions.
+You can think of the conjunction `and` among the *conclusions* as requiring you to give
+two *separate* proofs with the same assumptions.
 
 Exercise.
-What changes if we replace `and` for `or` in the previous discussion?
+What changes if we replace `and` with `or` in the previous discussion?
 
 Consequently, the tactics that we use may be different, based on whether "similar looking"
 statements are assumptions or conclusions.
