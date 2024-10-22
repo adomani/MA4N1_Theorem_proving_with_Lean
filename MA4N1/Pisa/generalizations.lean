@@ -79,13 +79,11 @@ end general
 Finally, let's confirm that the more general result proves to the special cases that we know.
 -/
 
-example (f : ℕ[X]) : Monotone (fun n ↦ f.eval n) :=
-by
+example (f : ℕ[X]) : Monotone (fun n ↦ f.eval n) := by
   sorry
   done
 
-example (f : ℝ≥0[X]) : Monotone (fun n ↦ f.eval n) :=
-by
+example (f : ℝ≥0[X]) : Monotone (fun n ↦ f.eval n) := by
   sorry
   done
 

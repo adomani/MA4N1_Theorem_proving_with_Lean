@@ -102,11 +102,10 @@ The syntax is
   Usually, this is a sequence of tactics inside a `by ... done` block.
 -/
 theorem my_induction
-  (P_zero  : P 0)
-  (P_add   : ∀ p q, P p → P q → P (p + q))
-  (P_X_pow : ∀ n : ℕ, P (X ^ n)) :
-  P f :=
-by
+    (P_zero  : P 0)
+    (P_add   : ∀ p q, P p → P q → P (p + q))
+    (P_X_pow : ∀ n : ℕ, P (X ^ n)) :
+    P f := by
   -- hover over `Polynomial.induction_on'`
   refine Polynomial.induction_on' f ?_ ?_
   · -- `exact?` reports `exact P_add`
@@ -135,8 +134,7 @@ by
 
 The same (almost) as `theorem`, except that we cannot assign it a name.
 -/
-example : Monotone (fun n ↦ f.eval n) :=
-by
+example : Monotone (fun n ↦ f.eval n) := by
   apply my_induction f _
   · -- show that the `0`-polynomial is monotone
     simp
@@ -184,15 +182,12 @@ end next
 Finally, let's confirm that the more general result proves to the special cases that we know.
 -/
 
-example (f : ℕ[X]) : Monotone (fun n ↦ f.eval n) :=
-by
+example (f : ℕ[X]) : Monotone (fun n ↦ f.eval n) := by
   sorry
   done
 
-example (f : ℝ≥0[X]) : Monotone (fun n ↦ f.eval n) :=
-by
+example (f : ℝ≥0[X]) : Monotone (fun n ↦ f.eval n) := by
   sorry
   done
-
 
 end TPwL_generalizations
