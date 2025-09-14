@@ -156,16 +156,16 @@ lemma Nat.Prime.divisors_mul (n : ℕ) {p : ℕ} (hp : Nat.Prime p) :
   --  * if we change a lemma in the output of `tac?`, but `tac?` still works,
   --    we only have to re-run `tac?`, instead of having to find out what had
   --    generated `tac [...]`.
-  simp? [hp.divisors, dvd_mul, Nat.dvd_prime hp] says
-    simp only [Nat.mem_divisors, Nat.isUnit_iff, dvd_mul, Nat.dvd_prime hp, exists_and_left,
-      exists_eq_or_imp, one_mul, exists_eq_right', exists_eq_left, ne_eq, mul_eq_zero, hp.divisors,
-      Finset.mem_singleton, Finset.mem_insert, exists_eq_right]
+  simp? [dvd_mul, Nat.dvd_prime hp, hp.divisors] says
+    simp only [Nat.mem_divisors, dvd_mul, Nat.dvd_prime hp, exists_and_left, exists_eq_or_imp,
+      one_mul, exists_eq_right', exists_eq_left, ne_eq, mul_eq_zero, not_or, hp.divisors,
+      Finset.mem_insert, Finset.mem_singleton, exists_eq_right]
   -- `aesop` can finish the proof from here
   -- below is a proof "by hand": let's see how we might discover it.
   constructor <;> intro h
   · rcases h with ⟨h | ⟨h, hh, rfl⟩, j⟩
-    · simp [h, not_or.mp j]
-    · simp [hh, not_or.mp j]
+    · simp [h, j]
+    · simp [hh, j]
   · rcases h with ⟨h, j⟩ | ⟨b, ⟨bn, n0⟩, rfl⟩
     · simp [h, j]
       exact? says exact Nat.Prime.ne_zero hp

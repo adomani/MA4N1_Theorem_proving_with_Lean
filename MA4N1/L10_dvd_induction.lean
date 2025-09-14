@@ -261,9 +261,9 @@ lemma _root_.Nat.Prime.divisors_mul (n : ℕ) {p : ℕ} (hp : Nat.Prime p) :
   --    we only have to re-run `tac?`, instead of having to find out what had
   --    generated `tac [...]`.
   simp? [hp.divisors, dvd_mul, Nat.dvd_prime hp] says
-    simp only [Nat.mem_divisors, Nat.isUnit_iff, dvd_mul, Nat.dvd_prime hp, exists_and_left,
-      exists_eq_or_imp, one_mul, exists_eq_right', exists_eq_left, ne_eq, mul_eq_zero, hp.divisors,
-      Finset.mem_singleton, Finset.mem_insert, exists_eq_right]
+    simp only [Nat.mem_divisors, dvd_mul, Nat.dvd_prime hp, exists_and_left, exists_eq_or_imp,
+      one_mul, exists_eq_right', exists_eq_left, ne_eq, mul_eq_zero, not_or, hp.divisors,
+      Finset.mem_insert, Finset.mem_singleton, exists_eq_right]
   aesop
   done
 
@@ -276,7 +276,7 @@ Our main result: the divisors of a product are the product of the divisors.
 
 example {m n : ℕ} : Nat.divisors m * Nat.divisors n = Nat.divisors (m * n) := by
   apply dvd_induction m
-  · simp only [Nat.divisors_zero, Finset.empty_mul, zero_mul, forall_const]
+  · simp only [Nat.divisors_zero, Finset.empty_mul, zero_mul]
   · simp
   · intros p a hp _ _ han
     rw [hp.divisors_mul, mul_assoc p, hp.divisors_mul, mul_assoc, han]

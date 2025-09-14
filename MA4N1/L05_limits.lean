@@ -37,7 +37,7 @@ example {n : ℕ} : ∃ m, n < m := by
   exact?
   done
 
-example {a : ℝ} : limit (fun n => a) a := by
+example {a : ℝ} : limit (fun _n => a) a := by
   unfold limit
   intros ε h
   use 0
