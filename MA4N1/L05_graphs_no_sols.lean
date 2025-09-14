@@ -4,7 +4,7 @@ import Mathlib.Data.PNat.Prime
 
 #allow_unused_tactic Lean.Parser.Tactic.done
 
-namespace TPwL_graphs_no_sols
+namespace TPwL_graphs
 
 /-
 #  Graphs in `Mathlib`
@@ -62,8 +62,8 @@ In fact, separating `s` and `(` by a space, yields a syntax error.
 /-
 `Mathlib` already has the definition of some graphs:
 -/
-#check completeGraph
-#check emptyGraph
+#check SimpleGraph.completeGraph
+#check SimpleGraph.emptyGraph
 #check completeBipartiteGraph
 #check SimpleGraph.pathGraph
 #check SimpleGraph.hasse  -- graph associated to an order
@@ -132,4 +132,4 @@ example {p q : ℕ} (hp : p.Prime) (hq : q.Prime) :
   sorry
   done
 
-end TPwL_graphs_no_sols
+end TPwL_graphs
