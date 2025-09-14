@@ -108,9 +108,8 @@ lemma aux (a : ℝ) : -1 ≤ (Int.natAbs ⌊a⌋) - a := by
     apply le_trans (b := (⌊a⌋ : ℝ))
     · exact Eq.le rfl
     · have := aux1 ⌊a⌋
-      have : ⌊a⌋ ≤ ((Int.natAbs ⌊a⌋ : ℤ) : ℝ) := by
-        exact?
-      exact this
+      norm_cast
+      exact?
   done
 
 lemma no_limit_id {a : ℝ} : ¬ limit (fun n => n) a := by
