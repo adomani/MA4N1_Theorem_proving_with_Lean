@@ -58,10 +58,10 @@ This is a definition in `Mathlib`:
 This is typically a "collection" of properties that we would like to treat as a single "bundle".
 For example
 -/
-#check Basis       --  a basis of a vector space
-#check MonoidHom   --  a homomorphism of monoids (e.g. of groups!)
-#check Units       --  the units in a monoid (e.g. in a ring)
-#check SimpleGraph --  a simple, undirected, loopless graph
+#check Module.Basis  --  a basis of a vector space
+#check MonoidHom     --  a homomorphism of monoids (e.g. of groups!)
+#check Units         --  the units in a monoid (e.g. in a ring)
+#check SimpleGraph   --  a simple, undirected, loopless graph
 
 /-
 
@@ -101,8 +101,9 @@ This means that we will register an `Add` instance on `point`.
 variable (p q : point) in
 /--
 error: failed to synthesize
-  HAdd point point ?m.1133
-Additional diagnostic information may be available using the `set_option diagnostics true` command.
+  HAdd point point ?m.3
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
 -/
 #guard_msgs in
 #check p + q
@@ -197,7 +198,8 @@ structure A (α : Type) [Add α] where
 /--
 error: failed to synthesize
   Add α
-Additional diagnostic information may be available using the `set_option diagnostics true` command.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
 -/
 #guard_msgs in
 variable {α : Type} (h : A α)         -- fails
