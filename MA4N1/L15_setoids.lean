@@ -1,4 +1,4 @@
-import Mathlib.Tactic
+import Mathlib--.Tactic
 
 #allow_unused_tactic Lean.Parser.Tactic.done
 
@@ -112,7 +112,7 @@ example : (⟦a⟧ : Quotient Nat_setoid) = ⟦b⟧ ↔ a ≈ b := by
   exact? says exact Quotient.eq
   done
 
-#check Quotient.eq_rel
+#check Quotient.eq'
 #check Quot.sound
 
 instance parity_setoid : Setoid ℤ where
@@ -133,6 +133,11 @@ instance parity_setoid : Setoid ℤ where
       · infer_instance
       done
   }
+
+-- Let's record that `parity_setoid` satisfies `IsSymm`, which is the typeclass analogue of
+-- the `symm` field from above.
+instance : IsSymm ℤ parity_setoid where
+  symm _a _b hab := Setoid.symm' parity_setoid hab
 
 --  `≃` is the symbol for an `Equiv
 #print Equiv
