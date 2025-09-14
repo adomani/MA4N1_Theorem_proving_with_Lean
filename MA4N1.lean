@@ -13,8 +13,8 @@ import MA4N1.L06_typeclasses
 import MA4N1.L07_calculations
 import MA4N1.L08_Ri_easy
 import MA4N1.L08_Ri_easy_no_sols
---import MA4N1.L08_Ri_hard
---import MA4N1.L08_Ri_hard_no_sols
+import MA4N1.L08_Ri_hard
+import MA4N1.L08_Ri_hard_no_sols
 import MA4N1.L09_noncomputable_IsSquare
 import MA4N1.L10_dvd_induction
 import MA4N1.L10_dvd_induction_no_sols
@@ -29,4 +29,9 @@ import MA4N1.L16_setoids_week_end_no_sols
 import MA4N1.L17_navigating_Mathlib
 import MA4N1.L18_finiteness
 import MA4N1.Matrices
+import MA4N1.Pisa.generalizations
+import MA4N1.Pisa.matrici_nilpotenti
+import MA4N1.Pisa.nilpotent_exercises
+import MA4N1.Pisa.nilpotent_exercises_no_sols
+import MA4N1.Pisa.nilpotent_matrices
 import MA4N1.help_me
