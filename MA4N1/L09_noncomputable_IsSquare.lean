@@ -119,13 +119,13 @@ theorem IsSquare_iff_mul_self {m : ℕ} : IsSquare m ↔ Nat.sqrt m * Nat.sqrt m
 --  The following examples can be proved using the result above.
 --  `norm_num` does not work before the `rw` and neither does `decide`.
 example : IsSquare 36 := by
-  --  decide  -- failed to synthesize `Decidable (IsSquare 36)`
+  --decide  -- failed to synthesize `Decidable (IsSquare 36)`
   rw [IsSquare_iff_mul_self]
   norm_num
   done
 
 example : ¬ IsSquare 20 := by
-  -- decide  -- failed to synthesize  `Decidable ¬IsSquare 20`
+  --decide  -- failed to synthesize  `Decidable ¬IsSquare 20`
   rw [IsSquare_iff_mul_self]
   norm_num
   done
@@ -135,16 +135,16 @@ example : ¬ IsSquare 20 := by
 --  and a proof of the equivalence of the "`Decidable`" `Prop` and the not-yet-`Decidable`
 --  one and "transports" the decidability.
 instance {m : ℕ} : Decidable (IsSquare m) :=
-  decidable_of_iff' (Nat.sqrt m * Nat.sqrt m = m) IsSquare_iff_mul_self
+  decidable_of_iff' _ IsSquare_iff_mul_self
 
 --  The two examples above can now be proved using `decide`.
 example : IsSquare 36 := by
-  try decide
+  fail_if_success decide
   with_unfolding_all decide
   done
 
 example : ¬ IsSquare 20 := by
-  try decide
+  fail_if_success decide
   with_unfolding_all decide
   done
 
