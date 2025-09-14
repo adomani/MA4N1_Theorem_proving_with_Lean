@@ -62,8 +62,8 @@ In fact, separating `s` and `(` by a space, yields a syntax error.
 /-
 `Mathlib` already has the definition of some graphs:
 -/
-#check completeGraph
-#check emptyGraph
+#check SimpleGraph.completeGraph
+#check SimpleGraph.emptyGraph
 #check completeBipartiteGraph
 #check SimpleGraph.pathGraph
 #check SimpleGraph.hasse  -- graph associated to an order
