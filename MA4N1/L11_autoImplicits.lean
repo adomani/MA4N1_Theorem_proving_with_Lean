@@ -86,7 +86,7 @@ variable (G2 : simpleGraph)
 #check G2
 
 /--
-error: invalid field notation, type is not of the form (C ...) where C is a constant
+error: Invalid field notation: Type is not of the form `C ...` where C is a constant
   G2
 has type
   simpleGraph
@@ -95,16 +95,16 @@ has type
 #check G2.Adj
 
 /--
-error: application type mismatch
-  SimpleGraph.Adj G2
-argument
+error: Application type mismatch: The argument
   G2
 has type
-  simpleGraph : Sort ?u.121
+  simpleGraph
 but is expected to have type
-  SimpleGraph ?m.124 : Type ?u.123
+  SimpleGraph ?m.3
+in the application
+  SimpleGraph.Adj G2
 ---
-info: (sorryAx (SimpleGraph ?m.124) true).Adj : ?m.124 → ?m.124 → Prop
+info: sorry.Adj : ?m.3 → ?m.3 → Prop
 -/
 #guard_msgs in
 #check SimpleGraph.Adj G2
