@@ -267,6 +267,7 @@ theorem blah (assumption : ℕ) : 0 + 0 = 0 := by
   let x : ℕ := 0
   show 0 * assumption + x = 0
   simp
+  exact rfl
   done
 /-!
 Here, the `theorem` disappeared.  The "consequences" are that there is a declaration
