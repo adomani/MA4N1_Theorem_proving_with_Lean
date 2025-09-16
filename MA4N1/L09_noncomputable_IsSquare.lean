@@ -140,13 +140,11 @@ instance {m : ℕ} : Decidable (IsSquare m) :=
 --  The two examples above can now be proved using `decide`.
 --  May get fixed soon: https://leanprover.zulipchat.com/#narrow/channel/287929-mathlib4/topic/Nat.2Esqrt.20no.20longer.20reduces.20definitionally
 example : IsSquare 36 := by
-  fail_if_success decide
-  with_unfolding_all decide
+  decide
   done
 
 example : ¬ IsSquare 20 := by
-  fail_if_success decide
-  with_unfolding_all decide
+  decide
   done
 
 end TPwL_noncomputable_IsSquare
