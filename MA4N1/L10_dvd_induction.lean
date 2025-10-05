@@ -1,6 +1,5 @@
+import MA4N1.Init
 import Mathlib.Tactic
-
-#allow_unused_tactic Lean.Parser.Tactic.done
 
 namespace TPwL_dvd_induction
 
@@ -93,14 +92,14 @@ This tactic essentially applies `simp` everywhere recursively, until it makes no
 #help tactic simp_all
 
 /-
-Finally, remember the `ext` tactic: to show that certain equalities hold,
+Finally, remember the `ext` tactic: to show that certain equalities between "sets" hold,
 it suffices to show that the two sides have the same elements.
 You can also use `ext a` to name the "common" element that the tactic extracts.
 -/
 
 example : {a : ℕ | a ∣ 6} = {1, 2, 3, 6} := by
   ext a
-  simp
+  simp only [Set.mem_setOf_eq, Set.mem_insert_iff, Set.mem_singleton_iff]
   constructor <;> intros h
   · have : a ≤ 6 := by
       apply Nat.le_of_dvd
@@ -108,22 +107,7 @@ example : {a : ℕ | a ∣ 6} = {1, 2, 3, 6} := by
       · exact h
     interval_cases a <;> omega
     done
-  · cases h with   -- this chain is a prime candidate for `rcases`!
-      | inl h =>
-        simp_all
-      | inr h =>
-        cases h with
-          | inl h =>
-            simp_all
-            decide
-          | inr h =>
-            cases h with
-              | inl h =>
-                simp_all
-                decide
-              | inr h =>
-                cases h with
-                  | refl => rfl
+  · aesop
   done
 
 /-!
@@ -138,7 +122,7 @@ example : {a : ℕ | a ∣ 6} = {1, 2, 3, 6} := by
   · intro h
     have := Nat.le_of_dvd (Nat.succ_pos 5) h
     interval_cases a <;> omega
-  · rintro (rfl|rfl|rfl|rfl) <;> omega
+  · aesop
 
 /-!
 In some sense, our intuition is correct: we have made our life hard, by
@@ -276,9 +260,9 @@ lemma _root_.Nat.Prime.divisors_mul (n : ℕ) {p : ℕ} (hp : Nat.Prime p) :
   --    we only have to re-run `tac?`, instead of having to find out what had
   --    generated `tac [...]`.
   simp? [hp.divisors, dvd_mul, Nat.dvd_prime hp] says
-    simp only [Nat.mem_divisors, Nat.isUnit_iff, dvd_mul, Nat.dvd_prime hp, exists_and_left,
-      exists_eq_or_imp, one_mul, exists_eq_right', exists_eq_left, ne_eq, mul_eq_zero, hp.divisors,
-      Finset.mem_singleton, Finset.mem_insert, exists_eq_right]
+    simp only [Nat.mem_divisors, dvd_mul, Nat.dvd_prime hp, exists_and_left, exists_eq_or_imp,
+      one_mul, exists_eq_right', exists_eq_left, ne_eq, mul_eq_zero, not_or, hp.divisors,
+      Finset.mem_insert, Finset.mem_singleton, exists_eq_right]
   aesop
   done
 
@@ -291,7 +275,7 @@ Our main result: the divisors of a product are the product of the divisors.
 
 example {m n : ℕ} : Nat.divisors m * Nat.divisors n = Nat.divisors (m * n) := by
   apply dvd_induction m
-  · simp only [Nat.divisors_zero, Finset.empty_mul, zero_mul, forall_const]
+  · simp only [Nat.divisors_zero, Finset.empty_mul, zero_mul]
   · simp
   · intros p a hp _ _ han
     rw [hp.divisors_mul, mul_assoc p, hp.divisors_mul, mul_assoc, han]

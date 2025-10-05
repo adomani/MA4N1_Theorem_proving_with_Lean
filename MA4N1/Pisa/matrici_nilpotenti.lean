@@ -1,7 +1,6 @@
+import MA4N1.Init
 import Mathlib.Tactic.Recall
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
-
-#allow_unused_tactic Lean.Parser.Tactic.done
 
 section Origine_della_domanda
 

@@ -1,7 +1,6 @@
+import MA4N1.Init
 import Mathlib.Tactic
 import Mathlib.NumberTheory.LSeries.RiemannZeta
-
-#allow_unused_tactic Lean.Parser.Tactic.done
 
 namespace TPwL_finiteness
 
@@ -267,6 +266,7 @@ theorem blah (assumption : ℕ) : 0 + 0 = 0 := by
   let x : ℕ := 0
   show 0 * assumption + x = 0
   simp
+  exact rfl
   done
 /-!
 Here, the `theorem` disappeared.  The "consequences" are that there is a declaration

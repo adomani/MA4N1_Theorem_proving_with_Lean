@@ -1,7 +1,6 @@
+import MA4N1.Init
 import Mathlib.Order.Filter.Basic
 import Mathlib.Data.Real.Archimedean
-
-#allow_unused_tactic Lean.Parser.Tactic.done
 
 namespace TPwL_limits
 
@@ -37,7 +36,7 @@ example {n : ℕ} : ∃ m, n < m := by
   exact?
   done
 
-example {a : ℝ} : limit (fun n => a) a := by
+example {a : ℝ} : limit (fun _n => a) a := by
   unfold limit
   intros ε h
   use 0
@@ -72,7 +71,7 @@ example {a b : ℝ} (f g : ℕ → ℝ) (hf : limit f a) (hg : limit g b) :
       intro n MNn
       dsimp
       rw [add_sub_add_comm]
-      apply lt_of_le_of_lt (abs_add (f n - a) (g n - b))
+      apply lt_of_le_of_lt (abs_add_le (f n - a) (g n - b))
       refine lt_of_lt_of_le (add_lt_add (h1 n ?_) (h2 n ?_)) ?_
       · exact le_of_max_le_left MNn   -- `exact?` works
       · exact le_of_max_le_right MNn  -- `exact?` works
@@ -108,9 +107,8 @@ lemma aux (a : ℝ) : -1 ≤ (Int.natAbs ⌊a⌋) - a := by
     apply le_trans (b := (⌊a⌋ : ℝ))
     · exact Eq.le rfl
     · have := aux1 ⌊a⌋
-      have : ⌊a⌋ ≤ ((Int.natAbs ⌊a⌋ : ℤ) : ℝ) := by
-        exact?
-      exact this
+      norm_cast
+      exact?
   done
 
 lemma no_limit_id {a : ℝ} : ¬ limit (fun n => n) a := by

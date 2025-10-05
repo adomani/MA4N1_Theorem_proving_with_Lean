@@ -1,7 +1,6 @@
+import MA4N1.Init
 import Mathlib.Tactic
 import Mathlib.Combinatorics.SimpleGraph.Basic
-
-#allow_unused_tactic Lean.Parser.Tactic.done
 
 namespace TPwL_autoImplicits
 
@@ -86,7 +85,7 @@ variable (G2 : simpleGraph)
 #check G2
 
 /--
-error: invalid field notation, type is not of the form (C ...) where C is a constant
+error: Invalid field notation: Type is not of the form `C ...` where C is a constant
   G2
 has type
   simpleGraph
@@ -95,16 +94,16 @@ has type
 #check G2.Adj
 
 /--
-error: application type mismatch
-  SimpleGraph.Adj G2
-argument
+error: Application type mismatch: The argument
   G2
 has type
-  simpleGraph : Sort ?u.121
+  simpleGraph
 but is expected to have type
-  SimpleGraph ?m.124 : Type ?u.123
+  SimpleGraph ?m.3
+in the application
+  SimpleGraph.Adj G2
 ---
-info: (sorryAx (SimpleGraph ?m.124) true).Adj : ?m.124 → ?m.124 → Prop
+info: sorry.Adj : ?m.3 → ?m.3 → Prop
 -/
 #guard_msgs in
 #check SimpleGraph.Adj G2
@@ -156,16 +155,16 @@ lemma Nat.Prime.divisors_mul (n : ℕ) {p : ℕ} (hp : Nat.Prime p) :
   --  * if we change a lemma in the output of `tac?`, but `tac?` still works,
   --    we only have to re-run `tac?`, instead of having to find out what had
   --    generated `tac [...]`.
-  simp? [hp.divisors, dvd_mul, Nat.dvd_prime hp] says
-    simp only [Nat.mem_divisors, Nat.isUnit_iff, dvd_mul, Nat.dvd_prime hp, exists_and_left,
-      exists_eq_or_imp, one_mul, exists_eq_right', exists_eq_left, ne_eq, mul_eq_zero, hp.divisors,
-      Finset.mem_singleton, Finset.mem_insert, exists_eq_right]
+  simp? [dvd_mul, Nat.dvd_prime hp, hp.divisors] says
+    simp only [Nat.mem_divisors, dvd_mul, Nat.dvd_prime hp, exists_and_left, exists_eq_or_imp,
+      one_mul, exists_eq_right', exists_eq_left, ne_eq, mul_eq_zero, not_or, hp.divisors,
+      Finset.mem_insert, Finset.mem_singleton, exists_eq_right]
   -- `aesop` can finish the proof from here
   -- below is a proof "by hand": let's see how we might discover it.
   constructor <;> intro h
   · rcases h with ⟨h | ⟨h, hh, rfl⟩, j⟩
-    · simp [h, not_or.mp j]
-    · simp [hh, not_or.mp j]
+    · simp [h, j]
+    · simp [hh, j]
   · rcases h with ⟨h, j⟩ | ⟨b, ⟨bn, n0⟩, rfl⟩
     · simp [h, j]
       exact? says exact Nat.Prime.ne_zero hp

@@ -1,7 +1,6 @@
+import MA4N1.Init
 import Mathlib.Tactic
 import MA4N1.help_me
-
-#allow_unused_tactic Lean.Parser.Tactic.done
 
 namespace TPwL_Ri_hard_no_sols
 
@@ -124,7 +123,7 @@ instance : Inv Ri where
   inv a := ⟨a.re / (a.re ^ 2 + a.im ^ 2), - a.im / (a.re ^ 2 + a.im ^ 2)⟩
 
 --  Hint: you may find this lemma useful!
-#check add_eq_zero_iff'
+#check add_eq_zero_iff_of_nonneg
 
 lemma add_square_eq_zero {a b : ℝ} (ha : a ^ 2 + b ^ 2 = 0) :
     a = 0 ∧ b = 0 := by
