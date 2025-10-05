@@ -1,3 +1,4 @@
+import MA4N1.Init
 /-
 
 #  Generalizations, automation, `exact?`, `simp`, tactics
@@ -29,7 +30,6 @@ means that if we construct something and we call it `X`
 its real name is going to be `TPwL.X`.
 useful to avoid name-clashes with pre-existing objects.
 -/
-#allow_unused_tactic Lean.Parser.Tactic.done
 
 namespace TPwL_generalizations
 

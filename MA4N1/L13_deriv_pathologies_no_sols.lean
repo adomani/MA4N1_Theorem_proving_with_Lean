@@ -1,6 +1,5 @@
+import MA4N1.Init
 import Mathlib.Analysis.Calculus.LocalExtr.Basic
-
-#allow_unused_tactic Lean.Parser.Tactic.done
 
 namespace TPwL_deriv_pathologies_no_sols
 

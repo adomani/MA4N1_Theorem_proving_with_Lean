@@ -1,7 +1,6 @@
+import MA4N1.Init
 import Mathlib.Tactic
 import Mathlib.Combinatorics.SimpleGraph.Basic
-
-#allow_unused_tactic Lean.Parser.Tactic.done
 
 namespace TPwL_typeclasses
 

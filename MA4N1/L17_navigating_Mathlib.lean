@@ -1,8 +1,7 @@
+import MA4N1.Init
 import Mathlib.Tactic
 import Mathlib.Algebra.Order.Chebyshev
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-
-#allow_unused_tactic Lean.Parser.Tactic.done
 
 namespace TPwL_navigating_Mathlib
 
