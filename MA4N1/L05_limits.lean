@@ -72,7 +72,7 @@ example {a b : ℝ} (f g : ℕ → ℝ) (hf : limit f a) (hg : limit g b) :
       intro n MNn
       dsimp
       rw [add_sub_add_comm]
-      apply lt_of_le_of_lt (abs_add (f n - a) (g n - b))
+      apply lt_of_le_of_lt (abs_add_le (f n - a) (g n - b))
       refine lt_of_lt_of_le (add_lt_add (h1 n ?_) (h2 n ?_)) ?_
       · exact le_of_max_le_left MNn   -- `exact?` works
       · exact le_of_max_le_right MNn  -- `exact?` works
