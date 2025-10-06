@@ -17,10 +17,10 @@ namespace TPwL_intro
 
 #check and  -- and (x y : Bool) : Bool
 #check or   -- or  (x y : Bool) : Bool
-#check And  -- And (x y : Prop) : Prop
-#check Or   -- Or  (x y : Prop) : Prop
+#check And  -- And (a b : Prop) : Prop
+#check Or   -- Or  (a b : Prop) : Prop
 
-#check (· ∧ ·)  -- fun x x_1 ↦ x ∧ x_1 : Prop → Prop → Prop
+#check (· ∧ ·)  -- fun x1 x2 => x1 ∧ x2 : Prop → Prop → Prop
 
 /-  Easy template for a `lemma`
 
