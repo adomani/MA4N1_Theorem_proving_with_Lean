@@ -23,7 +23,7 @@ main points that "complicate" the proof.
    * `m < 6` and `n < 6`, where we can really find solutions;
    * `6 ≤ m` or `6 ≤ n`, where again there are no solutions.
 
-To overcome these (minor) difficulties, we proceed in two steps.
+To overcome these (minor) difficulties, we proceed in three steps.
 
 ### `easy`
 We first prove a result (`easy`) analogous to the one that we want, but "shifting" by `3`
