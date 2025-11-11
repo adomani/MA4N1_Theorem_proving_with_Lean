@@ -1,3 +1,5 @@
+import MA4N1.BreatherWeek
+import MA4N1.Init
 import MA4N1.L00_intro
 import MA4N1.L01_polynomials
 import MA4N1.L01_polynomials_no_sols
