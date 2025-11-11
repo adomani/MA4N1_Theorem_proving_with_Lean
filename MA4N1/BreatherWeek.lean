@@ -25,7 +25,7 @@ main points that "complicate" the proof.
 
 To overcome these (minor) difficulties, we proceed in three steps.
 
-### `easy`
+### Step 1: `easy`
 We first prove a result (`easy`) analogous to the one that we want, but "shifting" by `3`
 the values of `m` and `n`, so that the condition that `m` and `n` are larger than `2`,
 becomes simply the condition that they are non-negative, which is automatic for natural numbers.
@@ -36,7 +36,7 @@ Once that is done, the main stumbling block that was the inequality with the pro
 variables, suddenly becomes a finite conjunction of *linear* equations in a single natural numbers,
 which is something that the automation handles easily.
 
-### `shift`
+### Step 2: `shift`
 Next, we show (`shift`) that the set that we actually care about is just a shift of the one that
 we just proved.
 
@@ -59,7 +59,7 @@ An alternative would be to use
   grind
 ```
 
-### Putting everything together
+### Step 3: Putting everything together
 We are now ready to prove the final result: we first use `rw` to reduce to showing the equality
 of two concrete finite sets of natural numbers (one shifted), and then using `ext; aesop`
 to finish off.
