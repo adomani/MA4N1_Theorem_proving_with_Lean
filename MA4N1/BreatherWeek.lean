@@ -1,4 +1,4 @@
-import Mathlib.Tactic.IntervalCases
+import Mathlib.Tactic
 
 /-!
 #  Breather week, November 2025
@@ -111,3 +111,114 @@ example : {(m, n) : Nat × Nat | m > 2 ∧ n > 2 ∧ (m - 2) * (n - 2) < 4} =
   -- And then the common `ext; aesop` combination finishes the proof.
   ext
   aesop
+
+/-!
+#  Addendum on Week 8
+
+The next example is code proving that all coefficients of a certain polynomial with rational
+coefficients "are" integers.
+
+This is correctly formulated as saying that, for every degree `k : ℕ`, there is an integer `z : ℤ`
+such that the coefficient of `X ^ k` in the polynomial is `z` (considered as a rational number).
+-/
+
+-- Get access to `C`, `X`, `coeff`, ..., as well as `ℤ[X]`.
+open Polynomial
+
+-- Get access to `(n)!` or `n !` as notation for the factorial.
+-- Note that `n!` does not work: there is the need for either a space or parentheses.
+-- The underlying reason is that `!` is a valid character in Lean identifiers and so
+-- `n!` can be interpreted as the name of a variable with two characters, including the `!`.
+open Nat
+
+-- Defining the polynomial `f(x) = x^n(a-bx)^n / n!` (as a polynomial, not a function)
+noncomputable def f_n (n : ℕ) (a : ℕ) (b : ℕ) : Polynomial ℚ :=
+  (C (1 / ((n)! : ℚ))) * (X ^ n * (C (a : ℚ) - C (b : ℚ) * X) ^ n)
+
+noncomputable def nfact_f_n (n a b : ℕ) : Polynomial ℚ :=
+  C ((n)! : ℚ) * f_n n a b
+
+-- Checking `n!f(x)` has integer coefficients
+proof_wanted nfact_f_n_integral_coeffs :
+    ∀ (k a b n : ℕ), ∃ z : ℤ, (nfact_f_n n a b).coeff k = (z : ℚ)
+
+/-!
+The main idea to prove this is to show that `nfact_f_n` is actually a polynomial with integer
+coefficients, and then deduce the result.
+
+So, our first (and only!) lemma, `nfact_f_n_integral`, shows that there is a polynomial with
+integer coefficients that is equal to `nfact_f_n n a b`.
+-/
+
+-- Let's prove that there is a *polynomial* with integer coefficients that works.
+lemma nfact_f_n_integral (a b n : ℕ) :
+    ∃ f : ℤ[X], nfact_f_n n a b = f.map (algebraMap ℤ ℚ) := by
+  unfold nfact_f_n f_n
+  use X ^ n * (C (a : ℤ) - C (b : ℤ) * X) ^ n
+  -- To prove an equality of polynomials, it suffices to prove the equality of their coefficients
+  ext
+  -- Note that `field` is not a lemma, but a *tactic*.  This is a very special case:
+  -- in general, `simp` only works with lemmas.
+  simp [field]
+
+/-!
+Now, finishing the proof is easy: we first use `nfact_f_n_integral` to get a polynomial
+with integer coefficients that is equal to `nfact_f_n n a b`, and then we just read off
+the coefficients.
+-/
+
+-- Checking `n!f(x)` has integer coefficients
+lemma nfact_f_n_integral_coeffs :
+    ∀ (k a b n : ℕ), ∃ z : ℤ, (nfact_f_n n a b).coeff k = (z : ℚ) := by
+  -- `intros` is only needed since the statement starts with `∀ (k a b n : ℕ)`.
+  -- If we had written `lemma ... (k a b n : ℕ) : ...`, then this line would not be needed.
+  intros k a b n
+  obtain ⟨f, hf⟩ := nfact_f_n_integral a b n
+  --  `simp_all` suffices here
+  rw [hf]
+  simp
+
+/-!
+##  General remarks
+
+### The use of `unfold`
+The tactic `unfold` does not appear in the proof of the "main" result,
+lemma `nfact_f_n_integral_coeffs`.
+
+In fact, the two `def`initions of `f_n` and `nfact_f_n` "should" be followed by several lemmas
+stating their main properties, such as `nfact_f_n_integral`.
+The proof of this lemma uses `unfold` and I would consider it to be part of the "standard library"
+of results about these definitions.
+
+Outside of these "standard" results, ideally there should no longer be the need to `unfold` any
+definition.
+If you find yourself needing to `unfold` a definition in order to prove a result,
+this is often a sign that some lemma is missing from the "standard library".
+So, you should first prove these lemmas about the definition, and then use these lemmas to prove
+the desired result.
+
+### `Polynomial.map` and `algebraMap`
+The part with `f.map (algebraMap ℤ ℚ)` may be surprising.
+This mixes dot-notation for `Polynomial.map` applied to `f : Polynomial ℤ` with
+`algebraMap ℤ ℚ`, which is the natural embedding of the integers into the rationals.
+The effect is to convert a polynomial with integer coefficients into a polynomial with rational
+coefficients, by `map`ping each coefficient via the embedding `algebraMap ℤ ℚ`.
+
+Knowing that this is one way of doing this requires some experience with `mathlib`.
+This is why it is always good to ask questions, or read a lot of resources and source code!
+
+### The variables `a` and `b`
+In the definitions `f_n` and `nfact_f_n`, the variables `a` and `b` are natural numbers.
+However, as soon as they are used, they are coerced into the rationals
+(via `(a : ℚ)` and `(b : ℚ)`).
+
+Depending on the intended application, it may be more natural to
+* keep them as natural numbers, and define the polynomial as a polynomial with natural number
+  coefficients (although this would then involve subtraction, which I would discourage);
+* use `a b : ℤ`, and not coerce them to rationals, defining a polynomial with integer coefficients
+  from the start (this may be the most natural choice, if the only goal is to show
+  `nfact_f_n_integral_coeffs`);
+* use `a b : ℚ`, if the intention is to work with rational coefficients from the start.
+
+What to use depends on the context and intended applications.
+-/
