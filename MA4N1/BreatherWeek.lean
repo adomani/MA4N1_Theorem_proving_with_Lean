@@ -119,8 +119,13 @@ coefficients "are" integers.
 This is correctly formulated as saying that, for every degree `k : ℕ`, there is an integer `z : ℤ`
 such that the coefficient of `X ^ k` in the polynomial is `z` (considered as a rational number).
 -/
-open Polynomial
-open Nat
+open Polynomial -- gives access to `C`, `X`, `coeff`, ..., as well as `ℤ[X]`.
+open Nat -- gives access to `(n)!` or `n !` as notation for the factorial.
+         -- Note that `n!` does not work: there is the need for either a space or parentheses.
+         -- The underlying reason is that `!` is a valid character in Lean identifiers and so
+         -- `n!` can be interpreted as the name of a variable with two characters,
+         -- including the `!`.
+
 -- Defining the polynomial `f(x) = x^n(a-bx)^n / n!` (as a polynomial, not a function)
 noncomputable def f_n (n : ℕ) (a : ℕ) (b : ℕ) : Polynomial ℚ :=
   (C (1 / ((n)! : ℚ))) * (X ^ n * (C (a : ℚ) - C (b : ℚ) * X) ^ n)
