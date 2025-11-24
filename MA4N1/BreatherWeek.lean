@@ -1,4 +1,4 @@
-import Mathlib --.Tactic --.IntervalCases
+import Mathlib.Tactic
 
 /-!
 #  Breather week, November 2025
