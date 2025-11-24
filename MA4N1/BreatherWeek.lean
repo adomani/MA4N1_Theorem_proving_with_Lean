@@ -143,7 +143,7 @@ proof_wanted nfact_f_n_integral_coeffs :
     ∀ (k a b n : ℕ), ∃ z : ℤ, (nfact_f_n n a b).coeff k = (z : ℚ)
 
 /-!
-The main idea to prove this is to show that `n!f_n` is actually a polynomial with integer
+The main idea to prove this is to show that `nfact_f_n` is actually a polynomial with integer
 coefficients, and then deduce the result.
 
 So, our first lemma, `nfact_f_n_integral`, shows that there is a polynomial with integer
