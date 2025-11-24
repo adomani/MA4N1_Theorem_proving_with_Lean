@@ -186,7 +186,7 @@ stating their main properties, such as `nfact_f_n_integral`.
 The proof of this lemma uses `unfold` and I would consider it to be part of the "standard library"
 of results about these definitions.
 
-Outside of these "standard" results, there should ideally no longer the need to `unfold` any
+Outside of these "standard" results, ideally there should no longer be the need to `unfold` any
 definition.
 If you find yourself needing to `unfold` a definition in order to prove a result,
 this is often a sign that some lemma is missing from the "standard library".
