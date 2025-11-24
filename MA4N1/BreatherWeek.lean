@@ -150,9 +150,11 @@ lemma nfact_f_n_integral (a b n : ℕ) :
     ∃ f : ℤ[X], nfact_f_n n a b = f.map (algebraMap ℤ ℚ) := by
   unfold nfact_f_n f_n
   use X ^ n * (C (a : ℤ) - C (b : ℤ) * X) ^ n
-  ext -- To prove an equality of polynomials, it suffices to prove the equality of their coefficients
-  simp [field] -- note that `field` is not a lemma, but a *tactic*.  This is a very special case:
-               -- in general, `simp` only works with lemmas.
+  -- To prove an equality of polynomials, it suffices to prove the equality of their coefficients
+  ext
+  -- Note that `field` is not a lemma, but a *tactic*.  This is a very special case:
+  -- in general, `simp` only works with lemmas.
+  simp [field]
 
 /-!
 Now, finishing the proof is easy: we first use `nfact_f_n_integral` to get a polynomial
@@ -163,7 +165,38 @@ the coefficients.
 -- Checking `n!f(x)` has integer coefficients
 lemma nfact_f_n_integral_coeffs :
     ∀ (k a b n : ℕ), ∃ z : ℤ, (nfact_f_n n a b).coeff k = (z : ℚ) := by
+  -- `intros` is only needed since the statement starts with `∀ (k a b n : ℕ)`.
+  -- If we had written `lemma ... (k a b n : ℕ) : ...`, then this line would not be needed.
   intros k a b n
   obtain ⟨f, hf⟩ := nfact_f_n_integral a b n
-  rw [hf]  --  `simp_all` suffices here
+  --  `simp_all` suffices here
+  rw [hf]
   simp
+
+/-!
+##  General remarks
+
+The tactic `unfold` does not appear in the proof of the "main" result,
+lemma `nfact_f_n_integral_coeffs`.
+
+In fact, the two `def`initions of `f_n` and `nfact_f_n` "should" be followed by several lemmas
+stating their main properties, such as `nfact_f_n_integral`.
+The proof of this lemma uses `unfold` and I would consider it to be part of the "standard library"
+of results about these definitions.
+
+Outside of these "standard" results, there should ideally no longer the need to `unfold` any
+definition.
+If you find yourself needing to `unfold` a definition in order to prove a result,
+this is often a sign that some lemma is missing from the "standard library".
+So, you should first prove these lemmas about the definition, and then use these lemmas to prove
+the desired result.
+
+The part with `f.map (algebraMap ℤ ℚ)` may be surprising.
+This mixes dot-notation for `Polynomial.map` applied to `f : Polynomial ℤ` with
+`algebraMap ℤ ℚ`, which is the natural embedding of the integers into the rationals.
+The effect is to convert a polynomial with integer coefficients into a polynomial with rational
+coefficients, by `map`ping each coefficient via the embedding `algebraMap ℤ ℚ`.
+
+Knowing that this is one way of doing this requires some experience with `mathlib`.
+This is why it is always good to ask questions, or read a lot of resources and source code!
+-/
