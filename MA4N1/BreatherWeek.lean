@@ -113,6 +113,8 @@ example : {(m, n) : Nat × Nat | m > 2 ∧ n > 2 ∧ (m - 2) * (n - 2) < 4} =
   aesop
 
 /-!
+#  Addendum on Week 8
+
 The next example is code proving that all coefficients of a certain polynomial with rational
 coefficients "are" integers.
 
