@@ -1,4 +1,4 @@
-import Mathlib.Tactic.IntervalCases
+import Mathlib --.Tactic --.IntervalCases
 
 /-!
 #  Breather week, November 2025
@@ -111,3 +111,55 @@ example : {(m, n) : Nat × Nat | m > 2 ∧ n > 2 ∧ (m - 2) * (n - 2) < 4} =
   -- And then the common `ext; aesop` combination finishes the proof.
   ext
   aesop
+
+open Polynomial
+
+-- Defining the polynomial f(x) = x^n(a-bx)^n / n! (as a polynomial, not a function)
+noncomputable def f_n (n : ℕ) (a : ℕ) (b : ℕ) : Polynomial ℚ :=
+  (C (1 / (n.factorial : ℚ))) * (X^n * (C (a : ℚ) - C (b : ℚ) * X)^n)
+
+noncomputable def nfact_f_n (n a b : ℕ) : Polynomial ℚ :=
+  C (n.factorial : ℚ) * f_n n a b
+
+-- Checking n!f(x) has integer coefficients
+lemma nfact_f_n_integral_coeffs :
+    ∀ (k a b n : ℕ), ∃ z : ℤ, (nfact_f_n n a b).coeff k = (z : ℚ) := by
+  intros k a b n
+  obtain ⟨f, hf⟩ := nfact_f_n_integral a b n
+  rw [hf]  --  `simp_all` suffices here
+  simp
+
+
+
+
+
+
+
+-- Let's prove that there is a *polynomial* with integer coefficients that works.
+lemma nfact_f_n_integral (a b n : ℕ) :
+    ∃ f : ℤ[X], nfact_f_n n a b = f.map (algebraMap ℤ ℚ) := by
+  unfold nfact_f_n f_n
+  use X ^ n * (C (a : ℤ) - C (b : ℤ) * X) ^ n
+  ext
+  simp [field]
+
+namespace first_attempt
+
+lemma nfact_f_n_integral (a b n : ℕ) :
+    ∃ f : ℤ[X], nfact_f_n n a b = f.aeval X := by
+  unfold nfact_f_n f_n
+  use X ^ n * (C (a : ℤ) - C (b : ℤ) * X) ^ n
+  ext
+  simp [field]
+
+-- Checking n!f(x) has integer coefficients
+lemma nfact_f_n_integral_coeffs :
+    ∀ (k a b n : ℕ), ∃ z : ℤ, (nfact_f_n n a b).coeff k = (z : ℚ) := by
+  intros k a b n
+  obtain ⟨f, hf⟩ := nfact_f_n_integral a b n
+  rw [hf]  --  `simp_all` suffices here
+  use f.coeff k
+  rw?  -- notice the appearence of `algebraMap`
+  sorry
+
+end first_attempt
