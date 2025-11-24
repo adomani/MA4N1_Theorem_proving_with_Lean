@@ -208,7 +208,7 @@ Knowing that this is one way of doing this requires some experience with `mathli
 This is why it is always good to ask questions, or read a lot of resources and source code!
 
 ### The variables `a` and `b`
-In the definitions `f_n` and `nfact_f_n`, `a` and `b` are natural numbers.
+In the definitions `f_n` and `nfact_f_n`, the variables `a` and `b` are natural numbers.
 However, as soon as they are used, they are coerced into the rationals
 (via `(a : ℚ)` and `(b : ℚ)`).
 
