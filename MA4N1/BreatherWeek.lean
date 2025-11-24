@@ -146,7 +146,7 @@ proof_wanted nfact_f_n_integral_coeffs :
 The main idea to prove this is to show that `nfact_f_n` is actually a polynomial with integer
 coefficients, and then deduce the result.
 
-So, our first lemma (and only!), `nfact_f_n_integral`, shows that there is a polynomial with
+So, our first (and only!) lemma, `nfact_f_n_integral`, shows that there is a polynomial with
 integer coefficients that is equal to `nfact_f_n n a b`.
 -/
 
