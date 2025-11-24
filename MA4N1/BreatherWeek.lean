@@ -181,6 +181,7 @@ lemma nfact_f_n_integral_coeffs :
 /-!
 ##  General remarks
 
+### The use of `unfold`
 The tactic `unfold` does not appear in the proof of the "main" result,
 lemma `nfact_f_n_integral_coeffs`.
 
@@ -196,6 +197,7 @@ this is often a sign that some lemma is missing from the "standard library".
 So, you should first prove these lemmas about the definition, and then use these lemmas to prove
 the desired result.
 
+### `Polynomial.map` and `algebraMap`
 The part with `f.map (algebraMap ℤ ℚ)` may be surprising.
 This mixes dot-notation for `Polynomial.map` applied to `f : Polynomial ℤ` with
 `algebraMap ℤ ℚ`, which is the natural embedding of the integers into the rationals.
@@ -204,4 +206,20 @@ coefficients, by `map`ping each coefficient via the embedding `algebraMap ℤ �
 
 Knowing that this is one way of doing this requires some experience with `mathlib`.
 This is why it is always good to ask questions, or read a lot of resources and source code!
+
+### The variables `a` and `b`
+In the definitions `f_n` and `nfact_f_n`, `a` and `b` are natural numbers.
+However, as soon as they are used, they are coerced into the rationals
+(via `(a : ℚ)` and `(b : ℚ)`).
+
+Depending on the intended application, it may be more natural to
+* keep them as natural numbers, and define the polynomial as a polynomial with natural number
+  coefficients (although this would then involve subtraction, which I would discourage);
+* use `a b : ℤ`, and not coerce them to rationals, defining a polynomial with integer coefficients
+  from the start (this may be the most natural choice, if the only goal is to show
+  `nfact_f_n_integral_coeffs`);
+* use `a b : ℚ`, if the intention is to work with rational coefficients from the start.
+
+What to use depends on the context and intended applications.
+
 -/
