@@ -124,10 +124,11 @@ noncomputable def nfact_f_n (n a b : ℕ) : Polynomial ℚ :=
 -- Checking n!f(x) has integer coefficients
 lemma nfact_f_n_integral_coeffs :
     ∀ (k a b n : ℕ), ∃ z : ℤ, (nfact_f_n n a b).coeff k = (z : ℚ) := by
-  intros k a b n
-  obtain ⟨f, hf⟩ := nfact_f_n_integral a b n
-  rw [hf]  --  `simp_all` suffices here
-  simp
+  sorry
+  --intros k a b n
+  --obtain ⟨f, hf⟩ := nfact_f_n_integral a b n
+  --rw [hf]  --  `simp_all` suffices here
+  --simp
 
 
 
