@@ -112,55 +112,53 @@ example : {(m, n) : Nat × Nat | m > 2 ∧ n > 2 ∧ (m - 2) * (n - 2) < 4} =
   ext
   aesop
 
-open Polynomial
+/-!
+The next example is code proving that all coefficients of a certain polynomial with rational
+coefficients "are" integers.
 
--- Defining the polynomial f(x) = x^n(a-bx)^n / n! (as a polynomial, not a function)
+This is correctly formulated as saying that, for every degree `k : ℕ`, there is an integer `z : ℤ`
+such that the coefficient of `X ^ k` in the polynomial is `z` (considered as a rational number).
+-/
+open Polynomial
+open Nat
+-- Defining the polynomial `f(x) = x^n(a-bx)^n / n!` (as a polynomial, not a function)
 noncomputable def f_n (n : ℕ) (a : ℕ) (b : ℕ) : Polynomial ℚ :=
-  (C (1 / (n.factorial : ℚ))) * (X^n * (C (a : ℚ) - C (b : ℚ) * X)^n)
+  (C (1 / ((n)! : ℚ))) * (X ^ n * (C (a : ℚ) - C (b : ℚ) * X) ^ n)
 
 noncomputable def nfact_f_n (n a b : ℕ) : Polynomial ℚ :=
-  C (n.factorial : ℚ) * f_n n a b
+  C ((n)! : ℚ) * f_n n a b
 
--- Checking n!f(x) has integer coefficients
-lemma nfact_f_n_integral_coeffs :
-    ∀ (k a b n : ℕ), ∃ z : ℤ, (nfact_f_n n a b).coeff k = (z : ℚ) := by
-  sorry
-  --intros k a b n
-  --obtain ⟨f, hf⟩ := nfact_f_n_integral a b n
-  --rw [hf]  --  `simp_all` suffices here
-  --simp
+-- Checking `n!f(x)` has integer coefficients
+proof_wanted nfact_f_n_integral_coeffs :
+    ∀ (k a b n : ℕ), ∃ z : ℤ, (nfact_f_n n a b).coeff k = (z : ℚ)
 
+/-!
+The main idea to prove this is to show that `n!f_n` is actually a polynomial with integer
+coefficients, and then deduce the result.
 
-
-
-
-
+So, our first lemma, `nfact_f_n_integral`, shows that there is a polynomial with integer
+coefficients that is equal to `nfact_f_n n a b`.
+-/
 
 -- Let's prove that there is a *polynomial* with integer coefficients that works.
 lemma nfact_f_n_integral (a b n : ℕ) :
     ∃ f : ℤ[X], nfact_f_n n a b = f.map (algebraMap ℤ ℚ) := by
   unfold nfact_f_n f_n
   use X ^ n * (C (a : ℤ) - C (b : ℤ) * X) ^ n
-  ext
-  simp [field]
+  ext -- To prove an equality of polynomials, it suffices to prove the equality of their coefficients
+  simp [field] -- note that `field` is not a lemma, but a *tactic*.  This is a very special case:
+               -- in general, `simp` only works with lemmas.
 
-namespace first_attempt
+/-!
+Now, finishing the proof is easy: we first use `nfact_f_n_integral` to get a polynomial
+with integer coefficients that is equal to `nfact_f_n n a b`, and then we just read off
+the coefficients.
+-/
 
-lemma nfact_f_n_integral (a b n : ℕ) :
-    ∃ f : ℤ[X], nfact_f_n n a b = f.aeval X := by
-  unfold nfact_f_n f_n
-  use X ^ n * (C (a : ℤ) - C (b : ℤ) * X) ^ n
-  ext
-  simp [field]
-
--- Checking n!f(x) has integer coefficients
+-- Checking `n!f(x)` has integer coefficients
 lemma nfact_f_n_integral_coeffs :
     ∀ (k a b n : ℕ), ∃ z : ℤ, (nfact_f_n n a b).coeff k = (z : ℚ) := by
   intros k a b n
   obtain ⟨f, hf⟩ := nfact_f_n_integral a b n
   rw [hf]  --  `simp_all` suffices here
-  use f.coeff k
-  rw?  -- notice the appearence of `algebraMap`
-  sorry
-
-end first_attempt
+  simp
