@@ -221,5 +221,4 @@ Depending on the intended application, it may be more natural to
 * use `a b : ℚ`, if the intention is to work with rational coefficients from the start.
 
 What to use depends on the context and intended applications.
-
 -/
