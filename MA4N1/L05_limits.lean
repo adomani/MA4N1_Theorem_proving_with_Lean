@@ -1,6 +1,6 @@
 import MA4N1.Init
 import Mathlib.Order.Filter.Basic
-import Mathlib.Data.Real.Archimedean
+import Mathlib.Algebra.Order.Archimedean.Real.Basic
 
 namespace TPwL_limits
 

@@ -1,3 +1,8 @@
+--  This file does not compile, and that is intentional: making it compile is one of the
+--  goals of the exercise.  The proofs at the end refer to API lemmas about `Ri` that the
+--  file never states, and working out which lemmas are missing is the point; `help_me!`
+--  and `help_all` hand them over for anyone who wants the hint.
+
 import MA4N1.Init
 import Mathlib.Tactic
 import MA4N1.help_me

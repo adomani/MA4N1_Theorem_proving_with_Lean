@@ -99,10 +99,10 @@ This means that we will register an `Add` instance on `point`.
 
 variable (p q : point) in
 /--
-error: failed to synthesize
+error: failed to synthesize instance of type class
   HAdd point point ?m.3
 
-Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
 -/
 #guard_msgs in
 #check p + q
@@ -195,10 +195,10 @@ section right_and_wrong_structures
 structure A (α : Type) [Add α] where
 
 /--
-error: failed to synthesize
+error: failed to synthesize instance of type class
   Add α
 
-Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
 -/
 #guard_msgs in
 variable {α : Type} (h : A α)         -- fails

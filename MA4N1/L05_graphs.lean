@@ -91,9 +91,9 @@ From this point of view, the `simp [h]` proof should still work, while the proof
 
 example {V : Type} {G : SimpleGraph V} {a b : V} (h : s(a, b) ∈ G.edgeSet) :
     s(b, a) ∈ G.edgeSet := by
-  apply G.symm  -- `G.symm` is dot-notation: it stands for SimpleGraph.symm G
+  apply G.adj_symm  -- `G.adj_symm` is dot-notation: it stands for `SimpleGraph.adj_symm G`
   exact h
-  -- or, combining the two `exact G.symm h`
+  -- or, combining the two `exact G.adj_symm h`
   done
 
 /-!
@@ -111,8 +111,10 @@ def divisibilityGraph : SimpleGraph ℕ where
   --  if you notice, we use `Adj a b := ...` instead of `Adj := fun a b => ...`
   --  this is a convenient feature to improve readability, but both mean the same
   Adj a b := (a ≠ b) ∧ ((a ∣ b) ∨ (b ∣ a))
+  --  the `symm` and `loopless` fields are the structures `Std.Symm` and `Std.Irrefl`,
+  --  each with a single field, so we fill in `symm.symm` and `loopless.irrefl`
   --  use `dsimp at *` to get a better view of the assumptions/goal
-  symm a b h := by
+  symm.symm a b h := by
     dsimp at *
     cases h with
     | intro left right =>
@@ -120,7 +122,7 @@ def divisibilityGraph : SimpleGraph ℕ where
       · exact?
       · exact?
     done
-  loopless a ha := by
+  loopless.irrefl a ha := by
     dsimp at ha
     cases ha with
     | intro left right =>

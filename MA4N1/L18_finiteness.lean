@@ -167,7 +167,11 @@ Let's see how to work in the presence of `Classical` and `noncomputable`.
 -/
 open Classical in
 /-- `Prop_to_Bool?` is always `true`: not only the condition is `True`, also both arms of the
-`if ... then ... else ...` statement end in `true`! -/
+`if ... then ... else ...` statement end in `true`!
+
+Note the `noncomputable`: deciding the condition `∃ n, n = 0` uses `Classical.propDecidable`,
+which is not an algorithm, so Lean cannot compile this definition. -/
+noncomputable
 def Prop_to_Bool? : Bool :=
 if ∃ n, n = 0 then true
               else true
@@ -194,7 +198,10 @@ open Classical in
 * the condition is `True`,
 * both arms of the `if ... then ... else ...` statement end in `true`,
 * there is a unique function to `Unit` from *anything*!
+
+As above, the `Classical` condition forces this definition to be `noncomputable`.
 -/
+noncomputable
 def Prop_to_type? : Unit :=
 if ∃ n, n = 0 then ()
               else ()

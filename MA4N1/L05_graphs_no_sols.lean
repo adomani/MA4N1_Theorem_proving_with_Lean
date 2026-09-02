@@ -3,7 +3,7 @@ import Mathlib.Combinatorics.SimpleGraph.Hasse
 import Mathlib.Combinatorics.SimpleGraph.Basic
 import Mathlib.Data.PNat.Prime
 
-namespace TPwL_graphs
+namespace TPwL_graphs_no_sols
 
 /-
 #  Graphs in `Mathlib`
@@ -109,11 +109,13 @@ def divisibilityGraph : SimpleGraph ℕ where
   --  if you notice, we use `Adj a b := ...` instead of `Adj := fun a b => ...`
   --  this is a convenient feature to improve readability, but both mean the same
   Adj a b := (a ≠ b) ∧ ((a ∣ b) ∨ (b ∣ a))
+  --  the `symm` and `loopless` fields are the structures `Std.Symm` and `Std.Irrefl`,
+  --  each with a single field, so we fill in `symm.symm` and `loopless.irrefl`
   --  use `dsimp at *` to get a better view of the assumptions/goal
-  symm a b h := by
+  symm.symm a b h := by
     sorry
     done
-  loopless a ha := by
+  loopless.irrefl a ha := by
     sorry
     done
 
@@ -131,4 +133,4 @@ example {p q : ℕ} (hp : p.Prime) (hq : q.Prime) :
   sorry
   done
 
-end TPwL_graphs
+end TPwL_graphs_no_sols

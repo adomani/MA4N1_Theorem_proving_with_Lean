@@ -81,7 +81,7 @@ variable {R : Type*} [CommRing R] {n : Type*} [DecidableEq n] [Fintype n]
 
 open Polynomial
 
-recall Matrix.charpolyRev (M : Matrix n n R) := det (1 - (X : R[X]) • M.map C)
+recall Matrix.charpolyRev (M : Matrix n n R) := Matrix.det (1 - (X : R[X]) • M.map C)
 
 namespace Matrix
 
