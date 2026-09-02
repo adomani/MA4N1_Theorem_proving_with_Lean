@@ -4,6 +4,10 @@ This is the repository for the module [MA4N1 Theorem Proving with Lean](https://
 
 Here, you will find the Lean files used during lectures, some exercises and various complements.
 
+Some outlines for group projects are collected on the
+[project ideas page](https://adomani.github.io/Syllabus/MA4N1/project_ideas) --
+a mode of project that is fully experimental this year.
+
 This is a Lean project with `Mathlib` as a dependency.
 You may want to set-up something like this for your group project.
 You can find instructions on how to do this at [this webpage](https://adomani.github.io/Syllabus/MA4N1/instructions_for_new_project).
