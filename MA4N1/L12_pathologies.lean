@@ -80,13 +80,13 @@ def myDiv (p q : ℚ) (h : q ≠ 0) : ℚ := p / q
 
 
 /--
-error: failed to synthesize
+error: failed to synthesize instance of type class
   OfNat (1 ≠ 0 → ℚ) 2
 numerals are polymorphic in Lean, but the numeral `2` cannot be used in a context where the expected type is
   1 ≠ 0 → ℚ
 due to the absence of the instance above
 
-Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
 ---
 error: unsolved goals
 ⊢ myDiv 2 1 = 2

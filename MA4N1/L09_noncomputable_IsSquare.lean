@@ -137,13 +137,17 @@ instance {m : ℕ} : Decidable (IsSquare m) :=
   decidable_of_iff' _ IsSquare_iff_mul_self
 
 --  The two examples above can now be proved using `decide`.
---  May get fixed soon: https://leanprover.zulipchat.com/#narrow/channel/287929-mathlib4/topic/Nat.2Esqrt.20no.20longer.20reduces.20definitionally
+--  We need the `+kernel` modifier: plain `decide` asks the *elaborator* to evaluate the
+--  `Decidable` instance and the elaborator does not unfold `Nat.sqrt`, which is defined by
+--  well-founded recursion.  `decide +kernel` hands the evaluation to the kernel instead,
+--  which does reduce it.
+--  See https://leanprover.zulipchat.com/#narrow/channel/287929-mathlib4/topic/Nat.2Esqrt.20no.20longer.20reduces.20definitionally
 example : IsSquare 36 := by
-  decide
+  decide +kernel
   done
 
 example : ¬ IsSquare 20 := by
-  decide
+  decide +kernel
   done
 
 end TPwL_noncomputable_IsSquare

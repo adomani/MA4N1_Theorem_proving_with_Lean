@@ -68,9 +68,9 @@ example : (1 : ℝ) ≤ 3 := by
 --  you can nest the uses of `calc`
 example {n : ℕ} {x : ℝ} (h : 1 ≤ x) : n + 1 ≤ n * x + 3 := by calc
   (_ : ℝ) ≤ n * 1 + 1 := by rw [mul_one]
-  _ ≤ n * x + 1 := add_le_add_right (mul_le_mul rfl.le h zero_le_one n.cast_nonneg) ..
+  _ ≤ n * x + 1 := add_le_add_left (mul_le_mul rfl.le h zero_le_one n.cast_nonneg) ..
   _ ≤ _ := by
-    apply add_le_add_left
+    apply add_le_add_right
     calc
       (1 : ℝ) = ((1 : ℕ) : ℝ) := by exact Nat.cast_one.symm
       _ ≤ ((3 : ℕ) : ℝ) := by refine Nat.cast_le.mpr ?_; exact Nat.le_three_of_sqrt_eq_one rfl

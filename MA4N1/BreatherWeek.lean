@@ -98,11 +98,8 @@ lemma shift : (· + (3, 3)) '' {(m, n) : ℕ × ℕ | (m + 1) * (n + 1) < 4} =
   -- `0, 1, 2, fst + 3`.
   -- The fact that we separate exactly these cases is communicated by the
   -- 3 underscores `_` separated by the "or" symbol `|`.
-  -- We then use `grind`, except that the final case is outside of scope:
-  -- `try tactic` means "if the tactic works, use it, otherwise, do nothing".
-  obtain _|_|_|fst := fst <;> try grind
-  -- Similar case split on `snd`, except that now `grind` solves all resulting goals.
-  obtain _|_|_|snd := snd <;> grind
+  -- We then use `grind` to solve each of the resulting goals.
+  obtain _|_|_|fst := fst <;> grind
 
 example : {(m, n) : Nat × Nat | m > 2 ∧ n > 2 ∧ (m - 2) * (n - 2) < 4} =
     {(3, 3), (3, 4), (3, 5), (4, 3), (5, 3)} := by
@@ -138,8 +135,11 @@ noncomputable def f_n (n : ℕ) (a : ℕ) (b : ℕ) : Polynomial ℚ :=
 noncomputable def nfact_f_n (n a b : ℕ) : Polynomial ℚ :=
   C ((n)! : ℚ) * f_n n a b
 
--- Checking `n!f(x)` has integer coefficients
-proof_wanted nfact_f_n_integral_coeffs :
+-- Checking `n!f(x)` has integer coefficients.
+-- `proof_wanted` records a statement that we would like to prove, without proving it yet.
+-- It introduces a declaration with the given name, so it must differ from the name of the
+-- lemma that we actually prove below.
+proof_wanted nfact_f_n_integral_coeffs_wanted :
     ∀ (k a b n : ℕ), ∃ z : ℤ, (nfact_f_n n a b).coeff k = (z : ℚ)
 
 /-!

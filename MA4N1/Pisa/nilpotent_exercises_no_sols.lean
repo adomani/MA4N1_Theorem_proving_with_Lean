@@ -155,14 +155,16 @@ variable {R : Type*} [CommRing R] {n : Type*} [DecidableEq n] [Fintype n]
 
 open Polynomial
 
-recall Matrix.charpolyRev (M : Matrix n n R) := det (1 - (X : R[X]) • M.map C)
+recall Matrix.charpolyRev (M : Matrix n n R) := Matrix.det (1 - (X : R[X]) • M.map C)
 
 namespace Matrix
 
 variable (M : Matrix n n R)
 
 --  why did I not find this lemma already?
-theorem map_pow (N : ℕ) : (M ^ N).map C = M.map C ^ N := by
+--  `Mathlib` now has the general `Matrix.map_pow`, for an arbitrary `RingHom` in place of `C`,
+--  so we give this specialised version a different name to avoid a clash.
+theorem map_pow_C (N : ℕ) : (M ^ N).map C = M.map C ^ N := by
   sorry
   done
 

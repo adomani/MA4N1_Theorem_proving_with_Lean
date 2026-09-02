@@ -76,18 +76,19 @@ example : (⟦Sat⟧ : Quotient Week_setoid) ≠ ⟦Mon⟧ := by
 lemma equiv_class_of_Sunday (d : Week) : (⟦Sun⟧ : Quotient Week_setoid) = ⟦d⟧ ↔
     d ∈ ({Sat, Sun} : Set _) := by
   -- `rcases d with _ | _ | _ | _ | _ | _ | _ <;>` also works instead of `induction`
+  -- `Quotient.eq` converts an equality of classes into the underlying relation;
+  -- what is left is a decidable statement about `week_end?`, which `decide` settles.
   induction d <;>
-    simp <;>
-    rintro ⟨⟩
+    simp [Quotient.eq] <;>
+    decide
   done
 
 lemma equiv_class_of_Monday (d : Week) : (⟦Mon⟧ : Quotient Week_setoid) = ⟦d⟧ ↔
     d ∈ ({Mon, Tue, Wed, Thu, Fri} : Set _) := by
   -- `rcases d with _ | _ | _ | _ | _ | _ | _ <;>` also works instead of `induction`
   induction d <;>
-    simp <;>
-    (try rfl) <;>
-    rintro ⟨⟩
+    simp [Quotient.eq] <;>
+    decide
   done
 
 example : Quotient Week_setoid ≃ Bool where

@@ -133,9 +133,9 @@ instance parity_setoid : Setoid ℤ where
       done
   }
 
--- Let's record that `parity_setoid` satisfies `IsSymm`, which is the typeclass analogue of
+-- Let's record that `parity_setoid` satisfies `Std.Symm`, which is the typeclass analogue of
 -- the `symm` field from above.
-instance : IsSymm ℤ parity_setoid where
+instance : Std.Symm (α := ℤ) parity_setoid where
   symm _a _b hab := Setoid.symm' parity_setoid hab
 
 --  `≃` is the symbol for an `Equiv
@@ -158,7 +158,8 @@ lemma equiv_class_of_zero (d : ℤ) :
 
 lemma equiv_class_of_one (d : ℤ) :
     (⟦1⟧ : Quotient parity_setoid) = ⟦d⟧ ↔ 2 ∣ d - 1 := by
-  simpa only [Quotient.eq] using comm
+  simp only [Quotient.eq]
+  exact comm
   done
 
 --  This lemma is part of the Friday support class

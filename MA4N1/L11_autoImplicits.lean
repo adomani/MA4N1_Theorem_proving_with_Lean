@@ -85,10 +85,9 @@ variable (G2 : simpleGraph)
 #check G2
 
 /--
-error: Invalid field notation: Type is not of the form `C ...` where C is a constant
+error: Invalid field notation: Field projection operates on types of the form `C ...` where C is a constant. The expression
   G2
-has type
-  simpleGraph
+has type `simpleGraph` which does not have the necessary form.
 -/
 #guard_msgs in
 #check G2.Adj
