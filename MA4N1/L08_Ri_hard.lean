@@ -2,8 +2,6 @@
 --  goals of the exercise.  The proofs at the end refer to API lemmas about `Ri` that the
 --  file never states, and working out which lemmas are missing is the point; `help_me!`
 --  and `help_all` hand them over for anyone who wants the hint.
---  So please do not "repair" this file when updating the project to a new version of Lean:
---  it is expected to fail, together with the root `MA4N1` module that imports it.
 
 import MA4N1.Init
 import Mathlib.Tactic
