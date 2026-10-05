@@ -19,4 +19,4 @@ For systems other than Unix, take a look at the [Mathlib projects webpage](https
 
 [Back to Moodle](https://moodle.warwick.ac.uk/course/view.php?id=71736#section-0)
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/adomani/MA4N1_Theorem_proving_with_Lean)
+<!-- [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/adomani/MA4N1_Theorem_proving_with_Lean) -->
