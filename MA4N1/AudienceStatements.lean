@@ -1,47 +1,131 @@
 import MA4N1.Init
-import Mathlib --.Tactic
+-- Note that we import `Mathlib`, since we want to maximise our chance of finding
+-- theorems and definitions that are already available.
+import Mathlib
 
-namespace TPwL_polynomials
+namespace RandomStatements
+
+/-!
+This file contains my formalisation attempts of theorems that were suggested during the lectures.
+
+I have tried to not polish them too much and to leave the code that I used to find the various
+lemmas and definitions, so that you can see how I went about formalising the statements.
+-/
 
 section Presentation
 /-!
-#  Preliminaries
+# Fundamental theorem of algebra
 
-The exercises cover several different notions:
-* `Polynomial` rings  `R[X]`;
-* `natDegree`s of `Polynomial`s.
+The first statement is the fundamental theorem of algebra.
 
-I will certainly not have time to talk about all of the above, but you are of course more than
-welcome to explore on your own and to ask lots of questions!
+Of various equivalent statements, I chose the formulation "ℂ is algebraically closed",
+since I imagine it will be the easiest to formalise on the spot.
 
-##  `Polynomial`
-
-The structure `Polynomial` takes a (Semi)`Ring` as input and returns...
-the `Mathlib` formalization of polynomials!
+I am aware that this will feel like cheating, but, when you are on your own, you should
+find the easy way out, if you can!
 -/
 
-section Polynomials
+-- Looking for the concept of "algebraically closed" in Mathlib, since I imagine it exists.
 
-#check Nat
-
--- Fundamental theorem of algebra
-
+-- I came across this lemma using autocompletion: I know this could be useful, since
+-- the `Geometrically` in `GeometricallyReduced` means that the property holds over
+-- an algebraic closure.
+-- I did not follow this path, but indeed if you Ctrl-click on this lemma and then on
+-- `IsGeometricallyReduced`, you will see that `AlgebraicClosure` exists and then you are
+-- really close.
 #check Algebra.instIsReducedTensorProductOfIsAlgebraicOfIsGeometricallyReduced
+
+-- Instead, I opened the [Mathlib documentation](https://leanprover-community.github.io/mathlib4_docs/index.html)
+-- and started typing `isalg[ebraicallyclosed]` and saw `IsAlgClosed`: that's what we wanted!
 #check IsAlgClosed
 
+-- Making sure that `ℂ` exists (hover over ℂ to see how to type it).
 #check ℂ
 
-#check exists_algClosure
-
+-- Finally, the fundamental theorem of algebra.  Since we stated it cleanly,
+-- `exact?` actually finds the proof for us!
 example : IsAlgClosed ℂ := by
   exact Complex.isAlgClosed
 
--- pigeonhole principle
+/-!
+# Pigeonhole principle
 
-example {A B : Type*} [Finite A] [Finite B] (f : A → B) (hB : Nat.card B < Nat.card A) :
+The next statement is the pigeonhole principle.  In this case, "the" pigeonhole principle,
+is really more of a family of possible different statements.
+
+I decided that one option was to say that if `A` and `B` are sets,
+`A` has cardinality `n + 1` and `B` has cardinality `n`,
+then any function `f : A → B` is not injective.
+
+*Warning*. Some of these attempts are incorrect!
+-/
+
+theorem flawed_pigeonhole {A B : Type*} {n : ℕ} (f : A → B)
+    (hA : Nat.card A = n + 1) (hB : Nat.card B = n) :
     ¬ Function.Injective f := by
-  stop
-  exact Complex.isAlgClosed
+  sorry
+
+-- Here is why `flawed_pigeonhole` is flawed: we can prove `False` using it!
+-- I'll leave you to figure out what this `example` does.
+example : False := by
+  have := flawed_pigeonhole (A := Unit) (B := ℕ) (n := 0) (fun _ => 0) (by simp) (by simp)
+  exact?  -- we are missing a hypothesis!
+
+-- What `flawed_pigeonhole` is missing is that `A` and `B` are finite sets.
+-- The source of confusion is that `Nat.card` is defined for all types,
+-- and for infinite ones, it returns `0`.
+
+example {A B : Type*} [Finite A] [Finite B] {n : ℕ} (f : A → B)
+    (hA : Nat.card A = n + 1) (hB : Nat.card B = n) :
+    ¬ Function.Injective f := by
+  sorry
+
+-- This statement is probably true, but definitely can be cleaned up still!
+-- First, finiteness of `A` follows from the fact that `Nat.card A` is non-zero.
+-- Second, we don't actually need the cardinality of `A` to be one more than the one of `B`,
+-- we just need it to be strictly larger.
+
+example {A B : Type*} [Finite B] (f : A → B) (hAB : Nat.card B < Nat.card A) :
+    ¬ Function.Injective f := by
+  sorry
+
+-- We can still improve this: if instead of the `Nat.card` we use the actual cardinality
+-- (Mathlib's `Cardinal`), then we don't even need to assume that `B` is finite.
+#check Cardinal
+
+-- It turns out that, with `open scoped Cardinal`, we can use `#A` for the cardinal of `A`.
+
+open scoped Cardinal in
+example {A B : Type} (f : A → B) (hAB : #B < #A) :
+    ¬ Function.Injective f := by
+  sorry
+
+-- If you observe carefully the statement, you will notice that I changed `Type*` for `Type`:
+-- this is a technicality and it is easier to do this, than to wrangle universe levels.
+
+-- For completeness, and if you are really curious about how to handle universe levels,
+-- here is one way -- feel free to ignore this!
+open Cardinal in
+universe u v in
+example {A : Type u} {B : Type v} (f : A → B) (hAB : lift.{max u v} #B < lift #A) :
+    ¬ Function.Injective f := by
+  sorry
+
+-- Now that we are here, though, the contrapositive of this statement looks like a tautology!
+open scoped Cardinal in
+example {A B : Type} (f : A → B) (hf : Function.Injective f) :
+    #A ≤ #B := by
+  exact Cardinal.mk_le_of_injective hf -- found using `exact?`
+
+-- and `exact?` finds the proof for us!
+
+-- The version with universe levels is also easy to prove, but `exact?` does not prove it directly.
+open Cardinal in
+universe u v in
+example {A : Type u} {B : Type v} (f : A → B) (hf : Function.Injective f) :
+    lift.{max u v} #A ≤ lift #B := by
+  refine lift_mk_le.mpr ?_ -- found using `apply?` and selecting what looked more promising
+  use f
 
 -- handshake lemma
 
@@ -63,183 +147,6 @@ example {f g : ℝ → ℝ} {x : ℝ} {f' g' : ℝ}
   exact?
   sorry
 
-variable {R : Type*} [Semiring R] {r : R}
-
-#check Polynomial R
-#guard_msgs(drop error) in
-#check R[X]
-
-open Polynomial
-
-#check R[X]
-#guard_msgs(drop error) in
-#check R[Y]
-
--- ##  Basic constructors
-
--- ###  `C` -- the constants
--- the extended name is `Polynomial.C`
-#check C r
-
-example {s : R} : C (r * s) = C r * C s := by
-  exact?
-
--- ###  `X` -- the variable
--- the extended name is `Polynomial.X`
-#check (X : R[X])
-#check X
-
--- ###  `monomial` -- the... monomials
--- we are not actually going to use them
-#check monomial 3 r
-
-example {n : ℕ} : C r * X ^ n = monomial n r := by
-  exact?
-
-example : ((X + C 1) ^ 2 : R[X]) = X ^ 2 + 2 * X + 1 := by
-  rw [sq, mul_add, add_mul, add_mul, ← sq, add_assoc, add_assoc]
-  simp     -- clears the `C`s
-  congr 1  -- matches the common parts of the expressions
-  rw [← add_assoc, two_mul]
-
-example : ((X + C r) ^ 2 : R[X]) = X ^ 2 + 2 * C r * X + C r ^ 2 := by
-  rw [sq, mul_add, add_mul, add_mul, ← sq, add_assoc, add_assoc, X_mul_C]
-  congr 1  -- matches the common parts of the expressions
-  rw [← add_assoc, two_mul, ← add_mul, sq]
-
-variable {S} [CommSemiring S] in
-example : ((X + 1) ^ 2 : S[X]) = X ^ 2 + 2 * X + 1 := by
-  ring
-
-variable {S} [CommSemiring S] in
-example : ((X + C 1) ^ 2 : S[X]) = X ^ 2 + C 2 * X + C 1 := by
-  simp?
-  ring
-  congr
-
-#check natDegree
-#check degree
-
---  Lean may not always have enough information to fill in typeclass arguments
---#guard_msgs(drop error) in
-example [Nontrivial R] : degree ((1 : R[X])) = 0 := by
-  exact?
-
---#guard_msgs(drop error) in
-example : natDegree (C r * X + C 1) = 1 := by
-  exact?  -- we are missing a hypothesis!
-
---  prove using `natDegree_add_eq_left_of_natDegree_lt`
-example [Nontrivial R] : natDegree (X + C 1 : R[X]) = 1 := by
-  rw [natDegree_add_eq_left_of_natDegree_lt]
-  exact?
-  simp?
-
---  One thing that could be useful for some of the exercises.
---  The evaluation of polynomials in `R[X]` at a fixed polynomial `p` is a ring homomorphism
---  `R[X] →+* R[X]`.
---  This is called `Polynomial.aeval` in `Mathlib`.
-
-noncomputable
-example {R} [CommRing R] (p : R[X]) : R[X] →+* R[X] :=
-  (aeval p).toRingHom
-
-/-
-###  Pitfall: disappearing `C`s
-
-The exact shape of a lemma in `Mathlib` is what makes it applicable or not in any given situation.
-On the one hand, not all combinations of lemmas with/without `C` in statements about `Polynomial`s
-are available.
-On the other hand, `simp` will try to remove `C`s in your expressions, if it can.
-This means that `exact?` might have found a lemma *before* applying `simp` and may fail afterwards:
--/
-example [Nontrivial R] : natDegree (X + C 1) = 1 := by
-  --simp  --uncomment this `simp` and `exact?` fails
-  exact?
-
-end Polynomials
-
 end Presentation
 
-section Exercises
-/-
-# Exercises
--/
-
-open Polynomial
-
-variable {R : Type*} [CommRing R]
-/-!
-Polynomials in Mathlib are denoted by the familiar notation `R[X]`.
-This notation is available because of the line `open Polynomial` just inside this section.
-Without `open Polynomial`, the notation is `Polynomial R`.
-
-Note that the `R` in `R[X]` is a `CommRing` and you can replace it by whatever (Semi)ring you want.
-The `[X]` part is hard-coded: it instructs Lean to consider polynomials in one variable over `R`.
-For instance, `#check R[Y]` yields an `unknown identifier 'Y'` error.
-
-Of course, the name of the variable in `R[X]` is `X`, so the notation is internally consistent,
-but you do not get the option of changing it, at least not easily!
-
-Also, the "obvious" inclusion `R ↪ R[X]` is denoted by `C` (for `C`onstants).
-The full name is `Polynomial.C`, but we are inside `open Polynomial`, so `C` suffices.
-
-Thus, `X ^ 3 + C 3 * X - C 2` represents the polynomial that you might write in TeX as
-$x ^ 3 + 3 x - 2$.
--/
-
---  The following exercises get you familiar with `natDegree`s of polynomials.
-section natDegree
-
-example : natDegree (X + 1 : ℤ[X]) = 1 := by
-  rw [natDegree_add_eq_left_of_natDegree_lt] <;>
-  simp
-
-example : natDegree (C 0 * X ^ 2 + C 3 * X : ℤ[X]) = 1 := by
-  rw [natDegree_add_eq_right_of_natDegree_lt]
-  · apply natDegree_C_mul_X
-    norm_num
-  · simp
-
-example (h2 : (2 : R) = 0) (h3 : (3 : R) = 0) : (0 : R) = 1 := by
-  have : (3 : R) - 2 = 1 := by norm_num
-  rw [← this, h2, h3, sub_zero]
-
-lemma aux [Nontrivial R] (h2 : (2 : R) ≠ 0) :
-    natDegree (C 4 * X ^ 2 : R[X]) < natDegree (C 2 * X ^ 3 : R[X]) := by
-  rw [natDegree_C_mul_X_pow 3]
-  · refine (natDegree_C_mul_X_pow_le (4 : R) 2).trans_lt ?_
-    norm_num
-  · assumption
-
-/-- Proof without automation -- I had prepared this before tactic `compute_degree` was merged. -/
-example : natDegree (C 2 * X ^ 3 + C 4 * X ^ 2 + 1 : R[X]) ∈ ({0, 3} : Set ℕ) := by
-  nontriviality R
-  by_cases h2 : (2 : R) = 0
-  · have h22 : (4 : R) = 2 * 2 := by norm_num
-    simp [h22, h2]
-  · simp only [Set.mem_singleton_iff, Set.mem_insert_iff]
-    right
-    rwa [natDegree_add_eq_left_of_natDegree_lt, natDegree_add_eq_left_of_natDegree_lt,
-      natDegree_C_mul_X_pow]
-    · exact aux h2
-    · rw [natDegree_add_eq_left_of_natDegree_lt, natDegree_C_mul_X_pow]
-      · simp only [natDegree_one, zero_lt_three]
-      · assumption
-      · exact aux h2
-
-/-- Proof with more automation -- works now that `compute_degree` is merged. -/
-example : natDegree (C 2 * X ^ 3 + C 4 * X ^ 2 + 1 : R[X]) ∈ ({0, 3} : Set ℕ) := by
-  nontriviality R
-  by_cases h2 : (2 : R) = 0
-  · have h22 : (4 : R) = 2 * 2 := by norm_num
-    simp [h22, h2]
-  · simp only [Set.mem_singleton_iff, Set.mem_insert_iff]
-    right
-    compute_degree!
-
-end natDegree
-
-end Exercises
-
-end TPwL_polynomials
+end RandomStatements
