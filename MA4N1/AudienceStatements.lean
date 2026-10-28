@@ -154,6 +154,22 @@ However, in the lecture I formalised the statement above, which is sometimes
 called the "theorem on friends and strangers"!]
 -/
 
+/-
+Here I made some choices: I do not guarantee that this statement is necessarily easy to prove,
+but the statement looks correct.
+
+* `A` is the set of people in the room,
+* `friends` is a symmetric relation on `A` representing whether two people are friends.
+
+The conclusion is that there are 3 distinct people that are either all friends or all strangers.
+
+I suspect that proving this statement will be fiddly and might become easier only after
+proving some general lemmas about graphs.
+A case-bash approach looks painful to formalise.
+
+*Note*.  We require `friends` to be symmetric, but we do not impose any condition on the values
+`friends a a`.  This is because the diagonal values of `friends` are irrelevant.
+-/
 example {A : Type*} (h6 : 6 ≤ Nat.card A) (friends : A → A → Prop)
     (hSymm : ∀ a b : A, friends a b ↔ friends b a) :
     ∃ a b c : A,
@@ -162,15 +178,46 @@ example {A : Type*} (h6 : 6 ≤ Nat.card A) (friends : A → A → Prop)
        (¬ friends a b ∧ ¬ friends a c ∧ ¬ friends b c)) := by
   sorry
 
--- chain rule
+/-!
+# Chain rule
 
-#check hasDerivAt_abs
+This is the statement that if `f` is differentiable at `x` and `g` is differentiable at `f x`,
+then the composition `g ∘ f` is differentiable at `x` and its derivative is given by
+`(g ∘ f)'(x) = g'(f(x)) * f'(x)`.
+-/
 
+/-
+Let's start looking for derivatives in Mathlib.  We can start by looking for `deriv`
+and autocomplete.
+
+It turns out that `deriv` actually exists.
+-/
+#check deriv
+/-
+Looking at the doc-string, we see that `deriv` is defined in terms of `HasDerivAt`.
+-/
+#check HasDerivAt
+/-
+So, we should provide `HasDerivAt` with the function, the value of its derivative at a point
+and the point itself.
+
+For simplicity, we limit our attention to `f` and `g` as functions from `ℝ` to `ℝ`.
+We let `x : ℝ` be the point where we evaluate the derivative of `f`, and we call
+* `f'` the value of the derivative of `f` at the point `x`,
+* `g'` the value of the derivative of `g` at the point `f x`.
+
+Now, the `HasDerivAt` assumptions lock the values with the actual derivatives and
+we are ready to state the chain rule.
+-/
 example {f g : ℝ → ℝ} {x : ℝ} {f' g' : ℝ}
     (hf : HasDerivAt f f' x) (hg : HasDerivAt g g' (f x)) :
     HasDerivAt (g ∘ f) (g' * f') x := by
-  exact?
-  sorry
+  exact HasDerivAt.comp x hg hf -- found using `exact?`
+
+/-
+The fact that `exact?` finds the proof is partial confirmation that we probably have a
+reasonable statement.
+-/
 
 end Presentation
 
