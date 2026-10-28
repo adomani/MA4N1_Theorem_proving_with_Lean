@@ -142,7 +142,17 @@ example {A : Type u} {B : Type v} (f : A → B) (hf : Function.Injective f) :
   refine lift_mk_le.mpr ?_ -- found using `apply?` and selecting what looked more promising
   use f
 
--- handshake lemma
+/-!
+# Handshake lemma
+
+This is the statement that if there are at least 6 people in a room,
+then there are 3 of them who are either all friends or all strangers.
+
+[EDIT: not really.  The handshake lemma is the statement that the
+sum of the degrees of the vertices of a graph is twice the number of edges.
+However, in the lecture I formalised the statement above, which is sometimes
+called the "theorem on friends and strangers"!]
+-/
 
 example {A : Type*} (h6 : 6 ≤ Nat.card A) (friends : A → A → Prop)
     (hSymm : ∀ a b : A, friends a b ↔ friends b a) :
