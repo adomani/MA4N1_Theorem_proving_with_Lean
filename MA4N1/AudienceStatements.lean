@@ -110,15 +110,16 @@ We can still improve this: if instead of the `Nat.card` we use the actual cardin
 -- It turns out that, with `open scoped Cardinal`, we can use `#A` for the cardinal of `A`.
 
 open scoped Cardinal in
-example {A B : Type} (f : A → B) (hAB : #B < #A) :
+example {A B : Type _} (f : A → B) (hAB : #B < #A) :
     ¬ Function.Injective f := by
   sorry
 
 /-
-If you observe carefully the statement, you will notice that I changed `Type*` for `Type`:
+If you observe carefully the statement, you will notice that I changed `Type*` for `Type _`:
 this is a technicality and it is easier to do this, than to wrangle universe levels.
+A consequence of this change is that the universe levels of `A` and `B` end up being the same.
 
-For completeness, and if you are really curious about how to handle universe levels,
+For completeness, and if you are really curious about how to handle arbitrary universe levels,
 here is one way -- feel free to ignore this!
 -/
 open Cardinal in
@@ -129,7 +130,7 @@ example {A : Type u} {B : Type v} (f : A → B) (hAB : lift.{max u v} #B < lift 
 
 -- Now that we are here, though, the contrapositive of this statement looks like a tautology!
 open scoped Cardinal in
-example {A B : Type} (f : A → B) (hf : Function.Injective f) :
+example {A B : Type _} (f : A → B) (hf : Function.Injective f) :
     #A ≤ #B := by
   exact Cardinal.mk_le_of_injective hf -- found using `exact?`
 
