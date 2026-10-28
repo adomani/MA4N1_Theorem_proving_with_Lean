@@ -1,5 +1,5 @@
 import MA4N1.Init
-import Mathlib --.Tactic
+import Mathlib.Tactic
 
 namespace TPwL_polynomials
 
@@ -21,47 +21,6 @@ the `Mathlib` formalization of polynomials!
 -/
 
 section Polynomials
-
-#check Nat
-
--- Fundamental theorem of algebra
-
-#check Algebra.instIsReducedTensorProductOfIsAlgebraicOfIsGeometricallyReduced
-#check IsAlgClosed
-
-#check ℂ
-
-#check exists_algClosure
-
-example : IsAlgClosed ℂ := by
-  exact Complex.isAlgClosed
-
--- pigeonhole principle
-
-example {A B : Type*} [Finite A] [Finite B] (f : A → B) (hB : Nat.card B < Nat.card A) :
-    ¬ Function.Injective f := by
-  stop
-  exact Complex.isAlgClosed
-
--- handshake lemma
-
-example {A : Type*} (h6 : 6 ≤ Nat.card A) (friends : A → A → Prop)
-    (hSymm : ∀ a b : A, friends a b ↔ friends b a) :
-    ∃ a b c : A,
-      a ≠ b ∧ a ≠ c ∧ b ≠ c ∧
-      ((friends a b ∧ friends a c ∧ friends b c) ∨
-       (¬ friends a b ∧ ¬ friends a c ∧ ¬ friends b c)) := by
-  sorry
-
--- chain rule
-
-#check hasDerivAt_abs
-
-example {f g : ℝ → ℝ} {x : ℝ} {f' g' : ℝ}
-    (hf : HasDerivAt f f' x) (hg : HasDerivAt g g' (f x)) :
-    HasDerivAt (g ∘ f) (g' * f') x := by
-  exact?
-  sorry
 
 variable {R : Type*} [Semiring R] {r : R}
 
@@ -118,19 +77,18 @@ example : ((X + C 1) ^ 2 : S[X]) = X ^ 2 + C 2 * X + C 1 := by
   congr
 
 #check natDegree
-#check degree
 
 --  Lean may not always have enough information to fill in typeclass arguments
---#guard_msgs(drop error) in
-example [Nontrivial R] : degree ((1 : R[X])) = 0 := by
+#guard_msgs(drop error) in
+example : natDegree 1 = 0 := by
   exact?
 
---#guard_msgs(drop error) in
+#guard_msgs(drop error) in
 example : natDegree (C r * X + C 1) = 1 := by
   exact?  -- we are missing a hypothesis!
 
 --  prove using `natDegree_add_eq_left_of_natDegree_lt`
-example [Nontrivial R] : natDegree (X + C 1 : R[X]) = 1 := by
+example [Nontrivial R] : natDegree (X + C 1) = 1 := by
   rw [natDegree_add_eq_left_of_natDegree_lt]
   exact?
   simp?
@@ -142,7 +100,7 @@ example [Nontrivial R] : natDegree (X + C 1 : R[X]) = 1 := by
 
 noncomputable
 example {R} [CommRing R] (p : R[X]) : R[X] →+* R[X] :=
-  (aeval p).toRingHom
+(aeval p).toRingHom
 
 /-
 ###  Pitfall: disappearing `C`s
