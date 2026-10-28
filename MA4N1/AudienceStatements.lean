@@ -77,7 +77,7 @@ I'll leave you to figure out what this `example` does.
 -/
 example : False := by
   have := flawed_pigeonhole (A := Unit) (B := ℕ) (n := 0) (fun _ => 0) (by simp) (by simp)
-  exact?  -- we are missing a hypothesis!
+  exact (iff_false_intro this).mp fun ⦃a₁ a₂⦄ => congrFun rfl -- found using `exact?`
 
 /-
 What `flawed_pigeonhole` is missing is that `A` and `B` are finite sets.
@@ -124,7 +124,7 @@ here is one way -- feel free to ignore this!
 -/
 open Cardinal in
 universe u v in
-example {A : Type u} {B : Type v} (f : A → B) (hAB : lift.{max u v} #B < lift #A) :
+example {A : Type u} {B : Type v} (f : A → B) (hAB : lift.{u} #B < lift.{v} #A) :
     ¬ Function.Injective f := by
   sorry
 
@@ -134,13 +134,12 @@ example {A B : Type _} (f : A → B) (hf : Function.Injective f) :
     #A ≤ #B := by
   exact Cardinal.mk_le_of_injective hf -- found using `exact?`
 
--- The version with universe levels is also easy to prove, but `exact?` does not prove it directly.
+-- The version with universe levels is also easy to prove.
 open Cardinal in
 universe u v in
 example {A : Type u} {B : Type v} (f : A → B) (hf : Function.Injective f) :
-    lift.{max u v} #A ≤ lift #B := by
-  refine lift_mk_le.mpr ?_ -- found using `apply?` and selecting what looked more promising
-  use f
+    lift.{v} #A ≤ lift.{u} #B := by
+  exact lift_mk_le_lift_mk_of_injective hf -- found using `exact?`
 
 /-!
 # Handshake lemma
@@ -194,7 +193,7 @@ It turns out that `deriv` actually exists.
 -/
 #check deriv
 /-
-Looking at the doc-string, we see that `deriv` is defined in terms of `HasDerivAt`.
+The doc-string of `deriv` mentions `HasDerivAt`, which seems promising.
 -/
 #check HasDerivAt
 /-
