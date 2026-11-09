@@ -31,6 +31,8 @@ import MA4N1.L16_setoids_week_end
 import MA4N1.L16_setoids_week_end_no_sols
 import MA4N1.L17_navigating_Mathlib
 import MA4N1.L18_finiteness
+import MA4N1.L19_topology
+import MA4N1.L19_topology_no_sols
 import MA4N1.Matrices
 import MA4N1.Pisa.generalizations
 import MA4N1.Pisa.matrici_nilpotenti
